@@ -130,9 +130,75 @@ const logout = async (token) => {
     await RefreshToken.destroy({ where: { token } });
 };
 
+const googleLogin = async (decodedToken, userAgent) => {
+    const { uid, email, name, picture } = decodedToken;
+
+    let user = await User.findOne({
+        where: { email },
+        include: [{ model: Panelist, as: 'panelist' }]
+    });
+
+    if (!user) {
+        // Create new user if they don't exist
+        user = await User.create({
+            email,
+            password_hash: 'SOCIAL_AUTH_PROVIDER', // Placeholder, not used for Google Auth
+            role: 'panelist',
+            email_verified: true,
+            google_id: uid
+        });
+
+        // Split name for panelist profile
+        const nameParts = name ? name.split(' ') : ['User', ''];
+        const firstName = nameParts[0];
+        const lastName = nameParts.slice(1).join(' ') || '';
+
+        await Panelist.create({
+            user_id: user.id,
+            first_name: firstName,
+            last_name: lastName,
+            profile_picture: picture
+        });
+
+        // Re-fetch to include panelist profile
+        user = await User.findByPk(user.id, {
+            include: [{ model: Panelist, as: 'panelist' }]
+        });
+    }
+
+    // Generate tokens
+    const panelistId = user.panelist ? user.panelist.id : null;
+    const accessToken = generateAccessToken(user, panelistId);
+    const refreshTokenString = generateRefreshToken();
+
+    // Store refresh token
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
+    await RefreshToken.create({
+        user_id: user.id,
+        token: refreshTokenString,
+        expires_at: expiresAt,
+        user_agent: userAgent
+    });
+
+    return {
+        user: {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            firstName: user.panelist ? user.panelist.first_name : null,
+            lastName: user.panelist ? user.panelist.last_name : null
+        },
+        accessToken,
+        refreshToken: refreshTokenString
+    };
+};
+
 module.exports = {
     register,
     login,
+    googleLogin,
     refreshAccessToken,
     logout
 };

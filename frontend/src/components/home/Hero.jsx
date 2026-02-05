@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, UserPlus, Search, DollarSign, Trophy, ShieldCheck } from 'lucide-react';
 import banner from '../../assets/hero_banner.png';
 import panel from "../../assets/panel.png";
 import panel3 from "../../assets/panel3.png";
@@ -17,7 +19,7 @@ const Hero = () => {
 
     return (
         <>
-            <div className='w-full bg-blue-600 border-b border-blue-700 h-10 shadow-sm'>
+            <div className='w-full bg-[#5B6CFF] border-b border-blue-700 h-10 shadow-sm'>
                 <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center'>
                     <div className='flex items-center'>
                         <span className='text-white text-sm font-medium border-l border-white pl-2 ml-2'>
@@ -26,7 +28,7 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
-            <section className="px-[3%] py-20 lg:py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+            <section className="px-[3%] py-20 lg:py-24 bg-white relative overflow-hidden">
 
                 {/* Background decoration */}
                 <div className="absolute -top-1/2 -right-[10%] w-[800px] h-[800px] bg-gradient-radial from-orange-50/40 to-transparent rounded-full opacity-40 pointer-events-none" />
@@ -37,10 +39,10 @@ const Hero = () => {
                     <div>
                         {/* Welcome Guest - Sequential Animation */}
                         <div className="flex gap-2 mb-4">
-                            <span className="text-blue-600 font-semibold uppercase tracking-wider text-sm animate-slide-in-left inline-block opacity-0" style={{ animationDelay: '0ms', animationFillMode: 'forwards' }}>
+                            <span className="text-[#5B6CFF] font-semibold uppercase tracking-wider text-sm animate-slide-in-left inline-block opacity-0" style={{ animationDelay: '0ms', animationFillMode: 'forwards' }}>
                                 Welcome
                             </span>
-                            <span className="text-blue-600 font-semibold uppercase tracking-wider text-sm animate-slide-in-left inline-block opacity-0" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
+                            <span className="text-[#5B6CFF] font-semibold uppercase tracking-wider text-sm animate-slide-in-left inline-block opacity-0" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
                                 Guest
                             </span>
                         </div>
@@ -66,7 +68,7 @@ const Hero = () => {
                             {/* Free Surveys with underline */}
                             <span className="relative inline-block">
                                 <span
-                                    className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-[#9EDAEF] to-[#1F6AE1] animate-slide-up inline-block opacity-0"
+                                    className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] animate-slide-up inline-block opacity-0"
                                     style={{ animationDelay: '900ms', animationFillMode: 'forwards' }}
                                 >
                                     Free Surveys
@@ -80,8 +82,8 @@ const Hero = () => {
                                 >
                                     <defs>
                                         <linearGradient id="heroUnderline" x1="0%" y1="0%" x2="100%" y2="0%">
-                                            <stop offset="0%" stopColor="#9EDAEF" />
-                                            <stop offset="100%" stopColor="#1F6AE1" />
+                                            <stop offset="0%" stopColor="#5B6CFF" />
+                                            <stop offset="100%" stopColor="#4FD1E8" />
                                         </linearGradient>
                                     </defs>
                                     <path
@@ -103,21 +105,29 @@ const Hero = () => {
                         </h1>
 
                         {/* Description - appears after heading */}
-                        <p className="text-xl lg:text-2xl leading-relaxed text-gray-600 mb-8 animate-fade-in opacity-0" style={{ animationDelay: '1300ms', animationFillMode: 'forwards' }}>
-                            Fill and earn money from surveys with <span className="text-slate-900 font-semibold">RealSays</span>. You might boost market research today with your opinion.
+                        <p className="text-xl lg:text-2xl leading-relaxed text-[#0F1E3A]/70 mb-8 animate-fade-in opacity-0" style={{ animationDelay: '1300ms', animationFillMode: 'forwards' }}>
+                            Fill and earn money from surveys with <span className="text-[#0F1E3A] font-semibold">RealSays</span>. You might boost market research today with your opinion.
                         </p>
 
                         {/* Buttons - appear after description */}
-                        <div className="flex flex-col sm:flex-row gap-4 items-center">
-                            <button className="group w-full sm:w-auto px-8 py-4 rounded-full font-bold text-lg text-white bg-gradient-to-r from-[#9EDAEF] to-[#1F6AE1] shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 relative overflow-hidden animate-fade-in opacity-0" style={{ animationDelay: '1500ms', animationFillMode: 'forwards' }}>
+                        <div className="flex flex-row flex-wrap gap-4 items-center justify-center lg:justify-start">
+                            <Link
+                                to="/signup"
+                                className="group px-7 py-4 rounded-full font-bold text-lg text-white bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 relative overflow-hidden animate-fade-in opacity-0"
+                                style={{ animationDelay: '1500ms', animationFillMode: 'forwards', textDecoration: 'none' }}
+                            >
                                 <span className="relative z-10">Start Earning</span>
-                                <div className="absolute inset-0 bg-gradient-to-r from-[#1F6AE1] to-[#9EDAEF] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            </button>
+                                <div className="absolute inset-0 bg-gradient-to-r from-[#4FD1E8] to-[#5B6CFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            </Link>
 
-                            <button className="group w-full sm:w-auto px-8 py-4 rounded-full font-bold text-lg bg-clip-text bg-gradient-to-r from-[#9EDAEF] to-[#1F6AE1] ring-2 ring-inset ring-gray-300 transition-all duration-300 hover:ring-blue-400 hover:-translate-y-1 hover:scale-105 hover:shadow-lg relative overflow-hidden animate-fade-in opacity-0" style={{ animationDelay: '1650ms', animationFillMode: 'forwards' }}>
-                                <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-[#9EDAEF] to-[#1F6AE1]">How it Works</span>
-                                <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-orange-50 opacity-0 group-hover:opacity-50 transition-opacity duration-300 -z-10 rounded-full" />
-                            </button>
+                            <a
+                                href="#how-it-works"
+                                className="group px-7 py-4 rounded-full font-bold text-lg bg-clip-text bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] ring-2 ring-inset ring-[#0F1E3A]/10 transition-all duration-300 hover:ring-[#4FD1E8] hover:-translate-y-1 hover:scale-105 hover:shadow-lg relative overflow-hidden animate-fade-in opacity-0"
+                                style={{ animationDelay: '1650ms', animationFillMode: 'forwards', textDecoration: 'none' }}
+                            >
+                                <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8]">How it Works</span>
+                                <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-50 transition-opacity duration-300 -z-10 rounded-full" />
+                            </a>
                         </div>
 
                     </div>
@@ -138,12 +148,12 @@ const Hero = () => {
 
                             {/* Trust Badge / Tooltip */}
                             <div className="absolute -left-12 top-1/4 animate-float opacity-0" style={{ animationDelay: '1400ms', animationFillMode: 'forwards' }}>
-                                <div className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 flex items-center gap-3 whitespace-nowrap hover:scale-105 transition-transform duration-300">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#9EDAEF] to-[#1F6AE1] flex items-center justify-center text-white shadow-lg">
+                                <div className="bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-white/50 flex items-center gap-3 whitespace-nowrap hover:scale-105 transition-transform duration-300">
+                                    <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] flex items-center justify-center text-white shadow-lg">
                                         <span className="font-bold text-sm">10+</span>
                                     </div>
                                     <div>
-                                        <p className="text-slate-900 font-bold text-sm">Trusted Experience</p>
+                                        <p className="text-[#0F1E3A] font-bold text-sm">Trusted Experience</p>
                                         <p className="text-slate-500 text-xs">10 years in the field</p>
                                     </div>
                                 </div>
@@ -159,7 +169,7 @@ const Hero = () => {
                                             </svg>
                                         </div>
                                         <div>
-                                            <p className="text-slate-900 font-bold text-sm">Verified Platform</p>
+                                            <p className="text-[#0F1E3A] font-bold text-sm">Verified Platform</p>
                                             <p className="text-slate-500 text-xs">100% Secure</p>
                                         </div>
                                     </div>
@@ -169,29 +179,96 @@ const Hero = () => {
                     </div>
                 </div>
             </section>
-            {/* Section 2: Commitments */}
-            <section className="px-[5%] py-24 bg-white relative overflow-hidden">
+
+            {/* Section 2: How It Works - PROFESSIONAL VERSION */}
+            <section id="how-it-works" className="px-[5%] py-24 bg-white relative overflow-hidden">
                 {/* Background Decorations */}
                 <div className="absolute inset-0 pointer-events-none">
                     <div className="absolute top-1/4 -left-20 w-80 h-80 bg-blue-50/50 rounded-full blur-[100px] animate-pulse-slow" />
-                    <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-50/30 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+                    <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-50/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
                 </div>
 
-                <div className="max-w-[1400px] mx-auto w-full relative z-10">
+                <div className="max-w-7xl mx-auto w-full relative z-10">
                     {/* Header Section */}
-                    <div className="text-center mb-16 px-4">
-                        <h2 className="text-blue-600 font-bold uppercase tracking-[0.2em] text-sm mb-4 animate-slide-up opacity-0" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
-                            Our Promise
-                        </h2>
-                        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-8 tracking-tight animate-slide-up opacity-0" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-                            We Stand by Our Commitments
+                    <div className="text-center mb-20 px-4">
+                        <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight animate-slide-up opacity-0 uppercase" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
+                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#5B6CFF] via-[#4FD1E8]/90 to-[#4FD1E8]">
+                                HOW DOES REALSAYS WORK?
+                            </span>
                         </h1>
-                        <p className="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed animate-fade-in opacity-0" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-                            Online surveys, chosen just for you, make earning rewards easy. No delays, zero conflicts.
-                            Share your voice and start earning today. All this is possible in one place — <span className="text-blue-600 font-semibold underline decoration-blue-200 decoration-2 underline-offset-4">RealSays</span>.
+                        <p className="text-[#0F1E3A]/70 text-lg font-medium animate-fade-in opacity-0" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
+                            Earn rewards instantly by sharing your opinions.
                         </p>
                     </div>
 
+                    {/* Steps Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+                        {[
+                            {
+                                icon: <UserPlus className="w-10 h-10 text-[#5B6CFF]" />,
+                                title: "Registration",
+                                desc: "Sign up on RealSays. Join this rapidly growing community today.",
+                                delay: '800ms'
+                            },
+                            {
+                                icon: <Search className="w-10 h-10 text-[#4FD1E8]" />,
+                                title: "Investigation",
+                                desc: "Receive questionnaires based on your profile. We value your interests.",
+                                delay: '1000ms'
+                            },
+                            {
+                                icon: <DollarSign className="w-10 h-10 text-[#5B6CFF]" />,
+                                title: "Salary",
+                                desc: "Earn rewards by filling out online questionnaires with instant payment.",
+                                delay: '1200ms'
+                            },
+                            {
+                                icon: <Trophy className="w-10 h-10 text-[#4FD1E8]" />,
+                                title: "Award",
+                                desc: "Earn rewards by referring friends. Special offers from top brands available.",
+                                delay: '1400ms'
+                            }
+                        ].map((step, idx) => (
+                            <div
+                                key={idx}
+                                className="group bg-white p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col items-center text-center animate-slide-up opacity-0 hover:-translate-y-2"
+                                style={{ animationDelay: step.delay, animationFillMode: 'forwards' }}
+                            >
+                                <div className="w-24 h-24 bg-blue-50/30 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#5B6CFF] group-hover:shadow-2xl group-hover:shadow-blue-500/30 transition-all duration-500 relative">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-[#5B6CFF] to-[#4FD1E8] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                                    <div className="transition-all duration-500 group-hover:scale-110 group-hover:text-white relative z-10">
+                                        {step.icon}
+                                    </div>
+                                </div>
+                                <h3 className="text-2xl font-bold text-[#0F1E3A] mb-4">{step.title}</h3>
+                                <p className="text-[#0F1E3A]/60 leading-relaxed text-sm">
+                                    {step.desc}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Privacy Note - Reference Style (Yellow Banner) */}
+                    <div className="max-w-4xl mx-auto mb-16 animate-fade-in opacity-0 px-4" style={{ animationDelay: '1600ms', animationFillMode: 'forwards' }}>
+                        <div className="bg-[#FFF9C4]/80 backdrop-blur-sm border border-yellow-200 rounded-full py-4 px-10 text-center shadow-sm flex items-center justify-center gap-3">
+                            <ShieldCheck className="w-5 h-5 text-yellow-700" />
+                            <p className="text-[15px] text-[#0F1E3A] font-medium">
+                                <span className="font-bold">P.S.:</span> We will absolutely not leak your personal information or privacy. This is RealSays's promise.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Final CTA */}
+                    <div className="text-center animate-fade-in opacity-0" style={{ animationDelay: '1800ms', animationFillMode: 'forwards' }}>
+                        <Link
+                            to="/signup"
+                            className="inline-flex items-center justify-center px-12 py-5 rounded-full bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold text-xl hover:shadow-2xl hover:shadow-blue-500/40 transition-all active:scale-95 group"
+                            style={{ textDecoration: 'none' }}
+                        >
+                            JOIN NOW
+                            <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </div>
                 </div>
             </section>
 
@@ -209,22 +286,22 @@ const Hero = () => {
                         {/* Left Column - Text Content */}
                         <div className="space-y-10 animate-fade-in opacity-0" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
                             <div className="space-y-4">
-                                <h2 className="text-orange-500 font-bold uppercase tracking-widest text-sm">
+                                <h2 className="text-[#5B6CFF] font-bold uppercase tracking-widest text-sm">
                                     Community Impact
                                 </h2>
-                                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 leading-[1.15] tracking-tight">
+                                <h1 className="text-4xl md:text-5xl font-bold text-[#0F1E3A] leading-[1.15] tracking-tight">
                                     We've Paid Our Community Over <br />
-                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400">
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8]">
                                         $14,320
                                     </span>
                                 </h1>
                             </div>
 
                             <div className="space-y-6">
-                                <p className="text-gray-600 text-lg md:text-xl leading-relaxed">
-                                    Whether you're a student, a professional, or a homemaker, <span className="text-slate-900 font-medium">RealSays</span> is the perfect space to monetize your opinions.
+                                <p className="text-[#0F1E3A]/70 text-lg md:text-xl leading-relaxed">
+                                    Whether you're a student, a professional, or a homemaker, <span className="text-[#0F1E3A] font-medium">RealSays</span> is the perfect space to monetize your opinions.
                                 </p>
-                                <p className="text-gray-600 text-lg md:text-xl leading-relaxed">
+                                <p className="text-[#0F1E3A]/70 text-lg md:text-xl leading-relaxed">
                                     Share your insights in your preferred language and grab quick rewards. Every voice matters in our growing global community.
                                 </p>
                             </div>

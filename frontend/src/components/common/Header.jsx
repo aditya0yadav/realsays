@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
-import { Wallet } from 'lucide-react';
+import { Wallet, Lock } from 'lucide-react';
 
 const Header = () => {
     const isAuthenticated = false;
@@ -37,16 +37,27 @@ const Header = () => {
                         </div>
                     ) : (
                         <div className="flex items-center gap-2 md:gap-4">
+                            {/* Mobile Login Button */}
                             <Link
                                 to="/login"
-                                className="text-xs md:text-sm font-medium text-slate-900 hover:bg-gray-50 border border-slate-300 rounded-full px-3 py-1.5 md:px-5 md:py-2 transition-colors"
+                                className="md:hidden flex items-center gap-2 border-2 border-orange-500 rounded-full px-4 py-1.5 transition-all active:scale-95"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <Lock className="h-4 w-4 text-orange-500" />
+                                <span className="text-sm font-bold text-orange-500">Login</span>
+                            </Link>
+
+                            {/* Desktop Buttons */}
+                            <Link
+                                to="/login"
+                                className="hidden md:block text-xs md:text-sm font-medium text-slate-900 hover:bg-gray-50 border border-slate-300 rounded-full px-3 py-1.5 md:px-5 md:py-2 transition-colors"
                                 style={{ textDecoration: 'none' }}
                             >
                                 Sign In
                             </Link>
                             <Link
                                 to="/signup"
-                                className="text-xs md:text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-full px-4 py-1.5 md:px-6 md:py-2 shadow-sm transition-colors"
+                                className="hidden md:block text-xs md:text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-full px-4 py-1.5 md:px-6 md:py-2 shadow-sm transition-colors"
                                 style={{ textDecoration: 'none' }}
                             >
                                 Sign Up

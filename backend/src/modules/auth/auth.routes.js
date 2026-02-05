@@ -7,6 +7,7 @@ const { validateRegister, validateLogin } = require('./auth.validator'); // Plac
 // Public routes
 router.post('/register', authController.register);
 router.post('/login', authController.login);
+router.post('/google', authController.googleAuth);
 router.post('/refresh', authController.refresh);
 router.post('/logout', authController.logout);
 

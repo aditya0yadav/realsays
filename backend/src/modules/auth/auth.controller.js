@@ -1,4 +1,5 @@
 const authService = require('./auth.service');
+const admin = require('../../config/firebaseAdmin');
 
 const register = async (req, res, next) => {
     try {
@@ -56,9 +57,29 @@ const getMe = async (req, res) => {
     });
 };
 
+const googleAuth = async (req, res, next) => {
+    try {
+        const { idToken } = req.body;
+        const userAgent = req.headers['user-agent'];
+
+        if (!idToken) {
+            return res.status(400).json({ success: false, message: 'Google ID Token is required' });
+        }
+
+        const decodedToken = await admin.auth().verifyIdToken(idToken);
+        const result = await authService.googleLogin(decodedToken, userAgent);
+
+        res.json({ success: true, ...result });
+    } catch (error) {
+        res.status(401);
+        next(new Error('Invalid Google Token: ' + error.message));
+    }
+};
+
 module.exports = {
     register,
     login,
+    googleAuth,
     refresh,
     logout,
     getMe

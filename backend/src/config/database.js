@@ -31,7 +31,8 @@ const connectDB = async () => {
     try {
         await sequelize.authenticate();
         console.log(`Database Connected: Using ${isDevelopment ? 'SQLite' : 'PostgreSQL'}`);
-        await sequelize.sync({ alter: true });
+        // Temporarily using force: true in dev to ensure all columns (like email_verified) are created
+        await sequelize.sync({ force: isDevelopment });
         console.log('Sequelize Models Synced');
     } catch (error) {
         console.error('Unable to connect to the database:', error);

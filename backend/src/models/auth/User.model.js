@@ -26,6 +26,15 @@ const User = sequelize.define('User', {
     last_login: {
         type: DataTypes.DATE,
         allowNull: true
+    },
+    email_verified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+    google_id: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        unique: true
     }
 }, {
     tableName: 'users',

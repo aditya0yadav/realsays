@@ -1,0 +1,175 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Mail, Lock, User, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { auth, googleProvider } from '../../config/firebase';
+import { signInWithPopup } from 'firebase/auth';
+import api from '../../api/axios';
+import panel3 from '../../assets/panel3.png';
+import logo from '../../assets/logo.png';
+
+const Signup = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [error, setError] = useState('');
+
+    const handleGoogleSignup = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const idToken = await result.user.getIdToken();
+
+            // Verify with backend
+            const response = await api.post('/auth/google', { idToken });
+
+            if (response.data.success) {
+                localStorage.setItem('accessToken', response.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error("Google Auth Error:", error);
+            setError("Google signup failed. Please try again.");
+        }
+    };
+
+    const handleEmailSignup = async (e) => {
+        e.preventDefault();
+        setError('');
+        try {
+            const response = await api.post('/auth/register', {
+                name,
+                email,
+                password
+            });
+
+            if (response.data.success) {
+                localStorage.setItem('accessToken', response.data.accessToken);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error("Signup Error:", error);
+            setError(error.response?.data?.message || "Signup failed. Please try again.");
+        }
+    };
+
+    return (
+        <div className="min-h-screen flex bg-white">
+            {/* Left Side: Signup Form */}
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-20">
+                <div className="w-full max-w-md space-y-8">
+                    <div className="text-center lg:text-left">
+                        <Link to="/" className="inline-block mb-8">
+                            <img src={logo} alt="RealSays" className="h-10 w-auto" />
+                        </Link>
+                        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Create Account</h1>
+                        <p className="text-gray-500 mt-2">Join our global community and start earning.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <button
+                            onClick={handleGoogleSignup}
+                            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-2xl font-semibold text-slate-700 hover:bg-gray-50 transition-all active:scale-[0.98]"
+                        >
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
+                            Join with Google
+                        </button>
+
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center">
+                                <span className="w-full border-t border-gray-100" />
+                            </div>
+                            <div className="relative flex justify-center text-xs uppercase">
+                                <span className="bg-white px-4 text-gray-400 font-medium tracking-widest">Or register with email</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form onSubmit={handleEmailSignup} className="space-y-6">
+                        <div className="space-y-4">
+                            <div className="relative group">
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+                                <input
+                                    type="text"
+                                    placeholder="Full Name"
+                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="relative group">
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+                                <input
+                                    type="email"
+                                    placeholder="Email Address"
+                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="relative group">
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+                                <input
+                                    type="password"
+                                    placeholder="Create Password"
+                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-start gap-3">
+                            <input type="checkbox" className="mt-1 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500/20" required />
+                            <span className="text-sm text-gray-500 leading-relaxed">
+                                I agree to the <Link to="/terms-of-service" className="text-blue-600 font-semibold hover:underline">Terms of Service</Link> and <Link to="/privacy-policy" className="text-blue-600 font-semibold hover:underline">Privacy Policy</Link>.
+                            </span>
+                        </div>
+
+                        {error && (
+                            <div className="bg-red-50 border border-red-100 text-red-600 px-4 py-3 rounded-xl text-sm font-medium">
+                                {error}
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            className="w-full h-14 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-2"
+                        >
+                            Create Account <ShieldCheck className="w-5 h-5" />
+                        </button>
+                    </form>
+
+                    <p className="text-center text-gray-600 font-medium">
+                        Already have an account? {' '}
+                        <Link to="/login" className="text-blue-600 font-bold hover:underline">Log in</Link>
+                    </p>
+                </div>
+            </div>
+
+            {/* Right Side: Visual Banner (Desktop Only) */}
+            <div className="hidden lg:flex lg:w-1/2 bg-blue-600 relative overflow-hidden items-center justify-center p-20">
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-white/10 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-orange-400/20 rounded-full blur-[120px]" />
+                </div>
+
+                <div className="relative z-10 text-center">
+                    <div className="mb-12 relative">
+                        <div className="absolute inset-0 bg-white/20 blur-[60px] rounded-full animate-pulse-slow" />
+                        <img src={panel3} alt="Insights" className="w-[80%] mx-auto relative z-10 drop-shadow-2xl animate-orbital-float-reverse" />
+                    </div>
+                    <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Your Opinion Matters</h2>
+                    <p className="text-blue-100 text-lg max-w-md mx-auto">
+                        Share your insights on the world's leading brands and get rewarded for your valuable time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Signup;
