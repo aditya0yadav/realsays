@@ -5,13 +5,13 @@ const PrivacyPolicy = () => {
         <div className="py-20 lg:py-32 bg-white">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-16">
-                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Privacy Policy</h1>
-                    <p className="text-gray-500 text-lg">Last Updated: February 4, 2026</p>
+                    <h1 className="text-4xl md:text-5xl font-bold text-[#0F1E3A] mb-6 tracking-tight">Privacy Policy</h1>
+                    <p className="text-gray-400 text-lg">Last Updated: February 4, 2026</p>
                 </div>
 
-                <div className="space-y-12 text-gray-700 leading-relaxed text-lg">
+                <div className="space-y-12 text-[#0F1E3A]/70 leading-relaxed text-lg">
                     <section>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-4">1. Information We Collect</h2>
+                        <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">1. Information We Collect</h2>
                         <p>
                             We collect information necessary to provide you with the best survey opportunities. This includes:
                         </p>
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-4">2. How We Use Your Information</h2>
+                        <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">2. How We Use Your Information</h2>
                         <p>
                             Your privacy is our priority. We use your data to:
                         </p>
@@ -36,32 +36,32 @@ const PrivacyPolicy = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-4">3. Data Security</h2>
+                        <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">3. Data Security</h2>
                         <p>
                             We implement industry-standard security measures to protect your personal information from unauthorized access, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-4">4. Sharing Your Information</h2>
+                        <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">4. Sharing Your Information</h2>
                         <p>
                             We never sell your personally identifiable information to third parties for marketing purposes. Your survey responses are typically shared in an anonymized or aggregated format with researchers. We may share information with trusted service providers who assist us in operating our platform.
                         </p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-bold text-slate-900 mb-4">5. Your Rights</h2>
+                        <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">5. Your Rights</h2>
                         <p>
                             You have the right to access, correct, or delete your personal data at any time. You can manage your information directly through your account settings or by contacting our support team.
                         </p>
                     </section>
 
-                    <section className="bg-orange-50 p-8 rounded-2xl border border-orange-100">
-                        <h2 className="text-2xl font-bold text-slate-900 mb-4">6. Contact Us</h2>
-                        <p>
+                    <section className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
+                        <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">6. Contact Us</h2>
+                        <p className="text-[#0F1E3A]/70">
                             If you have concerns about your privacy or data usage, please reach out to:
                         </p>
-                        <p className="font-semibold text-orange-600 mt-2">privacy@realsays.com</p>
+                        <p className="font-semibold text-[#5B6CFF] mt-2">privacy@realsays.com</p>
                     </section>
                 </div>
             </div>

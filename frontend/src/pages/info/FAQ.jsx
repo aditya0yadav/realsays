@@ -35,9 +35,9 @@ const FAQ = () => {
         <div className="py-20 lg:py-32 bg-gray-50/50">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
-                    <h2 className="text-teal-600 font-bold uppercase tracking-widest text-sm mb-4 border-b-2 border-teal-600 inline-block">Support Center</h2>
-                    <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mt-6 tracking-tight">Frequently Asked Questions</h1>
-                    <p className="text-gray-500 text-lg mt-4 font-medium">Everything you need to know about getting the most out of RealSays.</p>
+                    <h2 className="text-[#5B6CFF] font-bold uppercase tracking-widest text-sm mb-4 border-b-2 border-[#5B6CFF] inline-block">Support Center</h2>
+                    <h1 className="text-4xl md:text-5xl font-bold text-[#0F1E3A] mt-6 tracking-tight">Frequently Asked Questions</h1>
+                    <p className="text-[#0F1E3A]/70 text-lg mt-4 font-medium">Everything you need to know about getting the most out of RealSays.</p>
                 </div>
 
                 {/* Search Bar Placeholder */}
@@ -45,7 +45,7 @@ const FAQ = () => {
                     <input
                         type="text"
                         placeholder="Search for answers..."
-                        className="w-full h-16 pl-14 pr-6 rounded-2xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 shadow-sm text-lg transition-all"
+                        className="w-full h-16 pl-14 pr-6 rounded-2xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 shadow-sm text-lg transition-all"
                     />
                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6" />
                 </div>
@@ -55,24 +55,24 @@ const FAQ = () => {
                         <div
                             key={index}
                             className={`rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === index
-                                    ? 'bg-white border-blue-200 shadow-lg'
-                                    : 'bg-white border-gray-100 hover:border-gray-200'
+                                ? 'bg-white border-[#5B6CFF]/30 shadow-lg'
+                                : 'bg-white border-gray-100 hover:border-gray-200'
                                 }`}
                         >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                                 className="w-full px-8 py-6 flex justify-between items-center text-left"
                             >
-                                <span className={`text-lg font-bold ${openIndex === index ? 'text-blue-600' : 'text-slate-900'}`}>
+                                <span className={`text-lg font-bold ${openIndex === index ? 'text-[#5B6CFF]' : 'text-[#0F1E3A]'}`}>
                                     {faq.question}
                                 </span>
-                                {openIndex === index ? <ChevronUp className="text-blue-600 shrink-0" /> : <ChevronDown className="text-gray-400 shrink-0" />}
+                                {openIndex === index ? <ChevronUp className="text-[#5B6CFF] shrink-0" /> : <ChevronDown className="text-gray-400 shrink-0" />}
                             </button>
 
                             {openIndex === index && (
                                 <div className="px-8 pb-8">
                                     <div className="h-[1px] bg-gray-100 mb-6" />
-                                    <p className="text-gray-600 text-lg leading-relaxed">{faq.answer}</p>
+                                    <p className="text-[#0F1E3A]/70 text-lg leading-relaxed">{faq.answer}</p>
                                 </div>
                             )}
                         </div>
@@ -80,9 +80,9 @@ const FAQ = () => {
                 </div>
 
                 <div className="mt-20 text-center p-12 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">Still have questions?</h3>
+                    <h3 className="text-2xl font-bold text-[#0F1E3A] mb-4">Still have questions?</h3>
                     <p className="text-gray-500 mb-8">Can't find the answer you're looking for? Reach out to our friendly support team.</p>
-                    <a href="mailto:support@realsays.com" className="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors inline-block active:scale-95 shadow-lg">
+                    <a href="mailto:support@realsays.com" className="px-8 py-4 bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-blue-500/20 transition-all inline-block active:scale-95 shadow-md">
                         Contact Support
                     </a>
                 </div>

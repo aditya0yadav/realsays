@@ -62,14 +62,14 @@ const Signup = () => {
                         <Link to="/" className="inline-block mb-8">
                             <img src={logo} alt="RealSays" className="h-10 w-auto" />
                         </Link>
-                        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Create Account</h1>
+                        <h1 className="text-3xl font-bold text-[#0F1E3A] tracking-tight">Create Account</h1>
                         <p className="text-gray-500 mt-2">Join our global community and start earning.</p>
                     </div>
 
                     <div className="space-y-4">
                         <button
                             onClick={handleGoogleSignup}
-                            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-2xl font-semibold text-slate-700 hover:bg-gray-50 transition-all active:scale-[0.98]"
+                            className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-2xl font-semibold text-[#0F1E3A] hover:bg-gray-50 transition-all active:scale-[0.98]"
                         >
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
                             Join with Google
@@ -88,33 +88,33 @@ const Signup = () => {
                     <form onSubmit={handleEmailSignup} className="space-y-6">
                         <div className="space-y-4">
                             <div className="relative group">
-                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-[#5B6CFF] transition-colors" />
                                 <input
                                     type="text"
                                     placeholder="Full Name"
-                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:bg-white transition-all"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
                                 />
                             </div>
                             <div className="relative group">
-                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-[#5B6CFF] transition-colors" />
                                 <input
                                     type="email"
                                     placeholder="Email Address"
-                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:bg-white transition-all"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                             </div>
                             <div className="relative group">
-                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-blue-500 transition-colors" />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-[#5B6CFF] transition-colors" />
                                 <input
                                     type="password"
                                     placeholder="Create Password"
-                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:bg-white transition-all"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     required
@@ -123,9 +123,9 @@ const Signup = () => {
                         </div>
 
                         <div className="flex items-start gap-3">
-                            <input type="checkbox" className="mt-1 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500/20" required />
+                            <input type="checkbox" className="mt-1 w-4 h-4 rounded border-gray-300 text-[#5B6CFF] focus:ring-[#5B6CFF]/20" required />
                             <span className="text-sm text-gray-500 leading-relaxed">
-                                I agree to the <Link to="/terms-of-service" className="text-blue-600 font-semibold hover:underline">Terms of Service</Link> and <Link to="/privacy-policy" className="text-blue-600 font-semibold hover:underline">Privacy Policy</Link>.
+                                I agree to the <Link to="/terms-of-service" className="text-[#5B6CFF] font-semibold hover:underline">Terms of Service</Link> and <Link to="/privacy-policy" className="text-[#5B6CFF] font-semibold hover:underline">Privacy Policy</Link>.
                             </span>
                         </div>
 
@@ -137,7 +137,7 @@ const Signup = () => {
 
                         <button
                             type="submit"
-                            className="w-full h-14 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all active:scale-[0.98] shadow-lg flex items-center justify-center gap-2"
+                            className="w-full h-14 bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold rounded-2xl hover:shadow-lg hover:shadow-blue-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
                         >
                             Create Account <ShieldCheck className="w-5 h-5" />
                         </button>
@@ -145,21 +145,21 @@ const Signup = () => {
 
                     <p className="text-center text-gray-600 font-medium">
                         Already have an account? {' '}
-                        <Link to="/login" className="text-blue-600 font-bold hover:underline">Log in</Link>
+                        <Link to="/login" className="text-[#5B6CFF] font-bold hover:underline">Log in</Link>
                     </p>
                 </div>
             </div>
 
             {/* Right Side: Visual Banner (Desktop Only) */}
-            <div className="hidden lg:flex lg:w-1/2 bg-blue-600 relative overflow-hidden items-center justify-center p-20">
+            <div className="hidden lg:flex lg:w-1/2 bg-[#0F1E3A] relative overflow-hidden items-center justify-center p-20">
                 <div className="absolute inset-0 z-0">
-                    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-white/10 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-orange-400/20 rounded-full blur-[120px]" />
+                    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#5B6CFF]/20 rounded-full blur-[120px]" />
+                    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#4FD1E8]/10 rounded-full blur-[120px]" />
                 </div>
 
                 <div className="relative z-10 text-center">
                     <div className="mb-12 relative">
-                        <div className="absolute inset-0 bg-white/20 blur-[60px] rounded-full animate-pulse-slow" />
+                        <div className="absolute inset-0 bg-[#5B6CFF]/20 blur-[60px] rounded-full animate-pulse-slow" />
                         <img src={panel3} alt="Insights" className="w-[80%] mx-auto relative z-10 drop-shadow-2xl animate-orbital-float-reverse" />
                     </div>
                     <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Your Opinion Matters</h2>
