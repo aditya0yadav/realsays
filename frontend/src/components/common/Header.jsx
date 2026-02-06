@@ -12,9 +12,9 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
                 {/* Left Side: Institutional Branding */}
                 <div className="flex items-center">
-                    <Link to="/" className="flex items-center gap-2 text-[#0F1E3A] no-underline hover:opacity-90">
-                        <img src={logo} alt="RealSays" className="h-10 w-auto" />
-                        <span className="hidden sm:inline-block text-gray-400 text-sm font-medium border-l border-gray-200 pl-2 ml-2">
+                    <Link to="/" className="flex items-center gap-3 text-[#0F1E3A] no-underline hover:opacity-90">
+                        <img src={logo} alt="RealSays" className="h-10 w-auto object-contain" />
+                        <span className="hidden sm:inline-block text-gray-400 text-sm font-medium border-l border-gray-200 pl-3 ml-3">
                             Official Research Platform
                         </span>
                     </Link>

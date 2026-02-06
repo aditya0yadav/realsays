@@ -24,7 +24,7 @@ const Signup = () => {
             if (response.data.success) {
                 localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.refreshToken);
-                window.location.href = '/';
+                window.location.href = '/onboarding';
             }
         } catch (error) {
             console.error("Google Auth Error:", error);
@@ -45,7 +45,7 @@ const Signup = () => {
             if (response.data.success) {
                 localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('refreshToken', response.data.refreshToken);
-                window.location.href = '/';
+                window.location.href = '/onboarding';
             }
         } catch (error) {
             console.error("Signup Error:", error);

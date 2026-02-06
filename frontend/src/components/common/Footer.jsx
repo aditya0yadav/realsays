@@ -16,7 +16,7 @@ const Footer = () => {
                     {/* Column 1: Company Info */}
                     <div className="space-y-6">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <img src={logo} alt="RealSays Logo" className="h-10 w-auto brightness-0 invert" />
+                            <img src={logo} alt="RealSays Logo" className="h-12 w-auto brightness-0 invert" />
                         </Link>
                         <p className="text-gray-400 leading-relaxed text-[15px] max-w-xs">
                             RealSays is a premier market research platform connecting voices globally. We empower individuals to monetize their time through meaningful surveys while helping organizations gain verified, actionable insights.

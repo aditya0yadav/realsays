@@ -4,6 +4,7 @@ import { ArrowRight, UserPlus, Search, DollarSign, Trophy, ShieldCheck } from 'l
 import banner from '../../assets/hero_banner.png';
 import panel from "../../assets/panel.png";
 import panel3 from "../../assets/panel3.png";
+import sign from "../../assets/signup.png"
 
 const Hero = () => {
     const [scrollY, setScrollY] = useState(0);
@@ -16,6 +17,33 @@ const Hero = () => {
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const steps = [
+        {
+            icon: <UserPlus />,
+            title: "Quick Sync",
+            desc: "Connect your profile in 60 seconds. High speed, zero friction.",
+            color: "blue"
+        },
+        {
+            icon: <Search />,
+            title: "Smart Match",
+            desc: "Our engine finds high-yield surveys based on your unique DNA.",
+            color: "violet"
+        },
+        {
+            icon: <DollarSign />,
+            title: "Instant Credit",
+            desc: "Watch your balance update in real-time as you finish tasks.",
+            color: "cyan"
+        },
+        {
+            icon: <Trophy />,
+            title: "Direct Payout",
+            desc: "No points, no fluff. Real currency sent to your chosen account.",
+            color: "emerald"
+        }
+    ];
 
     return (
         <>
@@ -180,98 +208,85 @@ const Hero = () => {
                 </div>
             </section>
 
-            {/* Section 2: How It Works - PROFESSIONAL VERSION */}
-            <section id="how-it-works" className="px-[5%] py-24 bg-white relative overflow-hidden">
-                {/* Background Decorations */}
+            {/* Section 2: How It Works - REDESIGNED PREMIUM VERSION */}
+            <section id="how-it-works" className="py-24 px-[5%] bg-slate-50 relative overflow-hidden">
+                {/* Background Decoration */}
                 <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-1/4 -left-20 w-80 h-80 bg-blue-50/50 rounded-full blur-[100px] animate-pulse-slow" />
-                    <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-50/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
+                    <div className="absolute top-1/4 -left-20 w-80 h-80 bg-blue-100/40 rounded-full blur-[100px] animate-pulse-slow" />
+                    <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-cyan-100/30 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
                 </div>
 
-                <div className="max-w-7xl mx-auto w-full relative z-10">
-                    {/* Header Section */}
-                    <div className="text-center mb-20 px-4">
-                        <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tight animate-slide-up opacity-0 uppercase" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#5B6CFF] via-[#4FD1E8]/90 to-[#4FD1E8]">
-                                HOW DOES REALSAYS WORK?
-                            </span>
-                        </h1>
-                        <p className="text-[#0F1E3A]/70 text-lg font-medium animate-fade-in opacity-0" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-                            Earn rewards instantly by sharing your opinions.
-                        </p>
+                <div className="max-w-7xl mx-auto relative z-10">
+                    {/* Header: Premium & Bold */}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                        <div className="max-w-2xl">
+                            <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-blue-50 border border-blue-100">
+                                <span className="text-blue-600 text-xs font-bold uppercase tracking-[0.2em]">Efficiency Protocol</span>
+                            </div>
+                            <h2 className="text-5xl md:text-7xl font-black text-slate-900 leading-[1] tracking-tighter mb-6 uppercase">
+                                THE <span className="text-brand-gradient">PROCESS.</span>
+                            </h2>
+                            <p className="text-xl text-slate-600 font-medium border-l-4 border-blue-500 pl-6 leading-relaxed">
+                                Experience a seamless transition from insight to earnings with our high-speed monetization engine.
+                            </p>
+                        </div>
+                        <div className="hidden md:block">
+                            <div className="w-24 h-24 rounded-3xl bg-white shadow-xl shadow-blue-500/10 border border-blue-50 flex items-center justify-center font-black text-4xl italic text-slate-900 group">
+                                <span className="group-hover:scale-110 transition-transform duration-500">4/4</span>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Steps Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-                        {[
-                            {
-                                icon: <UserPlus className="w-10 h-10 text-[#5B6CFF]" />,
-                                title: "Registration",
-                                desc: "Sign up on RealSays. Join this rapidly growing community today.",
-                                delay: '800ms'
-                            },
-                            {
-                                icon: <Search className="w-10 h-10 text-[#4FD1E8]" />,
-                                title: "Investigation",
-                                desc: "Receive questionnaires based on your profile. We value your interests.",
-                                delay: '1000ms'
-                            },
-                            {
-                                icon: <DollarSign className="w-10 h-10 text-[#5B6CFF]" />,
-                                title: "Salary",
-                                desc: "Earn rewards by filling out online questionnaires with instant payment.",
-                                delay: '1200ms'
-                            },
-                            {
-                                icon: <Trophy className="w-10 h-10 text-[#4FD1E8]" />,
-                                title: "Award",
-                                desc: "Earn rewards by referring friends. Special offers from top brands available.",
-                                delay: '1400ms'
-                            }
-                        ].map((step, idx) => (
+                    {/* Steps Grid: Premium Glass Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {steps.map((step, idx) => (
                             <div
                                 key={idx}
-                                className="group bg-white p-10 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col items-center text-center animate-slide-up opacity-0 hover:-translate-y-2"
-                                style={{ animationDelay: step.delay, animationFillMode: 'forwards' }}
+                                className="group relative bg-white/60 backdrop-blur-xl p-10 rounded-[2.5rem] border border-white shadow-soft transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/10 hover:bg-white"
                             >
-                                <div className="w-24 h-24 bg-blue-50/30 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#5B6CFF] group-hover:shadow-2xl group-hover:shadow-blue-500/30 transition-all duration-500 relative">
-                                    <div className="absolute inset-0 bg-gradient-to-br from-[#5B6CFF] to-[#4FD1E8] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
-                                    <div className="transition-all duration-500 group-hover:scale-110 group-hover:text-white relative z-10">
-                                        {step.icon}
+                                {/* Index Badge */}
+                                <span className="absolute top-6 right-8 font-mono font-black text-blue-500/10 group-hover:text-blue-500/30 text-3xl transition-colors duration-500">
+                                    0{idx + 1}
+                                </span>
+
+                                {/* Icon: Premium Frame */}
+                                {/* <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center mb-8 relative">
+                                    <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl shadow-lg shadow-blue-500/30" />
+                                    <div className="relative z-10 text-blue-600 group-hover:text-white transition-colors duration-500">
+                                        {React.cloneElement(step.icon, { size: 28, strokeWidth: 2.5 })}
                                     </div>
-                                </div>
-                                <h3 className="text-2xl font-bold text-[#0F1E3A] mb-4">{step.title}</h3>
-                                <p className="text-[#0F1E3A]/60 leading-relaxed text-sm">
+                                </div> */}
+
+                                <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tighter">
+                                    {step.title}
+                                </h3>
+                                <p className="text-slate-600 font-medium leading-[1.4] text-[15px]">
                                     {step.desc}
                                 </p>
+
+                                {/* Hover Border Accent */}
+                                <div className="absolute bottom-6 left-10 right-10 h-[3px] bg-brand-gradient opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100 transition-all duration-500 origin-left rounded-full" />
                             </div>
                         ))}
                     </div>
 
-                    {/* Privacy Note - Reference Style (Yellow Banner) */}
-                    <div className="max-w-4xl mx-auto mb-16 animate-fade-in opacity-0 px-4" style={{ animationDelay: '1600ms', animationFillMode: 'forwards' }}>
-                        <div className="bg-[#FFF9C4]/80 backdrop-blur-sm border border-yellow-200 rounded-full py-4 px-10 text-center shadow-sm flex items-center justify-center gap-3">
-                            <ShieldCheck className="w-5 h-5 text-yellow-700" />
-                            <p className="text-[15px] text-[#0F1E3A] font-medium">
-                                <span className="font-bold">P.S.:</span> We will absolutely not leak your personal information or privacy. This is RealSays's promise.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Final CTA */}
-                    <div className="text-center animate-fade-in opacity-0" style={{ animationDelay: '1800ms', animationFillMode: 'forwards' }}>
+                    {/* Final CTA: Premium & Energized */}
+                    <div className="mt-20 flex flex-col items-center">
                         <Link
                             to="/signup"
-                            className="inline-flex items-center justify-center px-12 py-5 rounded-full bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold text-xl hover:shadow-2xl hover:shadow-blue-500/40 transition-all active:scale-95 group"
+                            className="group relative inline-flex items-center gap-4 bg-slate-900 text-white px-12 py-6 rounded-full text-xl font-bold shadow-2xl shadow-slate-900/20 hover:scale-105 hover:bg-blue-600 transition-all duration-300"
                             style={{ textDecoration: 'none' }}
                         >
-                            JOIN NOW
-                            <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+                            <span className="relative z-10">Start Your Journey</span>
+                            <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+                            <ArrowRight strokeWidth={3} className="relative z-10 group-hover:translate-x-2 transition-transform duration-300" />
                         </Link>
+                        <p className="mt-8 font-bold text-xs uppercase tracking-[0.3em] text-slate-400">
+                            Immediate Deployment Ready
+                        </p>
                     </div>
                 </div>
             </section>
-
             {/* Section 3: Paid Community */}
             <section className="px-[5%] py-24 bg-gradient-to-br from-orange-50/50 via-white to-blue-50/30 relative overflow-hidden">
                 {/* Background Decorations */}
