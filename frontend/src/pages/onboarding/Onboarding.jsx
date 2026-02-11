@@ -12,133 +12,307 @@ import {
     Briefcase,
     Calendar,
     Users,
-    ArrowRight
+    ArrowRight,
+    ChevronLeft,
+    ChevronDown
 } from 'lucide-react';
+
+import personaService from '../../services/persona.service';
 
 const Onboarding = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(0);
     const [animationPhase, setAnimationPhase] = useState('star'); // 'star' -> 'content'
     const [answers, setAnswers] = useState({});
+    const [questions, setQuestions] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [isFinalizing, setIsFinalizing] = useState(false);
 
-    const questions = [
-        {
-            id: 'gender',
-            question: "How should we address you?",
-            options: [
-                { label: 'Male', value: 'male', icon: <User className="w-5 h-5" /> },
-                { label: 'Female', value: 'female', icon: <User className="w-5 h-5" /> },
-                { label: 'Other', value: 'other', icon: <Sparkles className="w-5 h-5" /> }
-            ]
-        },
-        {
-            id: 'age',
-            question: "In which orbit is your age?",
-            options: [
-                { label: 'Gen Z (18-24)', value: '18-24', icon: <Calendar className="w-5 h-5" /> },
-                { label: 'Millennial (25-34)', value: '25-34', icon: <Calendar className="w-5 h-5" /> },
-                { label: 'Prime (35+)', value: '35+', icon: <Briefcase className="w-5 h-5" /> }
-            ]
-        },
-        {
-            id: 'maritalStatus',
-            question: "What's your current life status?",
-            options: [
-                { label: 'Single', value: 'single', icon: <Heart className="w-5 h-5" /> },
-                { label: 'Married', value: 'married', icon: <Users className="w-5 h-5" /> },
-                { label: 'Private', value: 'private', icon: <User className="w-5 h-5" /> }
-            ]
-        }
-    ];
+    const iconMap = {
+        gender: <User className="w-5 h-5" />,
+        age: <Calendar className="w-5 h-5" />,
+        marital_status: <Heart className="w-5 h-5" />,
+        country: <Compass className="w-5 h-5" />,
+        zip_code: <Home className="w-5 h-5" />,
+        default: <Sparkles className="w-5 h-5" />
+    };
+
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            console.log('Onboarding: Starting to fetch questions...');
+            try {
+                const response = await personaService.getQuestions();
+                console.log('Onboarding: Fetch response:', response);
+                if (response.success) {
+                    console.log(`Onboarding: Found ${response.data.length} questions`);
+                    const demographicKeys = ['gender', 'age', 'marital_status', 'country', 'zip_code']; // Included zip_code
+                    const filtered = response.data
+                        .filter(q => demographicKeys.includes(q.key))
+                        .map(q => ({
+                            id: q.key,
+                            question: q.title,
+                            type: q.type,
+                            options: q.options ? q.options.map(opt => ({
+                                label: opt,
+                                value: opt,
+                                icon: iconMap[q.key] || iconMap.default
+                            })) : (q.type === 'boolean' ? [
+                                { label: 'Yes', value: true, icon: <CheckCircle2 className="w-5 h-5" /> },
+                                { label: 'No', value: false, icon: <Sparkles className="w-5 h-5" /> }
+                            ] : null) // Return null if no predefined options and not boolean
+                        }));
+
+                    console.log('Onboarding: Filtered questions:', filtered);
+                    setQuestions(filtered);
+                } else {
+                    console.warn('Onboarding: Response success was false');
+                }
+            } catch (error) {
+                console.error('Onboarding: Failed to fetch onboarding questions:', error);
+            } finally {
+                console.log('Onboarding: Setting loading to false');
+                setLoading(false);
+            }
+        };
+
+        fetchQuestions();
+    }, []);
+
+    const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         setAnimationPhase('star');
         const timer = setTimeout(() => setAnimationPhase('content'), 400);
+        setInputValue(''); // Reset input value on step change
+        setShowDropdown(false); // Reset dropdown on step change
         return () => clearTimeout(timer);
     }, [step]);
 
-    const handleOptionSelect = (option) => {
+    const handleOptionSelect = async (option) => {
         const currentId = questions[step].id;
-        setAnswers(prev => ({ ...prev, [currentId]: option.value }));
+        const value = option.value;
+        submitResponse(currentId, value);
+    };
+
+    const handleInputSubmit = (e) => {
+        e.preventDefault();
+        if (!inputValue.trim()) return;
+        const currentId = questions[step].id;
+        submitResponse(currentId, inputValue.trim());
+    };
+
+    const handleBack = () => {
+        if (step > 0) {
+            setStep(prev => prev - 1);
+        }
+    };
+
+    const submitResponse = async (id, value) => {
+        const newAnswers = { ...answers, [id]: value };
+        setAnswers(newAnswers);
 
         if (step < questions.length - 1) {
             setStep(prev => prev + 1);
         } else {
-            setTimeout(() => navigate('/dashboard'), 800);
+            setIsFinalizing(true);
+            try {
+                // Save all answers to backend
+                await personaService.updateProfile(newAnswers);
+
+                // Longer delay for the final component transition as requested
+                setTimeout(() => navigate('/dashboard'), 2500);
+            } catch (error) {
+                console.error('Failed to save profile on onboarding:', error);
+                setTimeout(() => navigate('/dashboard'), 1500);
+            }
         }
     };
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-white">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                    className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
+                />
+            </div>
+        );
+    }
+
+    if (questions.length === 0) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-white p-8 space-y-4">
+                <Sparkles className="w-12 h-12 text-blue-500/50" />
+                <h1 className="text-2xl font-bold text-slate-900">Setting up your profile...</h1>
+                <p className="text-slate-500 text-center max-w-md">
+                    We're preparing your onboarding questions. This usually takes just a moment.
+                </p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all"
+                >
+                    Refresh Page
+                </button>
+            </div>
+        );
+    }
+
+    const currentQuestion = questions[step];
+    const isTextInput = !currentQuestion.options || currentQuestion.options.length === 0;
+    const isDropdown = currentQuestion.options && currentQuestion.options.length > 6;
+
     return (
         <div className="min-h-screen bg-white text-slate-900 flex flex-col lg:flex-row font-sans overflow-hidden relative">
+            {/* Top Bar for Back Button */}
+            <div className="absolute top-8 left-8 z-50">
+                {step > 0 && (
+                    <motion.button
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        onClick={handleBack}
+                        className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-all border border-slate-100"
+                    >
+                        <ChevronLeft className="w-4 h-4" />
+                        <span className="text-sm font-semibold">Back</span>
+                    </motion.button>
+                )}
+            </div>
 
             {/* Left Side: Question Logic */}
             <div className="w-full lg:w-[45%] flex flex-col p-8 lg:px-12 lg:py-24 relative z-20 bg-white">
                 <div className="flex-1 flex flex-col justify-center max-w-lg mx-auto w-full">
 
                     <AnimatePresence mode="wait">
-                        <motion.div
-                            key={step}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="space-y-12"
-                        >
-                            <h1 className="text-4xl lg:text-5xl font-sans font-[300] text-slate-900 leading-[1.3] tracking-[-0.02em] text-center">
-                                {questions[step].question.split('').map((char, i) => (
-                                    <motion.span
-                                        key={i}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: animationPhase === 'content' ? 1 : 0 }}
-                                        transition={{ delay: i * 0.01 }}
-                                    >
-                                        {char}
-                                    </motion.span>
-                                ))}
-                            </h1>
-
+                        {isProcessing ? (
                             <motion.div
-                                className="grid grid-cols-1 gap-4 w-full max-w-sm mx-auto"
-                                initial="hidden"
-                                animate={animationPhase === 'content' ? "visible" : "hidden"}
-                                variants={{
-                                    visible: {
-                                        transition: {
-                                            staggerChildren: 0.1,
-                                            delayChildren: 0.5 // Wait for question to partially type
-                                        }
-                                    }
-                                }}
+                                key="processing"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 1.1 }}
+                                className="flex flex-col items-center justify-center space-y-6 py-20"
                             >
-                                {questions[step].options.map((option, idx) => (
-                                    <motion.button
-                                        key={option.value}
-                                        variants={{
-                                            hidden: { opacity: 0, y: 50 },
-                                            visible: {
-                                                opacity: 1,
-                                                y: 50,
-                                                transition: {
-                                                    type: "spring",
-                                                    stiffness: 120,
-                                                    damping: 20,
-                                                    mass: 0.8
-                                                }
-                                            }
-                                        }}
-                                        onClick={() => handleOptionSelect(option)}
-                                        className="group flex items-center justify-between p-5 rounded-2xl border border-slate-100 bg-slate-50/30 hover:bg-white hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-[border-color,background-color,box-shadow,transform] duration-300"
-                                    >
-                                        <div className="flex items-center gap-5">
-                                            <div className="w-10 h-10 rounded-xl bg-white border border-slate-50 flex items-center justify-center text-blue-500/80 group-hover:text-blue-600 transition-colors">
-                                                {option.icon}
-                                            </div>
-                                            <span className="text-[17px] font-[400] text-slate-700 font-sans tracking-tight">{option.label}</span>
-                                        </div>
-                                        <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
-                                    </motion.button>
-                                ))}
+                                <div className="relative">
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                                        className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full"
+                                    />
+                                    <Sparkles className="absolute inset-0 m-auto w-6 h-6 text-blue-500 animate-pulse" />
+                                </div>
+                                <div className="space-y-2 text-center">
+                                    <h2 className="text-2xl font-semibold text-slate-800 tracking-tight">
+                                        {isFinalizing ? "Finishing Setup..." : "Synchronizing..."}
+                                    </h2>
+                                    <p className="text-slate-400 font-medium tracking-wide text-sm uppercase">
+                                        {isFinalizing ? "Preparing your dashboard" : "Aligning your profile"}
+                                    </p>
+                                </div>
                             </motion.div>
-                        </motion.div>
+                        ) : (
+                            <motion.div
+                                key={step}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="space-y-12"
+                            >
+                                <h1 className="text-4xl lg:text-5xl font-sans font-[300] text-slate-900 leading-[1.3] tracking-[-0.02em] text-center">
+                                    {currentQuestion.question.split('').map((char, i) => (
+                                        <motion.span
+                                            key={i}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: animationPhase === 'content' ? 1 : 0 }}
+                                            transition={{ delay: i * 0.01 }}
+                                        >
+                                            {char}
+                                        </motion.span>
+                                    ))}
+                                </h1>
+
+                                <motion.div
+                                    className="w-full max-w-sm mx-auto"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={animationPhase === 'content' ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                                    transition={{ delay: 0.8, duration: 0.4 }}
+                                >
+                                    {isTextInput ? (
+                                        <motion.form
+                                            onSubmit={handleInputSubmit}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className="space-y-4"
+                                        >
+                                            <input
+                                                type="text"
+                                                autoFocus
+                                                value={inputValue}
+                                                onChange={(e) => setInputValue(e.target.value)}
+                                                placeholder="Type your answer here..."
+                                                className="w-full p-5 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-lg outline-none"
+                                            />
+                                            <button
+                                                type="submit"
+                                                className="w-full p-5 rounded-2xl bg-blue-600 text-white font-semibold hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 transition-all flex items-center justify-center gap-2"
+                                            >
+                                                Next <ArrowRight className="w-5 h-5" />
+                                            </button>
+                                        </motion.form>
+                                    ) : isDropdown ? (
+                                        <div className="space-y-4">
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="relative group"
+                                            >
+                                                <div className="absolute inset-0 bg-blue-500/5 blur-xl group-hover:bg-blue-500/10 transition-colors rounded-3xl" />
+                                                <div className="relative bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-3xl p-1 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+                                                    <div className="max-h-[360px] overflow-y-auto custom-scrollbar p-1 space-y-1">
+                                                        {currentQuestion.options.map((option) => (
+                                                            <button
+                                                                key={option.value}
+                                                                onClick={() => handleOptionSelect(option)}
+                                                                className="w-full flex items-center justify-between p-4 bg-transparent hover:bg-blue-50/50 rounded-2xl transition-all duration-300 group/item"
+                                                            >
+                                                                <div className="flex items-center gap-4">
+                                                                    <div className="w-10 h-10 rounded-xl bg-white border border-slate-100 flex items-center justify-center text-blue-500 shadow-sm group-hover/item:scale-110 group-hover/item:text-blue-600 transition-all">
+                                                                        {option.icon}
+                                                                    </div>
+                                                                    <span className="font-semibold text-slate-700 group-hover/item:text-blue-600 transition-colors uppercase tracking-tight text-sm">
+                                                                        {option.label}
+                                                                    </span>
+                                                                </div>
+                                                                <ArrowRight className="w-4 h-4 text-slate-300 group-hover/item:text-blue-600 group-hover/item:translate-x-1 transition-all opacity-0 group-hover/item:opacity-100" />
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        </div>
+                                    ) : (
+                                        <div className="grid grid-cols-1 gap-4">
+                                            {currentQuestion.options.map((option, idx) => (
+                                                <button
+                                                    key={option.value}
+                                                    onClick={() => handleOptionSelect(option)}
+                                                    className="group flex items-center justify-between p-5 rounded-2xl border border-slate-100 bg-slate-50/30 hover:bg-white hover:border-blue-100 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
+                                                >
+                                                    <div className="flex items-center gap-5">
+                                                        <div className="w-10 h-10 rounded-xl bg-white border border-slate-50 flex items-center justify-center text-blue-500/80 group-hover:text-blue-600 transition-colors">
+                                                            {option.icon}
+                                                        </div>
+                                                        <span className="text-[17px] font-[400] text-slate-700 font-sans tracking-tight">{option.label}</span>
+                                                    </div>
+                                                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </motion.div>
+                            </motion.div>
+                        )}
                     </AnimatePresence>
                 </div>
             </div>
@@ -226,7 +400,7 @@ const Onboarding = () => {
                             <span className="w-1 h-1 bg-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
                         </div>
                         <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em]">
-                            {animationPhase === 'star' ? 'Active Thinking' : 'Synchronized'}
+                            {isProcessing ? 'Processing Data' : (animationPhase === 'star' ? 'Active Thinking' : 'Synchronized')}
                         </span>
                     </div>
                 </div>

@@ -249,14 +249,6 @@ const Hero = () => {
                                     0{idx + 1}
                                 </span>
 
-                                {/* Icon: Premium Frame */}
-                                {/* <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-cyan-50 flex items-center justify-center mb-8 relative">
-                                    <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl shadow-lg shadow-blue-500/30" />
-                                    <div className="relative z-10 text-blue-600 group-hover:text-white transition-colors duration-500">
-                                        {React.cloneElement(step.icon, { size: 28, strokeWidth: 2.5 })}
-                                    </div>
-                                </div> */}
-
                                 <h3 className="text-2xl font-black text-slate-900 mb-4 tracking-tighter">
                                     {step.title}
                                 </h3>

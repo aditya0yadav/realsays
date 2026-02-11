@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Lock, User, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, ShieldCheck } from 'lucide-react';
 import { auth, googleProvider } from '../../config/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import api from '../../api/axios';

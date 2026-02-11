@@ -10,8 +10,6 @@ if (Object.keys(serviceAccount).length > 0) {
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
     });
-} else {
-    console.warn("Firebase Admin: FIREBASE_SERVICE_ACCOUNT not found. Google Auth verification will not work.");
 }
 
 module.exports = admin;

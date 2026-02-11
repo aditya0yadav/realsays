@@ -3,11 +3,12 @@ const admin = require('../../config/firebaseAdmin');
 
 const register = async (req, res, next) => {
     try {
-        const user = await authService.register(req.body);
+        const userAgent = req.headers['user-agent'];
+        const result = await authService.register(req.body, userAgent);
         res.status(201).json({
             success: true,
             message: 'User registered successfully',
-            userId: user.id
+            ...result
         });
     } catch (error) {
         next(error);

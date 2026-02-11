@@ -2,7 +2,7 @@ const { User, Panelist, RefreshToken } = require('../../models');
 const { hashPassword, comparePassword } = require('../../utils/passwordHash');
 const { generateAccessToken, generateRefreshToken } = require('../../utils/tokenGenerator');
 
-const register = async (userData) => {
+const register = async (userData, userAgent) => {
     // Check if user exists
     const existingUser = await User.findOne({ where: { email: userData.email } });
     if (existingUser) {
@@ -19,17 +19,44 @@ const register = async (userData) => {
         role: userData.role || 'panelist'
     });
 
+    let panelist = null;
     // Create Panelist profile if role is panelist
     if (user.role === 'panelist') {
-        await Panelist.create({
+        panelist = await Panelist.create({
             user_id: user.id,
-            first_name: userData.firstName,
-            last_name: userData.lastName,
+            first_name: userData.name ? userData.name.split(' ')[0] : 'User',
+            last_name: userData.name ? userData.name.split(' ').slice(1).join(' ') : '',
             country_code: userData.countryCode
         });
     }
 
-    return user;
+    // Generate tokens for immediate login
+    const panelistId = panelist ? panelist.id : null;
+    const accessToken = generateAccessToken(user, panelistId);
+    const refreshTokenString = generateRefreshToken();
+
+    // Store refresh token
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7); // 7 days
+
+    await RefreshToken.create({
+        user_id: user.id,
+        token: refreshTokenString,
+        expires_at: expiresAt,
+        user_agent: userAgent
+    });
+
+    return {
+        user: {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+            firstName: panelist ? panelist.first_name : null,
+            lastName: panelist ? panelist.last_name : null
+        },
+        accessToken,
+        refreshToken: refreshTokenString
+    };
 };
 
 const login = async (email, password, userAgent) => {

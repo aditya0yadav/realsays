@@ -1,5 +1,3 @@
-import React from 'react';
-import { motion } from 'framer-motion';
 import {
     DollarSign,
     Activity,
@@ -28,7 +26,6 @@ const HomeTab = () => {
 
     return (
         <div className="space-y-8">
-            {/* Welcome Section */}
             <div className="space-y-1">
                 <h1 className="text-4xl font-sans font-[300] tracking-tight text-slate-900">
                     Welcome back, <span className="text-blue-600 font-[400]">{user?.name || 'Explorer'}</span>
@@ -36,7 +33,6 @@ const HomeTab = () => {
                 <p className="text-slate-400 font-[400]">System Status: <span className="text-blue-500 font-bold uppercase text-[10px] tracking-widest ml-1">Optimal</span></p>
             </div>
 
-            {/* Bento Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat, idx) => (
                     <div
@@ -59,7 +55,6 @@ const HomeTab = () => {
                     </div>
                 ))}
 
-                {/* Large Chart Card */}
                 <div
                     className="col-span-1 md:col-span-2 lg:col-span-3 p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm shadow-blue-500/5 relative overflow-hidden"
                 >
@@ -97,7 +92,6 @@ const HomeTab = () => {
                     </div>
                 </div>
 
-                {/* Recent Activity Card */}
                 <div
                     className="p-8 rounded-[2rem] bg-white border border-slate-100 shadow-sm shadow-blue-500/5 flex flex-col"
                 >

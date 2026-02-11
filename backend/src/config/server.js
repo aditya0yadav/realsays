@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const app = require('../app');
 
 const { connectDB } = require('./database');
@@ -9,9 +9,11 @@ const startServer = async () => {
     try {
         await connectDB();
 
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-            console.log(`Environment: ${process.env.NODE_ENV}`);
+        app.listen(PORT, async () => {
+
+            // Start the fetching process only after server is bound and DB is ready
+            const { initializeSurveyService } = require('../modules/survey/services/survey.service');
+            initializeSurveyService().catch(err => console.error('Failed to initialize survey service:', err));
         });
     } catch (error) {
         console.error('Failed to start server:', error);

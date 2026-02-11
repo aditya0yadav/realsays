@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api', // Backend hosted on port 3000
+    baseURL: 'http://localhost:5000/api', // Backend hosted on port 5000
     headers: {
         'Content-Type': 'application/json',
     },
@@ -36,7 +36,7 @@ api.interceptors.response.use(
                 }
 
                 // Call refresh endpoint
-                const { data } = await axios.post('http://localhost:3000/api/auth/refresh', {
+                const { data } = await axios.post('http://localhost:5000/api/auth/refresh', {
                     refreshToken,
                 });
 
