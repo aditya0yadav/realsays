@@ -1,5 +1,5 @@
 {
-  "lastFetched": 1770804887511,
+  "lastFetched": 1770925225298,
   "count": 20,
   "data": [
     {
@@ -144,20 +144,6 @@
         "studyType": "B2B",
         "projectBrief": "Age 25-65 Y.O; HRDMs in any industry & company size in given zips",
         "vAPICPC": "6.00"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 20,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
-          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":44}",
-          "Mismatch for age: user has \"25\", expected {\"min\":45,\"max\":54}",
-          "Mismatch for age: user has \"25\", expected {\"min\":55,\"max\":64}",
-          "Mismatch for age: user has \"25\", expected {\"min\":65,\"max\":99}",
-          "Missing attribute: job_title",
-          "Missing attribute: b2b_department",
-          "Missing attribute: employment_industry"
-        ]
       }
     },
     {
@@ -290,19 +276,6 @@
         "studyType": "B2C",
         "projectBrief": "a blend of home owners and gen pop audience aged 18+ residing in Denver.",
         "vAPICPC": "1.20"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 30,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
-          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":44}",
-          "Mismatch for age: user has \"25\", expected {\"min\":45,\"max\":54}",
-          "Mismatch for age: user has \"25\", expected {\"min\":55,\"max\":64}",
-          "Mismatch for age: user has \"25\", expected {\"min\":65,\"max\":99}",
-          "Missing attribute: living_status",
-          "Missing attribute: state"
-        ]
       }
     },
     {
@@ -391,7 +364,7 @@
         }
       ],
       "quota": {
-        "required": 130,
+        "required": 119,
         "remaining": 0
       },
       "status": "active",
@@ -400,7 +373,7 @@
         "parentID": "0",
         "clientID": "153",
         "surveyCPI": "1.20",
-        "surveyTargetCount": 130,
+        "surveyTargetCount": 119,
         "LOI": "10",
         "IR": "60",
         "countrieISOcode": "KR",
@@ -410,18 +383,89 @@
         "studyType": "B2C",
         "projectBrief": "Smartphone owners, GenPop aged 18+",
         "vAPICPC": "1.20"
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerSurveyId": "125640",
+      "title": "male and female aged 41-50",
+      "payout": 1.5,
+      "duration": "15 mins",
+      "qualifications": [
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 24
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 25,
+          "max": 40
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 45,
+          "max": 50
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 65,
+          "max": 99
+        },
+        {
+          "key": "annual_hhi",
+          "type": "list",
+          "allowed_values": [
+            "annual_hhi_002339",
+            "annual_hhi_002340",
+            "annual_hhi_002341",
+            "annual_hhi_002342",
+            "annual_hhi_002343",
+            "annual_hhi_002344",
+            "annual_hhi_002345",
+            "annual_hhi_002346",
+            "annual_hhi_002347",
+            "annual_hhi_002348",
+            "annual_hhi_002349",
+            "annual_hhi_002350",
+            "annual_hhi_002351",
+            "annual_hhi_002352",
+            "annual_hhi_002353"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 17,
+        "remaining": 0
       },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 25,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
-          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":44}",
-          "Mismatch for age: user has \"25\", expected {\"min\":45,\"max\":54}",
-          "Mismatch for gender: user has \"gender_001\", expected [\"gender_002\"]",
-          "Missing attribute: mobilephone_user",
-          "Missing attribute: cell_type"
-        ]
+      "status": "active",
+      "raw_data": {
+        "surveyID": "125640",
+        "parentID": "0",
+        "clientID": "153",
+        "surveyCPI": "1.50",
+        "surveyTargetCount": 17,
+        "LOI": "15",
+        "IR": "29",
+        "countrieISOcode": "SG",
+        "languageCode": "en",
+        "languageCountryCode": "en-SG",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "male and female aged 41-50",
+        "vAPICPC": "0.00"
       }
     },
     {
@@ -578,17 +622,6 @@
         "studyType": "B2C",
         "projectBrief": "",
         "vAPICPC": "0.37"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 16.666666666666664,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":29,\"max\":60}",
-          "Mismatch for ethnicity: user has \"No\", expected [\"ethnicity_0010\",\"ethnicity_0011\",\"ethnicity_0012\",\"ethnicity_0013\",\"ethnicity_0014\",\"ethnicity_0015\",\"ethnicity_0016\",\"ethnicity_003\",\"ethnicity_004\",\"ethnicity_005\",\"ethnicity_006\",\"ethnicity_007\",\"ethnicity_008\",\"ethnicity_009\"]",
-          "Mismatch for race: user has \"White\", expected [\"race_00295\",\"race_00296\",\"race_00297\",\"race_00298\",\"race_00299\",\"race_00300\",\"race_00301\",\"race_00302\",\"race_00303\",\"race_00304\",\"race_00305\",\"race_00306\",\"race_00307\",\"race_00308\",\"race_00309\",\"race_00310\"]",
-          "Missing attribute: b2b_industry",
-          "Mismatch for annual_hhi: user has \"annual_hhi_002343\", expected [\"annual_hhi_002349\",\"annual_hhi_002350\",\"annual_hhi_002351\",\"annual_hhi_002352\",\"annual_hhi_002353\",\"annual_hhi_002354\"]"
-        ]
       }
     },
     {
@@ -759,19 +792,6 @@
         "studyType": "B2C",
         "projectBrief": "Gen Pop",
         "vAPICPC": "1.20"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 12.5,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":45}",
-          "Mismatch for age: user has \"25\", expected {\"min\":46,\"max\":54}",
-          "Mismatch for age: user has \"25\", expected {\"min\":55,\"max\":64}",
-          "Mismatch for gender: user has \"gender_001\", expected [\"gender_002\"]",
-          "Missing attribute: state",
-          "Missing attribute: region",
-          "Missing attribute: ethnic_identity_2"
-        ]
       }
     },
     {
@@ -879,15 +899,6 @@
         "studyType": "B2C",
         "projectBrief": "Gen Pop",
         "vAPICPC": "0.00"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 40,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
-          "Mismatch for gender: user has \"gender_001\", expected [\"gender_002\"]",
-          "Missing attribute: state"
-        ]
       }
     },
     {
@@ -1002,16 +1013,6 @@
         "studyType": "B2C",
         "projectBrief": "Gen Pop",
         "vAPICPC": "0.00"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 42.857142857142854,
-        "failedReasons": [
-          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
-          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":44}",
-          "Mismatch for age: user has \"25\", expected {\"min\":45,\"max\":54}",
-          "Missing attribute: state"
-        ]
       }
     },
     {
@@ -1098,14 +1099,6 @@
         "studyType": "B2C",
         "projectBrief": "",
         "vAPICPC": "0.21"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 50,
-        "failedReasons": [
-          "Mismatch for ethnicity: user has \"No\", expected [\"ethnicity_0010\",\"ethnicity_0011\",\"ethnicity_0012\",\"ethnicity_0013\",\"ethnicity_0014\",\"ethnicity_0015\",\"ethnicity_0016\",\"ethnicity_003\",\"ethnicity_004\",\"ethnicity_005\",\"ethnicity_006\",\"ethnicity_007\",\"ethnicity_008\",\"ethnicity_009\"]",
-          "Mismatch for race: user has \"White\", expected [\"race_00295\",\"race_00296\",\"race_00297\",\"race_00298\",\"race_00299\",\"race_00300\",\"race_00301\",\"race_00302\",\"race_00303\",\"race_00304\",\"race_00305\",\"race_00306\",\"race_00307\",\"race_00308\",\"race_00309\",\"race_00310\"]"
-        ]
       }
     },
     {
@@ -1150,60 +1143,6 @@
         "studyType": "B2C",
         "projectBrief": "",
         "vAPICPC": "0.11"
-      },
-      "auditMatch": {
-        "isMatch": true,
-        "score": 100,
-        "failedReasons": []
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126384",
-      "title": "No Description available",
-      "payout": 0.18,
-      "duration": "20 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 590,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126384",
-        "parentID": "0",
-        "clientID": "1863",
-        "surveyCPI": "0.18",
-        "surveyTargetCount": 590,
-        "LOI": "20",
-        "IR": "50",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2C",
-        "projectBrief": "",
-        "vAPICPC": "0.18"
-      },
-      "auditMatch": {
-        "isMatch": true,
-        "score": 100,
-        "failedReasons": []
       }
     },
     {
@@ -1272,18 +1211,18 @@
         }
       ],
       "quota": {
-        "required": 971,
+        "required": 1170,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758023524,
         "Name": "1758023523",
-        "TotalCompleteRequired": 971,
+        "TotalCompleteRequired": 1170,
         "CPI": 1,
         "LOI": 11,
         "IR": 83,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-11T22:31:51.000Z",
@@ -1294,15 +1233,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_AGE_AND_GENDER_OF_CHILD"
-        ]
       }
     },
     {
@@ -1371,18 +1303,18 @@
         }
       ],
       "quota": {
-        "required": 948,
+        "required": 1148,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758050906,
         "Name": "1758050905",
-        "TotalCompleteRequired": 948,
+        "TotalCompleteRequired": 1148,
         "CPI": 1,
         "LOI": 11,
         "IR": 86,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-11T22:54:05.000Z",
@@ -1393,15 +1325,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_AGE_AND_GENDER_OF_CHILD"
-        ]
       }
     },
     {
@@ -1480,18 +1405,18 @@
         }
       ],
       "quota": {
-        "required": 475,
+        "required": 670,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758144892,
         "Name": "1758144891",
-        "TotalCompleteRequired": 475,
+        "TotalCompleteRequired": 670,
         "CPI": 1.3,
         "LOI": 9,
         "IR": 72,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T00:27:13.000Z",
@@ -1502,16 +1427,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 50,
-        "failedReasons": [
-          "Missing attribute: STANDARD_PRIMARY_DECISION_MAKER",
-          "Missing attribute: STANDARD_AGE_AND_GENDER_OF_CHILD"
-        ]
       }
     },
     {
@@ -1572,18 +1489,18 @@
         }
       ],
       "quota": {
-        "required": 853,
+        "required": 993,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758153949,
         "Name": "1758150367",
-        "TotalCompleteRequired": 853,
+        "TotalCompleteRequired": 993,
         "CPI": 0.9,
         "LOI": 9,
         "IR": 88,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T00:34:08.000Z",
@@ -1594,15 +1511,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_HHI_US"
-        ]
       }
     },
     {
@@ -1671,18 +1581,18 @@
         }
       ],
       "quota": {
-        "required": 894,
+        "required": 1094,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758176898,
         "Name": "1758176897",
-        "TotalCompleteRequired": 894,
+        "TotalCompleteRequired": 1094,
         "CPI": 1.1,
         "LOI": 12,
         "IR": 82,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T00:54:08.000Z",
@@ -1693,15 +1603,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_AGE_AND_GENDER_OF_CHILD"
-        ]
       }
     },
     {
@@ -1762,18 +1665,18 @@
         }
       ],
       "quota": {
-        "required": 883,
+        "required": 1083,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758341246,
         "Name": "1758337949",
-        "TotalCompleteRequired": 883,
+        "TotalCompleteRequired": 1083,
         "CPI": 0.95,
         "LOI": 9,
         "IR": 85,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T03:34:18.000Z",
@@ -1784,15 +1687,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_HHI_US"
-        ]
       }
     },
     {
@@ -1861,18 +1757,18 @@
         }
       ],
       "quota": {
-        "required": 929,
+        "required": 1129,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758608888,
         "Name": "1758608887",
-        "TotalCompleteRequired": 929,
+        "TotalCompleteRequired": 1129,
         "CPI": 1,
         "LOI": 10,
         "IR": 84,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T08:14:27.000Z",
@@ -1883,15 +1779,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_AGE_AND_GENDER_OF_CHILD"
-        ]
       }
     },
     {
@@ -1960,18 +1849,18 @@
         }
       ],
       "quota": {
-        "required": 966,
+        "required": 1166,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758669755,
         "Name": "1758669754",
-        "TotalCompleteRequired": 966,
+        "TotalCompleteRequired": 1166,
         "CPI": 1,
         "LOI": 12,
         "IR": 85,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T09:14:29.000Z",
@@ -1982,15 +1871,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_AGE_AND_GENDER_OF_CHILD"
-        ]
       }
     },
     {
@@ -2051,18 +1933,18 @@
         }
       ],
       "quota": {
-        "required": 946,
+        "required": 1146,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758791122,
         "Name": "1758791121",
-        "TotalCompleteRequired": 946,
+        "TotalCompleteRequired": 1146,
         "CPI": 1,
         "LOI": 9,
         "IR": 83,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T11:14:32.000Z",
@@ -2073,15 +1955,8 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_HHI_US"
-        ]
       }
     },
     {
@@ -2142,18 +2017,18 @@
         }
       ],
       "quota": {
-        "required": 969,
+        "required": 1169,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758835820,
         "Name": "1758835512",
-        "TotalCompleteRequired": 969,
+        "TotalCompleteRequired": 1169,
         "CPI": 0.95,
         "LOI": 9,
         "IR": 86,
-        "LastUpdateTimeStamp": "2026-02-10T11:58:42.000Z",
+        "LastUpdateTimeStamp": "2026-02-12T14:25:42.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
         "SurveyEndDate": "2026-02-12T11:54:32.000Z",
@@ -2164,17 +2039,10 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-10T11:58:42.000Z",
+        "SurveyCreatedAt": "2026-02-12T00:00:00.000Z",
         "status": "Live"
-      },
-      "auditMatch": {
-        "isMatch": false,
-        "score": 66.66666666666666,
-        "failedReasons": [
-          "Missing attribute: STANDARD_HHI_US"
-        ]
       }
     }
   ],
-  "auditTimestamp": "2026-02-11T10:14:47.882Z"
+  "auditTimestamp": "2026-02-12T19:40:25.298Z"
 }

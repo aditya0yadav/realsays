@@ -13,6 +13,7 @@ const startServer = async () => {
 
             // Start the fetching process only after server is bound and DB is ready
             const { initializeSurveyService } = require('../modules/survey/services/survey.service');
+            require('../modules/survey/services/survey.worker'); // Start the worker
             initializeSurveyService().catch(err => console.error('Failed to initialize survey service:', err));
         });
     } catch (error) {

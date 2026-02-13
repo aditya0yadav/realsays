@@ -4,7 +4,11 @@ const { fetchPollsOpinionSurveys } = require('../integrations/pollsopinion');
 const { fetchMiratsQuantoSurveys } = require('../integrations/miratsquanto');
 const fs = require('fs').promises;
 const path = require('path');
-const { SurveyProvider, Survey, Panelist, PersonaAttribute, AttributeDefinition } = require('../../../models');
+const redis = require('../../../config/redis');
+const { Queue } = require('bullmq');
+const { addSurveyFetchJob, surveyFetchQueue } = require('./survey.queue');
+const { SurveyProvider, Survey, Panelist, PersonaAttribute, AttributeDefinition, SurveyClick } = require('../../../models');
+const { Op } = require('sequelize');
 const SurveyMatchingService = require('./surveyMatching.service');
 
 const providerMapper = {
@@ -27,17 +31,22 @@ let surveyRegistry = {
     data: [],
     lastFetched: null
 };
-const CACHE_DURATION = 20 * 60 * 1000; // 20 minutes
+const CACHE_DURATION = 35 * 60 * 1000; // 35 minutes
 
 /**
  * Main function to get matched surveys for a user
  */
 async function getAllSurveys(panelistId, forceFetch = false) {
     try {
-        // Ensure registry is warm
-        await refreshSurveyRegistry(forceFetch);
+        if (forceFetch) {
+            await refreshSurveyRegistry(true);
+        }
 
-        if (!panelistId) return surveyRegistry.data;
+        // 1. Get Registry from Redis
+        const cachedRegistry = await redis.get('survey_registry');
+        const surveyRegistryData = cachedRegistry ? JSON.parse(cachedRegistry) : [];
+
+        if (!panelistId) return surveyRegistryData;
 
         // Fetch user attributes for matching
         const panelist = await Panelist.findByPk(panelistId, {
@@ -79,16 +88,53 @@ async function getAllSurveys(panelistId, forceFetch = false) {
             }
         }
 
-        // Match and Score all surveys
-        return surveyRegistry.data.map(survey => {
-            const matchResult = SurveyMatchingService.match(panelist, survey, formattedMappings);
-            return {
-                ...survey,
-                matchScore: matchResult.score,
-                isMatch: matchResult.isMatch,
-                failedReasons: matchResult.failedReasons // Return why it didn't match perfectly
-            };
-        }).sort((a, b) => b.matchScore - a.matchScore); // Always show best matches first
+        // 4. Fetch user's clicks for filtering (Already visited & Daily limit)
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const recentClicks = await SurveyClick.findAll({
+            where: {
+                panelist_id: panelistId,
+                created_at: { [Op.gte]: startOfDay }
+            }
+        });
+
+        const visitedSurveyIds = new Set(recentClicks.map(c => `${c.provider_id}_${c.provider_survey_id}`));
+        const dailyLimitReached = recentClicks.length >= 5;
+
+        if (dailyLimitReached) {
+            return []; // User has hit their daily limit of 5 survey attempts/clicks
+        }
+
+        // 5. Match, Score, and Filter all surveys
+        return surveyRegistryData
+            .filter(survey => {
+                // Filter 1: LOI/CPI Rule (LOI > 10 and CPI < 0.4)
+                const loi = parseInt(survey.raw_data.LOI || survey.raw_data.SurveyLOI || survey.duration) || 0;
+                const cpi = survey.payout;
+
+                if (loi > 10 && cpi < 0.4) {
+                    return false;
+                }
+
+                // Filter 2: Already visited today
+                const provider = providers.find(p => p.slug === survey.provider);
+                if (provider && visitedSurveyIds.has(`${provider.id}_${survey.providerSurveyId}`)) {
+                    return false;
+                }
+
+                return true;
+            })
+            .map(survey => {
+                const matchResult = SurveyMatchingService.match(panelist, survey, formattedMappings);
+                return {
+                    ...survey,
+                    matchScore: matchResult.score,
+                    isMatch: matchResult.isMatch,
+                    failedReasons: matchResult.failedReasons
+                };
+            })
+            .sort((a, b) => b.matchScore - a.matchScore);
 
     } catch (error) {
         console.error('Error in getAllSurveys:', error.message);
@@ -103,6 +149,9 @@ async function initiateSurvey(panelistId, providerSlug, providerSurveyId, ipAddr
     const { SurveyClick, SurveyProvider, Survey } = require('../../../models');
 
     try {
+        if (!panelistId) {
+            throw new Error('Panelist ID is required to initiate a survey');
+        }
 
         // 1. Get Provider
         const provider = await SurveyProvider.findOne({ where: { slug: providerSlug } });
@@ -147,7 +196,7 @@ async function initiateSurvey(panelistId, providerSlug, providerSurveyId, ipAddr
         };
 
     } catch (error) {
-        console.error('Error in initiateSurvey:', error.message);
+        console.error('Error in initiateSurvey:', error); // Log full error object
         throw error;
     }
 }
@@ -179,10 +228,16 @@ function standardizeSurvey(s, providerSlug) {
  */
 async function refreshSurveyRegistry(forceFetch = false) {
     try {
+        const lastFetched = await redis.get('survey_registry_last_fetched');
         const now = Date.now();
-        if (!forceFetch && surveyRegistry.lastFetched && (now - surveyRegistry.lastFetched < CACHE_DURATION)) {
+
+        if (!forceFetch && lastFetched && (now - parseInt(lastFetched) < CACHE_DURATION)) {
             return;
         }
+
+        // Set a lock/cooldown to prevent multiple simultaneous fetches across instances
+        const lock = await redis.set('survey_fetch_lock', 'true', 'NX', 'PX', 30000); // 30s lock
+        if (!lock && !forceFetch) return;
 
         const activeProviders = await SurveyProvider.findAll({ where: { is_active: true } });
 
@@ -197,59 +252,72 @@ async function refreshSurveyRegistry(forceFetch = false) {
                 qualification_url: provider.qualification_url
             };
 
-            const surveys = await mapper.fetchSurveys(config, 10);
-
-            // Enrich with qualifications
-            if (mapper.fetchQualifications) {
-                if (provider.slug === 'goweb') {
-                    // GoWeb is per-survey qualification fetch
-                    await Promise.all(surveys.map(async (s) => {
-                        const rawTargeting = await mapper.fetchQualifications(config, s.providerSurveyId);
-
-                        if (rawTargeting && Object.keys(rawTargeting).length > 0) {
-                            s.qualifications = normalizeGoWebQualifications(rawTargeting);
-                        } else {
-                            s.qualifications = [];
-                        }
-                    }));
+            try {
+                const surveys = await mapper.fetchSurveys(config, 10);
+                console.log(`[SurveyService] Pulled ${surveys.length} surveys from ${provider.slug}`);
+                if (surveys.length === 0 && provider.slug === 'goweb') {
+                    console.warn(`[SurveyService] GoWeb returned zero surveys. Check config:`, JSON.stringify(config.auth));
                 }
-                else {
-                    // Zamplia is per-survey
-                    await Promise.all(surveys.map(async (s) => {
-                        const rawQuals = await mapper.fetchQualifications(config, s.providerSurveyId);
 
-                        if (rawQuals && rawQuals.length > 0) {
-                            // Standardize Zamplia quals
-                            s.qualifications = rawQuals.map(q => {
-                                const allowedValues = q.AnswerCodes ? q.AnswerCodes.map(a => {
-                                    // Robust extraction of the answer code/ID
-                                    const code = a.AnswerCode ?? a.AnswerID ?? a.answercode ?? a.Code ?? a.Id ?? (typeof a !== 'object' ? a : null);
-                                    if (code === null || code === undefined || code === 'undefined' || typeof code === 'object') return null;
-                                    return String(code);
-                                }).filter(v => v !== null) : [];
+                // Enrich with qualifications
+                if (mapper.fetchQualifications) {
+                    if (provider.slug === 'goweb') {
+                        // GoWeb is per-survey qualification fetch
+                        await Promise.all(surveys.map(async (s) => {
+                            const rawTargeting = await mapper.fetchQualifications(config, s.providerSurveyId);
 
-                                return {
-                                    key: q.DemographicName,
-                                    id: String(q.QuestionID),
-                                    type: q.QuestionType === 'Radio' || q.QuestionType === 'MultiSelect' ? 'list' : 'text',
-                                    allowed_values: allowedValues
-                                };
-                            });
-                        } else {
-                            s.qualifications = [];
-                        }
-                    }));
+                            if (rawTargeting && Object.keys(rawTargeting).length > 0) {
+                                s.qualifications = normalizeGoWebQualifications(rawTargeting);
+                            } else {
+                                s.qualifications = [];
+                            }
+                        }));
+                    }
+                    else {
+                        // Zamplia is per-survey
+                        await Promise.all(surveys.map(async (s) => {
+                            const rawQuals = await mapper.fetchQualifications(config, s.providerSurveyId);
+
+                            if (rawQuals && rawQuals.length > 0) {
+                                // Standardize Zamplia quals
+                                s.qualifications = rawQuals.map(q => {
+                                    const allowedValues = q.AnswerCodes ? q.AnswerCodes.map(a => {
+                                        // Robust extraction of the answer code/ID
+                                        const code = a.AnswerCode ?? a.AnswerID ?? a.answercode ?? a.Code ?? a.Id ?? (typeof a !== 'object' ? a : null);
+                                        if (code === null || code === undefined || code === 'undefined' || typeof code === 'object') return null;
+                                        return String(code);
+                                    }).filter(v => v !== null) : [];
+
+                                    return {
+                                        key: q.DemographicName,
+                                        id: String(q.QuestionID),
+                                        type: q.QuestionType === 'Radio' || q.QuestionType === 'MultiSelect' ? 'list' : 'text',
+                                        allowed_values: allowedValues
+                                    };
+                                });
+                            } else {
+                                s.qualifications = [];
+                            }
+                        }));
+                    }
                 }
+
+                return surveys.map(s => ({ ...s, providerId: provider.id }));
+            } catch (providerError) {
+                console.error(`[SurveyService] Failed to fetch from ${provider.slug}:`, providerError.message);
+                return [];
             }
-
-            return surveys.map(s => ({ ...s, providerId: provider.id }));
         });
 
         const results = await Promise.all(fetchPromises);
         // Standardize all results before saving to registry
         const flattened = results.flat();
-        surveyRegistry.data = flattened.map(s => standardizeSurvey(s, s.provider));
-        surveyRegistry.lastFetched = Date.now();
+        const standardizedData = flattened.map(s => standardizeSurvey(s, s.provider));
+
+        // Save to Redis
+        await redis.set('survey_registry', JSON.stringify(standardizedData));
+        await redis.set('survey_registry_last_fetched', String(Date.now()));
+        await redis.del('survey_fetch_lock');
 
         // Persist to file for debugging/audit
         try {
@@ -311,9 +379,9 @@ async function refreshSurveyRegistry(forceFetch = false) {
 
             const cachePath = path.join(__dirname, '../../../../survey-cache.json');
             await fs.writeFile(cachePath, JSON.stringify({
-                lastFetched: surveyRegistry.lastFetched,
-                count: surveyRegistry.data.length,
-                data: matchAudit.length > 0 ? matchAudit : surveyRegistry.data,
+                lastFetched: Date.now(),
+                count: standardizedData.length,
+                data: matchAudit.length > 0 ? matchAudit : standardizedData,
                 auditTimestamp: new Date().toISOString()
             }, null, 2));
         } catch (fsError) {
@@ -330,7 +398,10 @@ async function refreshSurveyRegistry(forceFetch = false) {
  * Persists a survey to the DB only when the user decides to visit/take it
  */
 async function persistSurveyOnVisit(providerSlug, providerSurveyId) {
-    const surveyData = surveyRegistry.data.find(s =>
+    const cachedRegistry = await redis.get('survey_registry');
+    const surveyRegistryData = cachedRegistry ? JSON.parse(cachedRegistry) : [];
+
+    const surveyData = surveyRegistryData.find(s =>
         s.provider === providerSlug && s.providerSurveyId === providerSurveyId
     );
 
@@ -394,13 +465,21 @@ function normalizeGoWebQualifications(targeting) {
     return quals;
 }
 
-// Only start background refresh in production
-if (process.env.NODE_ENV === 'production') {
-    setInterval(() => refreshSurveyRegistry().catch(console.error), CACHE_DURATION);
-}
+// Initial job addition logic moved to initializeSurveyService
 
 async function initializeSurveyService() {
-    await refreshSurveyRegistry(true); // Force first fetch on startup
+    // 1. Warm the cache locally/synchronously on startup if needed (or just queue it)
+    await refreshSurveyRegistry(false);
+
+    // 2. Setup repeatable job for background refresh
+    if (process.env.NODE_ENV === 'production') {
+        await surveyFetchQueue.add('refresh-registry', { force: false }, {
+            repeat: {
+                every: CACHE_DURATION
+            },
+            jobId: 'refresh-registry-repeat'
+        });
+    }
 }
 
-module.exports = { getAllSurveys, refreshSurveyRegistry, persistSurveyOnVisit, initializeSurveyService };
+module.exports = { getAllSurveys, refreshSurveyRegistry, persistSurveyOnVisit, initializeSurveyService, initiateSurvey };

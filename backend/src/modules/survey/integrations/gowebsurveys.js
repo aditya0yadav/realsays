@@ -1,18 +1,31 @@
 const axios = require('axios');
+const CircuitBreaker = require('opossum');
+
+// shared breaker options
+const breakerOptions = {
+    timeout: 30000,
+    errorThresholdPercentage: 50,
+    resetTimeout: 25 * 60 * 1000 // 25 minutes
+};
+
+const fetchBreaker = new CircuitBreaker(async (config, limit) => {
+    const { listUrl, auth } = config;
+    const { data } = await axios.get(
+        listUrl,
+        {
+            headers: {
+                'Authorization': auth.app_key,
+                'payload': auth.app_id,
+                'Accept': 'application/json'
+            }
+        }
+    );
+    return data;
+}, breakerOptions);
 
 async function fetchGoWebSurveys(config, limit = 50) {
     try {
-        const { listUrl, auth } = config;
-        const { data } = await axios.get(
-            listUrl,
-            {
-                headers: {
-                    'Authorization': auth.app_key,
-                    'payload': auth.app_id,
-                    'Accept': 'application/json'
-                }
-            }
-        );
+        const data = await fetchBreaker.fire(config, limit);
 
         if (!data || !data.surveys) return [];
 
@@ -20,7 +33,11 @@ async function fetchGoWebSurveys(config, limit = 50) {
             .slice(0, limit)
             .map(normalizeGoWebSurvey);
     } catch (error) {
-        console.error('Error fetching GoWebSurveys:', error.message);
+        if (error.message === 'Open' || error.message === 'HalfOpen') {
+            console.error('[GoWebBreaker] Circuit is OPEN. Skipping fetch.');
+        } else {
+            console.error('Error fetching GoWebSurveys:', error.message);
+        }
         return [];
     }
 }
@@ -39,30 +56,40 @@ function normalizeGoWebSurvey(survey) {
     };
 }
 
+const qualificationBreaker = new CircuitBreaker(async (config, surveyId) => {
+    const { qualification_url, auth } = config;
+    const { data } = await axios.post(
+        qualification_url,
+        {
+            surveyID: surveyId
+        },
+        {
+            headers: {
+                'Authorization': auth.app_key,
+                'payload': auth.app_id,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+    return data;
+}, breakerOptions);
+
 async function fetchGoWebQualifications(config, surveyId) {
     try {
-        const { qualification_url, auth } = config;
+        const { qualification_url } = config;
         if (!qualification_url) return {};
 
-        const { data } = await axios.post(
-            qualification_url,
-            {
-                surveyID: surveyId
-            },
-            {
-                headers: {
-                    'Authorization': auth.app_key,
-                    'payload': auth.app_id,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
+        const data = await qualificationBreaker.fire(config, surveyId);
 
         // GoWeb returns nested data in 'targeting'
         return data?.targeting || {};
     } catch (error) {
-        console.error(`Error fetching GoWeb Qualifications for ${surveyId}:`, error.message);
+        if (error.message === 'Open' || error.message === 'HalfOpen') {
+            // Already logged by fetchBreaker or similar pattern
+        } else {
+            console.error(`Error fetching GoWeb Qualifications for ${surveyId}:`, error.message);
+        }
         return {};
     }
 }
@@ -99,10 +126,10 @@ async function registerSurvey(config, surveyId, panelistId, ipAddress, clickId) 
         );
 
         if (data.surveyInfo?.[0]?.SurveyEntryUrl) {
-            // Note: The user mentioned 'pid' is used for user identification.
-            // GoWeb usually appends &pid= to the SurveyEntryUrl if we need to pass something.
-            // But since we registered specific links with clickId, we are good.
-            return data.surveyInfo[0].SurveyEntryUrl;
+            let entryUrl = data.surveyInfo[0].SurveyEntryUrl;
+            // Append panelist ID for tracking
+            const separator = entryUrl.includes('?') ? '&' : '?';
+            return `${entryUrl}${separator}pid=${panelistId}`;
         }
 
         throw new Error(data.apiMessages || 'Failed to register GoWeb survey');

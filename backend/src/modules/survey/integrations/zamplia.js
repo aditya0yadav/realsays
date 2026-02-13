@@ -1,17 +1,29 @@
 const axios = require('axios');
+const CircuitBreaker = require('opossum');
+
+const breakerOptions = {
+    timeout: 30000,
+    errorThresholdPercentage: 50,
+    resetTimeout: 25 * 60 * 1000 // 25 minutes
+};
+
+const fetchBreaker = new CircuitBreaker(async (config, limit) => {
+    const { listUrl, auth } = config;
+    const { data } = await axios.get(
+        listUrl,
+        {
+            headers: {
+                "accept": "application/json",
+                "ZAMP-KEY": auth.app_key
+            }
+        }
+    );
+    return data;
+}, breakerOptions);
 
 async function fetchZampliaSurveys(config, limit = 50) {
     try {
-        const { listUrl, auth } = config;
-        const { data } = await axios.get(
-            listUrl,
-            {
-                headers: {
-                    "accept": "application/json",
-                    "ZAMP-KEY": auth.app_key
-                }
-            }
-        );
+        const data = await fetchBreaker.fire(config, limit);
 
         if (!data || !data.result || !data.result.data) return [];
 
@@ -19,7 +31,11 @@ async function fetchZampliaSurveys(config, limit = 50) {
             .slice(0, limit)
             .map(normalizeZampliaSurvey);
     } catch (error) {
-        console.error('Error fetching ZampliaSurveys:', error.message);
+        if (error.message === 'Open' || error.message === 'HalfOpen') {
+            console.error('[ZampliaBreaker] Circuit is OPEN. Skipping fetch.');
+        } else {
+            console.error('Error fetching ZampliaSurveys:', error.message);
+        }
         return [];
     }
 }
@@ -38,25 +54,35 @@ function normalizeZampliaSurvey(survey) {
     };
 }
 
+const qualificationBreaker = new CircuitBreaker(async (config, surveyId) => {
+    const { qualification_url, auth } = config;
+    const { data } = await axios.get(
+        `${qualification_url}?SurveyId=${surveyId}`,
+        {
+            headers: {
+                "accept": "application/json",
+                "ZAMP-KEY": auth.app_key
+            }
+        }
+    );
+    return data;
+}, breakerOptions);
+
 async function fetchZampliaQualifications(config, surveyId) {
     try {
-        const { qualification_url, auth } = config;
+        const { qualification_url } = config;
         if (!qualification_url || !surveyId) return [];
 
-        const { data } = await axios.get(
-            `${qualification_url}?SurveyId=${surveyId}`,
-            {
-                headers: {
-                    "accept": "application/json",
-                    "ZAMP-KEY": auth.app_key
-                }
-            }
-        );
+        const data = await qualificationBreaker.fire(config, surveyId);
 
         // Zamplia returns specific qualification JSON for the survey in result.data
         return data?.result?.data || [];
     } catch (error) {
-        console.error(`Error fetching Zamplia Qualifications for ${surveyId}:`, error.message);
+        if (error.message === 'Open' || error.message === 'HalfOpen') {
+            // Already logged
+        } else {
+            console.error(`Error fetching Zamplia Qualifications for ${surveyId}:`, error.message);
+        }
         return [];
     }
 }
