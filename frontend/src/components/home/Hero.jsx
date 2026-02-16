@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, UserPlus, Search, DollarSign, Trophy, ShieldCheck } from 'lucide-react';
 import banner from '../../assets/hero_banner.png';
-import panel from "../../assets/panel.png";
 import panel3 from "../../assets/panel3.png";
-import sign from "../../assets/signup.png"
 
 const Hero = () => {
     const [scrollY, setScrollY] = useState(0);
