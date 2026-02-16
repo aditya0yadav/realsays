@@ -13,5 +13,6 @@ router.get('/:provider/:surveyId/initiate', protect, surveyController.initiateSu
 // Callbacks (Unprotected as they come from provider servers/redirects)
 const trackingController = require('./controllers/tracking.controller');
 router.get('/callback/goweb', trackingController.handleGoWebCallback);
+router.get('/callback/zamplia', trackingController.handleZampliaCallback);
 
 module.exports = router;

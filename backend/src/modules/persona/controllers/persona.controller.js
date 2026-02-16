@@ -6,12 +6,7 @@ const { Panelist } = require('../../../models');
  */
 const getQuestions = async (req, res) => {
     try {
-        console.log('PersonaController: Fetching questions from service...');
         const questions = await personaService.getProfileQuestions();
-        console.log(`PersonaController: Found ${questions.length} questions`);
-
-        // Log keys to see what's being returned
-        console.log('PersonaController: Question keys found:', questions.map(q => q.key));
 
         res.status(200).json({
             success: true,

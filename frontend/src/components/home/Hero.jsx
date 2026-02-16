@@ -279,6 +279,7 @@ const Hero = () => {
                     </div>
                 </div>
             </section>
+
             {/* Section 3: Paid Community */}
             <section className="px-[5%] py-24 bg-gradient-to-br from-orange-50/50 via-white to-blue-50/30 relative overflow-hidden">
                 {/* Background Decorations */}
@@ -355,153 +356,40 @@ const Hero = () => {
                 </div>
             </section>
 
-            <style jsx>{`
-                @keyframes fade-in {
-                    from {
-                        opacity: 0;
-                        transform: translateY(10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
+            {/* Section 4: Rewards Section - MOVED AFTER COMMUNITY */}
+            <section className="relative px-[5%] py-24 bg-gradient-to-r from-[#5B6CFF] to-[#3B4CFF] overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+                </div>
 
-                @keyframes fade-in-right {
-                    from {
-                        opacity: 0;
-                        transform: translateX(50px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-                }
+                <div className="max-w-7xl mx-auto relative z-10 text-center">
+                    <h2 className="text-white text-4xl md:text-5xl font-black mb-12 uppercase tracking-[0.2em]">
+                        Our Rewards
+                    </h2>
 
-                @keyframes slide-in-left {
-                    from {
-                        opacity: 0;
-                        transform: translateX(-30px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateX(0);
-                    }
-                }
+                    {/* Rewards Showcase Card */}
+                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.2)] transform hover:scale-[1.02] transition-transform duration-500">
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-32">
+                            {/* Amazon Pay */}
+                            <div className="flex flex-col items-center group">
+                                <img
+                                    src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+                                    alt="Amazon Pay"
+                                    className="h-10 md:h-12 w-auto mb-2 grayscale group-hover:grayscale-0 transition-all duration-500"
+                                />
+                                <span className="text-slate-600 font-bold text-lg">Amazon Pay gift card</span>
+                            </div>
 
-                @keyframes slide-up {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
+                            {/* Uber */}
+                            <div className="flex flex-col items-center group">
+                                <h3 className="text-4xl md:text-5xl font-bold text-black group-hover:scale-110 transition-transform duration-500">Uber</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                @keyframes draw-line {
-                    from {
-                        opacity: 0;
-                        stroke-dashoffset: 1000;
-                    }
-                    to {
-                        opacity: 1;
-                        stroke-dashoffset: 0;
-                    }
-                }
-
-                @keyframes float {
-                    0%, 100% {
-                        transform: translateY(0px);
-                    }
-                    50% {
-                        transform: translateY(-15px);
-                    }
-                }
-
-                @keyframes float-slow {
-                    0%, 100% {
-                        transform: translateY(0px) rotate(0deg);
-                    }
-                    50% {
-                        transform: translateY(-10px) rotate(1deg);
-                    }
-                }
-
-                @keyframes pulse-slow {
-                    0%, 100% {
-                        opacity: 0.4;
-                        transform: scale(1.1);
-                    }
-                    50% {
-                        opacity: 0.6;
-                        transform: scale(1.15);
-                    }
-                }
-
-                @keyframes orbital-float {
-                    0% {
-                        transform: translate(0, 0) scale(1);
-                    }
-                    33% {
-                        transform: translate(30px, -50px) scale(1.1);
-                    }
-                    66% {
-                        transform: translate(-20px, 20px) scale(0.9);
-                    }
-                    100% {
-                        transform: translate(0, 0) scale(1);
-                    }
-                }
-
-                @keyframes orbital-float-reverse {
-                    0% {
-                        transform: translate(0, 0) scale(1);
-                    }
-                    33% {
-                        transform: translate(-40px, 30px) scale(0.95);
-                    }
-                    66% {
-                        transform: translate(25px, -45px) scale(1.05);
-                    }
-                    100% {
-                        transform: translate(0, 0) scale(1);
-                    }
-                }
-
-                .animate-fade-in {
-                    animation: fade-in 0.6s ease-out;
-                }
-
-                .animate-fade-in-right {
-                    animation: fade-in-right 1s ease-out;
-                }
-
-                .animate-slide-in-left {
-                    animation: slide-in-left 0.6s ease-out;
-                }
-
-                .animate-slide-up {
-                    animation: slide-up 0.5s ease-out;
-                }
-
-                .animate-draw-line {
-                    animation: draw-line 1s ease-out;
-                }
-
-                .animate-float {
-                    animation: float 3s ease-in-out infinite;
-                }
-
-                .animate-float-slow {
-                    animation: float-slow 6s ease-in-out infinite;
-                }
-
-                .animate-pulse-slow {
-                    animation: pulse-slow 4s ease-in-out infinite;
-                }
-            `}</style>
         </>
     );
 };

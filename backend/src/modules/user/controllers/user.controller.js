@@ -1,4 +1,5 @@
-const { User, Panelist, PersonaAttribute, AttributeDefinition } = require('../../../models');
+const { User, Panelist, PersonaAttribute, AttributeDefinition, SurveyCompletion, Survey } = require('../../../models');
+const surveyService = require('../../survey/services/survey.service');
 
 /**
  * Update user avatar
@@ -75,7 +76,7 @@ const getProfileSummary = async (req, res) => {
                 {
                     model: Panelist,
                     as: 'panelist',
-                    attributes: ['id', 'first_name', 'last_name', 'status', 'quality_score'],
+                    attributes: ['id', 'first_name', 'last_name', 'status', 'quality_score', 'balance', 'lifetime_earnings'],
                     include: [
                         {
                             model: PersonaAttribute,
@@ -111,6 +112,10 @@ const getProfileSummary = async (req, res) => {
                 id: user.panelist.id,
                 status: user.panelist.status,
                 quality_score: user.panelist.quality_score,
+                balance: user.panelist.balance,
+                pending_bonus: user.panelist.pending_bonus,
+                completions_count: user.panelist.completions_count,
+                lifetime_earnings: user.panelist.lifetime_earnings,
                 responses: user.panelist.attributes.reduce((acc, attr) => {
                     acc[attr.definition.key] = {
                         value: attr.value,
@@ -135,8 +140,106 @@ const getProfileSummary = async (req, res) => {
     }
 };
 
+/**
+ * Get user wallet data
+ */
+const getWallet = async (req, res) => {
+    try {
+        const panelist = await Panelist.findOne({
+            where: { user_id: req.user.id }
+        });
+
+        if (!panelist) {
+            return res.status(404).json({
+                success: false,
+                message: 'Panelist profile not found'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: {
+                balance: parseFloat(panelist.balance || 0),
+                pending_bonus: parseFloat(panelist.pending_bonus || 0),
+                completions_count: panelist.completions_count || 0,
+                lifetime_earnings: parseFloat(panelist.lifetime_earnings || 0),
+                currency: 'USD'
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching wallet:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch wallet'
+        });
+    }
+};
+
+/**
+ * Get stats for home dashboard
+ */
+const getHomeStats = async (req, res) => {
+    try {
+        const panelist = await Panelist.findOne({
+            where: { user_id: req.user.id }
+        });
+
+        if (!panelist) {
+            return res.status(404).json({
+                success: false,
+                message: 'Panelist profile not found'
+            });
+        }
+
+        // 1. Get completions count
+        const completionsCount = await SurveyCompletion.count({
+            where: { panelist_id: panelist.id, status: 'complete' }
+        });
+
+        // 2. Get recent activities
+        const recentCompletions = await SurveyCompletion.findAll({
+            where: { panelist_id: panelist.id },
+            include: [{ model: Survey, as: 'survey', attributes: ['title'] }],
+            limit: 5,
+            order: [['created_at', 'DESC']]
+        });
+
+        // 3. Get available surveys count (Active Missions)
+        // We'll use the survey service's in-memory registry size or count from DB
+        const surveys = await surveyService.getAllSurveys(panelist.id);
+        const activeMissionsCount = surveys.length;
+
+        res.status(200).json({
+            success: true,
+            data: {
+                balance: parseFloat(panelist.balance || 0),
+                pending_bonus: parseFloat(panelist.pending_bonus || 0),
+                completions_to_unlock: Math.max(0, 5 - (panelist.completions_count || 0)),
+                lifetime_earnings: parseFloat(panelist.lifetime_earnings || 0),
+                completions_count: completionsCount,
+                active_missions_count: activeMissionsCount,
+                quality_score: panelist.quality_score,
+                recent_activities: recentCompletions.map(c => ({
+                    title: c.survey ? c.survey.title : 'Market Research',
+                    status: c.status.charAt(0).toUpperCase() + c.status.slice(1),
+                    reward: `+$${parseFloat(c.payout).toFixed(2)}`,
+                    time: c.created_at
+                }))
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching home stats:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch home stats'
+        });
+    }
+};
+
 module.exports = {
     updateAvatar,
     getProfile,
-    getProfileSummary
+    getProfileSummary,
+    getWallet,
+    getHomeStats
 };

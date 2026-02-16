@@ -1,12 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { User, Shield, Bell, Settings, LogOut, Camera, Loader2, Mail, MapPin, Calendar, Briefcase, Award, ChevronRight, Fingerprint } from 'lucide-react';
+import { User, Shield, Bell, Settings, LogOut, Camera, Loader2, Mail, MapPin, Calendar, Briefcase, Award, ChevronRight, Fingerprint, Lock, X, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
 import userService from '../../../services/user.service';
 
 const ProfileTab = () => {
-    const { user, refreshUser, logout } = useAuth();
+    const { user, refreshUser, logout, changePassword } = useAuth();
     const [uploading, setUploading] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const [passwordData, setPasswordData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [passwordStatus, setPasswordStatus] = useState({ loading: false, error: null, success: false });
     const fileInputRef = useRef(null);
 
     // Refresh user data on mount to ensure we have the latest summary
@@ -41,6 +48,27 @@ const ProfileTab = () => {
         }
     };
 
+    const handlePasswordChangeSubmit = async (e) => {
+        e.preventDefault();
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            setPasswordStatus({ ...passwordStatus, error: 'New passwords do not match' });
+            return;
+        }
+
+        try {
+            setPasswordStatus({ loading: true, error: null, success: false });
+            await changePassword(passwordData.oldPassword, passwordData.newPassword);
+            setPasswordStatus({ loading: false, error: null, success: true });
+            setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' });
+            setTimeout(() => {
+                setShowPasswordModal(false);
+                setPasswordStatus({ loading: false, error: null, success: false });
+            }, 2000);
+        } catch (error) {
+            setPasswordStatus({ loading: false, error: error || 'Failed to change password', success: false });
+        }
+    };
+
     const getAvatarUrl = () => {
         if (!user?.avatar_url) return null;
         if (user.avatar_url.startsWith('/uploads')) {
@@ -62,7 +90,7 @@ const ProfileTab = () => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto py-4 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <div className="max-w-4xl mx-auto py-4 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 relative">
             {/* Header Section - Stripped & Minimalist */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-12 border-b border-slate-200/60">
                 <div className="flex items-center gap-8">
@@ -173,19 +201,116 @@ const ProfileTab = () => {
                     {/* Security Module */}
                     <div className="space-y-6 pt-12 border-t border-slate-100">
                         <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Security</h3>
-                        <div className="space-y-2">
-                            <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 transition-all text-sm font-bold text-slate-700 group">
-                                <span>Change Password</span>
-                                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-transform" />
-                            </button>
-                            <button className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 transition-all text-sm font-bold text-slate-700 group">
-                                <span>Privacy Settings</span>
-                                <ChevronRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-transform" />
-                            </button>
+                        <div className="space-y-4">
+                            <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm space-y-4">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+                                        <Lock className="w-4 h-4 text-blue-600" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-bold text-slate-900">Password & Security</h4>
+                                        <p className="text-xs text-slate-400">Manage your account access</p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setShowPasswordModal(true)}
+                                    className="w-full py-3 px-4 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-between group"
+                                >
+                                    <span>Change Password</span>
+                                    <ChevronRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Change Password Modal */}
+            {showPasswordModal && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0F1E3A]/40 backdrop-blur-sm animate-in fade-in duration-300">
+                    <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl p-10 relative overflow-hidden animate-in zoom-in-95 duration-300">
+                        <button
+                            onClick={() => setShowPasswordModal(false)}
+                            className="absolute top-8 right-8 text-slate-400 hover:text-slate-900 transition-colors"
+                        >
+                            <X size={24} />
+                        </button>
+
+                        <div className="mb-8">
+                            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
+                                <Lock className="text-blue-500" size={28} />
+                            </div>
+                            <h2 className="text-2xl font-bold text-[#0F1E3A] tracking-tight">Update Password</h2>
+                            <p className="text-slate-500 text-sm mt-2 font-medium">Ensure your account stays secure.</p>
+                        </div>
+
+                        <form onSubmit={handlePasswordChangeSubmit} className="space-y-5">
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">Current Password</label>
+                                <input
+                                    type="password"
+                                    required
+                                    value={passwordData.oldPassword}
+                                    onChange={(e) => setPasswordData({ ...passwordData, oldPassword: e.target.value })}
+                                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    placeholder="••••••••"
+                                />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">New Password</label>
+                                <input
+                                    type="password"
+                                    required
+                                    value={passwordData.newPassword}
+                                    onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    placeholder="••••••••"
+                                />
+                            </div>
+                            <div className="space-y-1.5">
+                                <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm New Password</label>
+                                <input
+                                    type="password"
+                                    required
+                                    value={passwordData.confirmPassword}
+                                    onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
+                                    placeholder="••••••••"
+                                />
+                            </div>
+
+                            {passwordStatus.error && (
+                                <div className="p-4 rounded-2xl bg-red-50 flex items-center gap-3 text-red-600 text-sm font-bold border border-red-100 animate-in shake-in duration-300">
+                                    <AlertCircle size={18} />
+                                    {passwordStatus.error}
+                                </div>
+                            )}
+
+                            {passwordStatus.success && (
+                                <div className="p-4 rounded-2xl bg-green-50 flex items-center gap-3 text-green-600 text-sm font-bold border border-green-100">
+                                    <CheckCircle2 size={18} />
+                                    Password updated successfully!
+                                </div>
+                            )}
+
+                            <button
+                                type="submit"
+                                disabled={passwordStatus.loading || passwordStatus.success}
+                                className="w-full py-4 rounded-2xl bg-[#0F1E3A] text-white font-bold text-sm shadow-xl shadow-blue-900/10 hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group active:scale-95 mt-4"
+                            >
+                                {passwordStatus.loading ? (
+                                    <Loader2 className="animate-spin w-4 h-4" />
+                                ) : (
+                                    <>
+                                        Update Password
+                                        <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

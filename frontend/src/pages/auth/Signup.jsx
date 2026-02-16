@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Lock, User, ShieldCheck } from 'lucide-react';
 import { auth, googleProvider } from '../../config/firebase';
-import { signInWithPopup } from 'firebase/auth';
-import api from '../../api/axios';
+import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import api from '../../services/api';
 import panel3 from '../../assets/panel3.png';
 import logo from '../../assets/logo.png';
 
@@ -19,11 +19,12 @@ const Signup = () => {
             const idToken = await result.user.getIdToken();
 
             // Verify with backend
-            const response = await api.post('/auth/google', { idToken });
+            const response = await api.post('/auth/firebase', { idToken });
 
             if (response.data.success) {
-                localStorage.setItem('accessToken', response.data.accessToken);
-                localStorage.setItem('refreshToken', response.data.refreshToken);
+                // Google signup success
+                localStorage.setItem('accessToken', idToken);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 window.location.href = '/onboarding';
             }
         } catch (error) {
@@ -36,20 +37,24 @@ const Signup = () => {
         e.preventDefault();
         setError('');
         try {
-            const response = await api.post('/auth/register', {
-                name,
-                email,
-                password
-            });
+            // 1. Create user in Firebase
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
+            // 2. Update profile with name
+            await updateProfile(userCredential.user, { displayName: name });
+
+            const idToken = await userCredential.user.getIdToken();
+
+            // 3. Sync with our Backend
+            const response = await api.post('/auth/firebase', { idToken });
             if (response.data.success) {
-                localStorage.setItem('accessToken', response.data.accessToken);
-                localStorage.setItem('refreshToken', response.data.refreshToken);
+                localStorage.setItem('accessToken', idToken);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 window.location.href = '/onboarding';
             }
         } catch (error) {
             console.error("Signup Error:", error);
-            setError(error.response?.data?.message || "Signup failed. Please try again.");
+            setError("Signup failed. That email may already be in use.");
         }
     };
 
@@ -157,15 +162,25 @@ const Signup = () => {
                     <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#4FD1E8]/10 rounded-full blur-[120px]" />
                 </div>
 
-                <div className="relative z-10 text-center">
-                    <div className="mb-12 relative">
-                        <div className="absolute inset-0 bg-[#5B6CFF]/20 blur-[60px] rounded-full animate-pulse-slow" />
-                        <img src={panel3} alt="Insights" className="w-[80%] mx-auto relative z-10 drop-shadow-2xl animate-orbital-float-reverse" />
+                <div className="relative z-10 text-center w-full min-h-[400px] flex flex-col justify-center items-center">
+                    {/* Simplified Floating Brand Elements */}
+                    <div className="absolute top-[15%] right-[10%] w-24 h-24 bg-white/10 backdrop-blur-md rounded-[2rem] border border-white/20 shadow-2xl flex items-center justify-center p-5 animate-float-slow opacity-90">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Amazon_icon.svg" alt="Amazon" className="w-full h-auto drop-shadow-md" />
                     </div>
-                    <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Your Opinion Matters</h2>
-                    <p className="text-blue-100 text-lg max-w-md mx-auto">
-                        Share your insights on the world's leading brands and get rewarded for your valuable time.
-                    </p>
+
+                    <div className="absolute bottom-[10%] left-[10%] w-24 h-24 bg-white/10 backdrop-blur-md rounded-[2rem] border border-white/20 shadow-2xl flex items-center justify-center p-5 animate-float opacity-90" style={{ animationDelay: '1.5s' }}>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png" alt="Netflix" className="w-full h-auto drop-shadow-md" />
+                    </div>
+
+                    <div className="relative z-10 max-w-md">
+                        <h2 className="text-5xl font-bold text-white mb-6 tracking-tight font-display leading-[1.1]">
+                            Your Opinion <br />
+                            <span className="text-brand-cyan">Actually Matters</span>
+                        </h2>
+                        <p className="text-blue-100/60 text-xl max-w-sm mx-auto leading-relaxed font-medium">
+                            Join the global elite contributing to the world's leading brands.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -83,6 +83,15 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    const changePassword = async (oldPassword, newPassword) => {
+        try {
+            const { data } = await api.post('/auth/change-password', { oldPassword, newPassword });
+            return data;
+        } catch (error) {
+            throw error.response?.data?.message || 'Failed to change password';
+        }
+    };
+
     const value = {
         user,
         isAuthenticated: !!user,
@@ -91,6 +100,7 @@ export const AuthProvider = ({ children }) => {
         register,
         refreshUser,
         logout,
+        changePassword
     };
 
     return (

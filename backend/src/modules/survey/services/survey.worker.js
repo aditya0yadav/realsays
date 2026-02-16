@@ -5,9 +5,7 @@ const surveyService = require('./survey.service');
 const surveyWorker = new Worker('survey-fetch', async (job) => {
     if (job.name === 'refresh-registry') {
         const { force } = job.data;
-        // console.log(`[SurveyWorker] Starting refresh (force=${force})`);
         await surveyService.refreshSurveyRegistry(force);
-        // console.log('[SurveyWorker] Refresh complete');
     }
 }, {
     connection: redis,

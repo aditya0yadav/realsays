@@ -41,12 +41,10 @@ const Onboarding = () => {
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            console.log('Onboarding: Starting to fetch questions...');
+            // Starting to fetch questions
             try {
                 const response = await personaService.getQuestions();
-                console.log('Onboarding: Fetch response:', response);
                 if (response.success) {
-                    console.log(`Onboarding: Found ${response.data.length} questions`);
                     const demographicKeys = ['gender', 'age', 'marital_status', 'country', 'zip_code']; // Included zip_code
                     const filtered = response.data
                         .filter(q => demographicKeys.includes(q.key))
@@ -64,7 +62,7 @@ const Onboarding = () => {
                             ] : null) // Return null if no predefined options and not boolean
                         }));
 
-                    console.log('Onboarding: Filtered questions:', filtered);
+                    setQuestions(filtered);
                     setQuestions(filtered);
                 } else {
                     console.warn('Onboarding: Response success was false');
@@ -72,7 +70,7 @@ const Onboarding = () => {
             } catch (error) {
                 console.error('Onboarding: Failed to fetch onboarding questions:', error);
             } finally {
-                console.log('Onboarding: Setting loading to false');
+                setLoading(false);
                 setLoading(false);
             }
         };

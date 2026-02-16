@@ -45,7 +45,7 @@ const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
             </nav>
 
             <div className="p-6 border-t border-white/5 space-y-4 relative z-10">
-                <SidebarLink icon={<Settings />} label="Settings" />
+
                 <div className="group px-4 py-3 rounded-2xl cursor-pointer hover:bg-white/5 transition-all flex items-center justify-between">
                     <div
                         onClick={() => setActiveTab('profile')}

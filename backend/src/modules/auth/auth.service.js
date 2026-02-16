@@ -157,8 +157,34 @@ const logout = async (token) => {
     await RefreshToken.destroy({ where: { token } });
 };
 
-const googleLogin = async (decodedToken, userAgent) => {
-    const { uid, email, name, picture } = decodedToken;
+const changePassword = async (userId, oldPassword, newPassword) => {
+    const user = await User.findByPk(userId);
+    if (!user) {
+        throw new Error('User not found');
+    }
+
+    // Check if user has a password (might be a Firebase user)
+    if (user.password_hash === 'FIREBASE_AUTH_PROVIDER') {
+        throw new Error('Password cannot be changed for social login accounts');
+    }
+
+    // Verify old password
+    const isValid = await comparePassword(oldPassword, user.password_hash);
+    if (!isValid) {
+        throw new Error('Invalid old password');
+    }
+
+    // Hash and update new password
+    const hashedPassword = await hashPassword(newPassword);
+    user.password_hash = hashedPassword;
+    await user.save();
+
+    return { success: true, message: 'Password updated successfully' };
+};
+
+const firebaseLogin = async (decodedToken, userAgent) => {
+    // firebaseLogin logic
+    const { uid, email, name, picture, email_verified } = decodedToken;
 
     let user = await User.findOne({
         where: { email },
@@ -169,17 +195,16 @@ const googleLogin = async (decodedToken, userAgent) => {
         // Create new user if they don't exist
         user = await User.create({
             email,
-            password_hash: 'SOCIAL_AUTH_PROVIDER', // Placeholder, not used for Google Auth
+            password_hash: 'FIREBASE_AUTH_PROVIDER',
             role: 'panelist',
-            email_verified: true,
-            google_id: uid
+            email_verified: email_verified || false,
+            google_id: uid // Using google_id column for Firebase UID for compatibility
         });
 
-        // Split name for panelist profile
+        // Parse name for panelist profile
         const nameParts = name ? name.split(' ') : ['User', ''];
         const firstName = nameParts[0];
         const lastName = nameParts.slice(1).join(' ') || '';
-
         await Panelist.create({
             user_id: user.id,
             first_name: firstName,
@@ -191,23 +216,18 @@ const googleLogin = async (decodedToken, userAgent) => {
         user = await User.findByPk(user.id, {
             include: [{ model: Panelist, as: 'panelist' }]
         });
+    } else {
+        // Found existing user logic
+        if (!user.google_id) {
+            // Link existing user to firebase uid if not linked
+            user.google_id = uid;
+            await user.save();
+        }
     }
 
-    // Generate tokens
-    const panelistId = user.panelist ? user.panelist.id : null;
-    const accessToken = generateAccessToken(user, panelistId);
-    const refreshTokenString = generateRefreshToken();
-
-    // Store refresh token
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-
-    await RefreshToken.create({
-        user_id: user.id,
-        token: refreshTokenString,
-        expires_at: expiresAt,
-        user_agent: userAgent
-    });
+    // Update last login
+    user.last_login = new Date();
+    await user.save();
 
     return {
         user: {
@@ -215,17 +235,17 @@ const googleLogin = async (decodedToken, userAgent) => {
             email: user.email,
             role: user.role,
             firstName: user.panelist ? user.panelist.first_name : null,
-            lastName: user.panelist ? user.panelist.last_name : null
-        },
-        accessToken,
-        refreshToken: refreshTokenString
+            lastName: user.panelist ? user.panelist.last_name : null,
+            avatar: user.avatar_url || (user.panelist ? user.panelist.profile_picture : null)
+        }
     };
 };
 
 module.exports = {
     register,
     login,
-    googleLogin,
+    firebaseLogin,
     refreshAccessToken,
-    logout
+    logout,
+    changePassword
 };

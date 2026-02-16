@@ -157,10 +157,8 @@ async function initiateSurvey(panelistId, providerSlug, providerSurveyId, ipAddr
         const provider = await SurveyProvider.findOne({ where: { slug: providerSlug } });
         if (!provider) throw new Error(`Provider ${providerSlug} not found`);
 
-        // 2. Try to find the survey in our DB (optional but good for tracking)
-        const survey = await Survey.findOne({
-            where: { provider_id: provider.id, provider_survey_id: String(providerSurveyId) }
-        });
+        // 2. Persist the survey to DB if it's in our registry (standardized payout, etc.)
+        const survey = await persistSurveyOnVisit(providerSlug, providerSurveyId);
 
         // 3. Create a Click Record
         const click = await SurveyClick.create({
@@ -254,7 +252,6 @@ async function refreshSurveyRegistry(forceFetch = false) {
 
             try {
                 const surveys = await mapper.fetchSurveys(config, 10);
-                console.log(`[SurveyService] Pulled ${surveys.length} surveys from ${provider.slug}`);
                 if (surveys.length === 0 && provider.slug === 'goweb') {
                     console.warn(`[SurveyService] GoWeb returned zero surveys. Check config:`, JSON.stringify(config.auth));
                 }

@@ -31,6 +31,22 @@ const userService = {
             }
         });
         return response.data;
+    },
+
+    /**
+     * Get user wallet data
+     */
+    getWallet: async () => {
+        const response = await api.get('/user/wallet');
+        return response.data;
+    },
+
+    /**
+     * Get home dashboard stats
+     */
+    getHomeStats: async () => {
+        const response = await api.get('/user/home-stats');
+        return response.data;
     }
 };
 

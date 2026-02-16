@@ -12,8 +12,10 @@ const DiscoverTab = () => {
             setLoading(true);
             try {
                 const data = await surveyService.getSurveys();
-                // Slice to top 5 highest scoring surveys
-                const topSurveys = data.slice(0, 5);
+                // Sort by highest payout and slice top 10
+                const topSurveys = data
+                    .sort((a, b) => b.payout - a.payout)
+                    .slice(0, 10);
                 setSurveys(topSurveys);
             } catch (error) {
                 console.error('Failed to fetch surveys:', error);

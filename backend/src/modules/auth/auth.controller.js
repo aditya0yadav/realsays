@@ -58,30 +58,44 @@ const getMe = async (req, res) => {
     });
 };
 
-const googleAuth = async (req, res, next) => {
+const firebaseAuth = async (req, res, next) => {
     try {
         const { idToken } = req.body;
         const userAgent = req.headers['user-agent'];
 
         if (!idToken) {
-            return res.status(400).json({ success: false, message: 'Google ID Token is required' });
+            return res.status(400).json({ success: false, message: 'Firebase ID Token is required' });
         }
 
         const decodedToken = await admin.auth().verifyIdToken(idToken);
-        const result = await authService.googleLogin(decodedToken, userAgent);
+
+        const result = await authService.firebaseLogin(decodedToken, userAgent);
 
         res.json({ success: true, ...result });
     } catch (error) {
+        console.error('Backend: Firebase Auth Error:', error.message);
         res.status(401);
-        next(new Error('Invalid Google Token: ' + error.message));
+        next(new Error('Invalid Firebase Token: ' + error.message));
+    }
+};
+
+const changePassword = async (req, res, next) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        const result = await authService.changePassword(req.user.id, oldPassword, newPassword);
+        res.json(result);
+    } catch (error) {
+        res.status(400);
+        next(error);
     }
 };
 
 module.exports = {
     register,
     login,
-    googleAuth,
+    firebaseAuth,
     refresh,
     logout,
-    getMe
+    getMe,
+    changePassword
 };

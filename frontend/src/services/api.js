@@ -25,36 +25,39 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        // If error is 401 and we haven't tried refreshing yet
-        if (error.response?.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        if (error.response?.status === 401) {
+            console.error('Frontend API Error: 401 Unauthorized at', originalRequest.url);
 
-            try {
+            if (!originalRequest._retry) {
+                originalRequest._retry = true;
+
                 const refreshToken = localStorage.getItem('refreshToken');
-                if (!refreshToken) {
-                    throw new Error('No refresh token');
+                if (refreshToken) {
+                    try {
+                        // Attempting token refresh
+                        const { data } = await axios.post('http://localhost:5000/api/auth/refresh', {
+                            refreshToken,
+                        });
+
+                        localStorage.setItem('accessToken', data.accessToken);
+                        localStorage.setItem('refreshToken', data.refreshToken);
+
+                        originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+                        return api(originalRequest);
+                    } catch (refreshError) {
+                        console.error('Frontend: Refresh failed', refreshError);
+                    }
+                } else {
+                    console.warn('Frontend: No refresh token available for 401 retry');
                 }
-
-                // Call refresh endpoint
-                const { data } = await axios.post('http://localhost:5000/api/auth/refresh', {
-                    refreshToken,
-                });
-
-                // Store new tokens
-                localStorage.setItem('accessToken', data.accessToken);
-                localStorage.setItem('refreshToken', data.refreshToken);
-
-                // Retry original request with new token
-                originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-                return api(originalRequest);
-            } catch (refreshError) {
-                // Refresh failed (expired or invalid), logout user
-                localStorage.removeItem('accessToken');
-                localStorage.removeItem('refreshToken');
-                localStorage.removeItem('user');
-                window.location.href = '/login'; // Redirect to login
-                return Promise.reject(refreshError);
             }
+
+            // If we get here, refresh either didn't happen or failed
+            console.warn('Frontend: Redirecting to login due to persistent 401');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('user');
+            window.location.href = '/login';
         }
 
         return Promise.reject(error);

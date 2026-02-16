@@ -16,9 +16,8 @@ const redisConfig = {
 
 const redis = new Redis(redisConfig);
 
-redis.on('connect', () => {
-    // console.log('[Redis] Connected to server');
-});
+// Connected to server
+
 
 redis.on('error', (err) => {
     console.error('[Redis] Error:', err.message);

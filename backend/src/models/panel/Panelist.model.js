@@ -42,6 +42,26 @@ const Panelist = sequelize.define('Panelist', {
             min: 0,
             max: 100
         }
+    },
+    balance: {
+        type: DataTypes.DECIMAL(10, 2),
+        defaultValue: 0.00
+    },
+    pending_bonus: {
+        type: DataTypes.DECIMAL(10, 2),
+        defaultValue: 5.00
+    },
+    completions_count: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    lifetime_earnings: {
+        type: DataTypes.DECIMAL(10, 2),
+        defaultValue: 0.00
+    },
+    profile_picture: {
+        type: DataTypes.STRING(1024),
+        allowNull: true
     }
 }, {
     tableName: 'panelists',
