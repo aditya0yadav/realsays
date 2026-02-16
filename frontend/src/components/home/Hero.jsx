@@ -356,39 +356,6 @@ const Hero = () => {
                 </div>
             </section>
 
-            {/* Section 4: Rewards Section - MOVED AFTER COMMUNITY */}
-            <section className="relative px-[5%] py-24 bg-gradient-to-r from-[#5B6CFF] to-[#3B4CFF] overflow-hidden">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-0 left-0 w-full h-full" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-                </div>
-
-                <div className="max-w-7xl mx-auto relative z-10 text-center">
-                    <h2 className="text-white text-4xl md:text-5xl font-black mb-12 uppercase tracking-[0.2em]">
-                        Our Rewards
-                    </h2>
-
-                    {/* Rewards Showcase Card */}
-                    <div className="bg-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.2)] transform hover:scale-[1.02] transition-transform duration-500">
-                        <div className="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-32">
-                            {/* Amazon Pay */}
-                            <div className="flex flex-col items-center group">
-                                <img
-                                    src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
-                                    alt="Amazon Pay"
-                                    className="h-10 md:h-12 w-auto mb-2 grayscale group-hover:grayscale-0 transition-all duration-500"
-                                />
-                                <span className="text-slate-600 font-bold text-lg">Amazon Pay gift card</span>
-                            </div>
-
-                            {/* Uber */}
-                            <div className="flex flex-col items-center group">
-                                <h3 className="text-4xl md:text-5xl font-bold text-black group-hover:scale-110 transition-transform duration-500">Uber</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
         </>
     );
