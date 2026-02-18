@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Home,
@@ -17,11 +17,14 @@ import HomeTab from '../../components/dashboard/tabs/HomeTab';
 import DiscoverTab from '../../components/dashboard/tabs/DiscoverTab';
 import WalletTab from '../../components/dashboard/tabs/WalletTab';
 import ProfileTab from '../../components/dashboard/tabs/ProfileTab';
+import ProfileCompletionModal from '../../components/profile/ProfileCompletionModal';
 
 const Dashboard = () => {
     const { user, logout } = useAuth();
     const [searchParams, setSearchParams] = useSearchParams();
     const activeTab = searchParams.get('tab') || 'discover';
+
+    const [showProfileModal, setShowProfileModal] = useState(true);
 
     const setActiveTab = (tab) => {
         setSearchParams({ tab });
@@ -40,6 +43,8 @@ const Dashboard = () => {
 
     return (
         <div className="h-screen bg-slate-50 text-slate-900 flex overflow-hidden font-display transition-colors duration-500">
+            {showProfileModal && <ProfileCompletionModal onClose={() => setShowProfileModal(false)} />}
+
             {/* Sidebar Component */}
             <Sidebar
                 activeTab={activeTab}

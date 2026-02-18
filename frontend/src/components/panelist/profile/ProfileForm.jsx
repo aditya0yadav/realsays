@@ -24,7 +24,15 @@ const ProfileForm = () => {
                 if (profileRes.success) {
                     const profileData = {};
                     profileRes.data.forEach(attr => {
-                        profileData[attr.definition.key] = attr.value;
+                        let val = attr.value;
+                        // Attempt to parse JSON for array types
+                        if (attr.definition.type === 'multi-select' && typeof val === 'string') {
+                            try {
+                                const parsed = JSON.parse(val);
+                                if (Array.isArray(parsed)) val = parsed;
+                            } catch (e) { /* keep as string if fail */ }
+                        }
+                        profileData[attr.definition.key] = val;
                     });
                     setProfile(profileData);
                 }
@@ -68,9 +76,6 @@ const ProfileForm = () => {
         );
     }
 
-    const demographicKeys = ['age', 'gender', 'zip_code', 'country', 'marital_status'];
-    const demographicQuestions = questions.filter(q => demographicKeys.includes(q.key));
-
     return (
         <div className="max-w-4xl mx-auto space-y-8">
             <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
@@ -79,36 +84,61 @@ const ProfileForm = () => {
                     Personal Information
                 </h2>
 
-                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {demographicQuestions.map(q => (
-                        <div key={q.key} className="space-y-2">
-                            <label className="text-sm font-semibold text-slate-700 block">
-                                {q.title}
-                            </label>
-                            {q.options ? (
-                                <select
-                                    value={profile[q.key] || ''}
-                                    onChange={(e) => handleChange(q.key, e.target.value)}
-                                    className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
-                                >
-                                    <option value="">Select option...</option>
-                                    {q.options.map(opt => (
-                                        <option key={opt} value={opt}>{opt}</option>
-                                    ))}
-                                </select>
-                            ) : (
-                                <input
-                                    type={q.type === 'number' ? 'number' : 'text'}
-                                    value={profile[q.key] || ''}
-                                    onChange={(e) => handleChange(q.key, e.target.value)}
-                                    className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
-                                    placeholder={`Enter your ${q.key.replace('_', ' ')}`}
-                                />
-                            )}
-                        </div>
-                    ))}
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {questions.map(q => (
+                            <div key={q.key} className="space-y-2">
+                                <label className="text-sm font-semibold text-slate-700 block">
+                                    {q.title}
+                                </label>
+                                {q.type === 'single-select' || (q.key === 'state') ? (
+                                    <select
+                                        value={profile[q.key] || ''}
+                                        onChange={(e) => handleChange(q.key, e.target.value)}
+                                        className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
+                                    >
+                                        <option value="">Select option...</option>
+                                        {q.options && q.options.map(opt => (
+                                            <option key={opt} value={opt}>{opt}</option>
+                                        ))}
+                                    </select>
+                                ) : q.type === 'multi-select' ? (
+                                    <div className="h-48 overflow-y-auto border border-slate-200 rounded-xl p-3 space-y-2">
+                                        {q.options && q.options.map(opt => (
+                                            <label key={opt} className="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-lg cursor-pointer">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={Array.isArray(profile[q.key]) ? profile[q.key].includes(opt) : (profile[q.key] === opt)}
+                                                    onChange={(e) => {
+                                                        const current = Array.isArray(profile[q.key]) ? profile[q.key] : [];
+                                                        let newVal;
+                                                        if (e.target.checked) {
+                                                            newVal = [...current, opt];
+                                                        } else {
+                                                            newVal = current.filter(X => X !== opt);
+                                                        }
+                                                        handleChange(q.key, newVal);
+                                                    }}
+                                                    className="w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                                                />
+                                                <span className="text-sm text-slate-700">{opt}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <input
+                                        type={q.type === 'number' ? 'number' : 'text'}
+                                        value={profile[q.key] || ''}
+                                        onChange={(e) => handleChange(q.key, e.target.value)}
+                                        className="w-full h-12 px-4 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all"
+                                        placeholder={`Enter your answer`}
+                                    />
+                                )}
+                            </div>
+                        ))}
+                    </div>
 
-                    <div className="md:col-span-2 pt-4">
+                    <div className="pt-4">
                         <button
                             type="submit"
                             disabled={isSaving}
