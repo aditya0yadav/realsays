@@ -11,11 +11,11 @@ const RewardsSlider = () => {
             logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg',
             content: (
                 <>
-                    <p className="mb-4">
+                    <p className="mb-4 hidden md:block">
                         PayPal is one of the world's leading payment platforms, and most of us have used it at some point, whether you're buying something on eBay, Amazon, or within your phone apps. This means you'll likely have many questions about how it works and how to use your PayPal cash. But wouldn't it be great to get some PayPal credit for free?
                     </p>
                     <p>
-                        One of the best ways to earn a little bit of free PayPal is with us here at <span className="font-bold text-slate-900">RealSays</span>. Sign up to become a member and take a few surveys. In return, you'll earn points to turn into gift cards or PayPal cash. Our surveys take only a few minutes to complete. And we'll even give you a bonus once you've signed up to get you started. What are you waiting for?
+                        Earn free PayPal cash with <span className="font-bold text-slate-900">RealSays</span>. Sign up, take surveys, and earn points convertible to cash. It’s fast, easy, and rewarding.
                     </p>
                 </>
             )
@@ -26,11 +26,11 @@ const RewardsSlider = () => {
             logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg',
             content: (
                 <>
-                    <p className="mb-4">
+                    <p className="mb-4 hidden md:block">
                         Amazon is the go-to destination for almost anything you need, from daily essentials to tech gadgets. We all love the convenience of Prime delivery. But imagine filling up your cart and checking out without spending your own hard-earned money. That's the power of free Amazon Gift Cards.
                     </p>
                     <p>
-                        With <span className="font-bold text-slate-900">RealSays</span>, earning Amazon credits is simple and fun. Just share your honest feedback on products and services you use every day. Your opinions are valuable, and we convert them directly into Amazon Gift Cards. It's the smartest way to shop—earning rewards for your voice. Join RealSays now and start your free shopping spree!
+                        Shop for free on Amazon with <span className="font-bold text-slate-900">RealSays</span>. Share your feedback, earn points, and redeem them for Amazon Gift Cards. Your voice pays for your shopping!
                     </p>
                 </>
             )
@@ -54,34 +54,34 @@ const RewardsSlider = () => {
     };
 
     return (
-        <section className="py-20 bg-slate-50 overflow-hidden">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <section className="py-12 md:py-20 bg-slate-50 overflow-hidden">
+            <div className="max-w-6xl mx-auto px-0 md:px-8 relative">
                 {/* Previous Button */}
                 <button
                     onClick={prevSlide}
-                    className="absolute -left-4 md:-left-16 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all z-20 shadow-sm"
+                    className="absolute left-2 md:-left-16 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all z-20 shadow-sm"
                     aria-label="Previous slide"
                 >
-                    <ChevronLeft className="w-6 h-6" />
+                    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
 
                 {/* Next Button */}
                 <button
                     onClick={nextSlide}
-                    className="absolute -right-4 md:-right-16 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all z-20 shadow-sm"
+                    className="absolute right-2 md:-right-16 top-1/2 -translate-y-1/2 p-2 md:p-3 rounded-full bg-white border border-slate-200 text-slate-400 hover:text-slate-900 hover:bg-slate-50 transition-all z-20 shadow-sm"
                     aria-label="Next slide"
                 >
-                    <ChevronRight className="w-6 h-6" />
+                    <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
                 </button>
 
                 {/* Main Content Box - Simplified */}
-                <div className="bg-white rounded-[2rem] p-8 md:p-12 min-h-[350px] relative flex items-center justify-center border border-slate-100">
+                <div className="bg-white md:rounded-[2rem] px-4 py-8 md:p-12 min-h-[300px] md:min-h-[250px] relative flex items-center justify-center border-y md:border border-slate-100 mx-0">
 
                     {/* Content */}
                     <div className="w-full transition-opacity duration-500 ease-in-out">
                         <div className="flex flex-col items-center text-center">
                             {/* Logo */}
-                            <div className="h-12 md:h-16 mb-8 flex items-center justify-center">
+                            <div className="h-10 md:h-16 mb-6 md:mb-8 flex items-center justify-center">
                                 <img
                                     src={slides[currentSlide].logo}
                                     alt={slides[currentSlide].title}
@@ -90,20 +90,20 @@ const RewardsSlider = () => {
                             </div>
 
                             {/* Text Content */}
-                            <div className="text-slate-600 text-lg leading-relaxed max-w-3xl animate-fade-in">
+                            <div className="text-slate-600 text-sm md:text-lg leading-relaxed max-w-3xl animate-fade-in">
                                 {slides[currentSlide].content}
                             </div>
                         </div>
                     </div>
 
                     {/* Dots Indicator */}
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
+                    <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
                         {slides.map((_, idx) => (
                             <button
                                 key={idx}
                                 onClick={() => setCurrentSlide(idx)}
-                                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${currentSlide === idx
-                                    ? 'bg-blue-600 w-6'
+                                className={`w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300 ${currentSlide === idx
+                                    ? 'bg-blue-600 w-4 md:w-6'
                                     : 'bg-slate-300 hover:bg-slate-400'
                                     }`}
                                 aria-label={`Go to slide ${idx + 1}`}

@@ -70,6 +70,7 @@ async function getAllSurveys(panelistId, forceFetch = false) {
         const providers = await SurveyProvider.findAll();
         const providerMap = providers.reduce((acc, p) => ({ ...acc, [p.id]: p }), {});
 
+
         for (const m of allMappings) {
             const provider = providerMap[m.provider_id];
             if (!provider) continue;

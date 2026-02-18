@@ -1,4 +1,5 @@
 const authService = require('./auth.service');
+const jwt = require('jsonwebtoken');
 const admin = require('../../config/firebaseAdmin');
 
 const register = async (req, res, next) => {
@@ -37,6 +38,40 @@ const refresh = async (req, res, next) => {
         res.json({ success: true, ...result });
     } catch (error) {
         res.status(403);
+        next(error);
+    }
+};
+
+const adminLogin = async (req, res, next) => {
+    try {
+        const { username, password } = req.body;
+
+        // Static Admin Credentials
+        if (username === 'admin' && password === '12345678') {
+            const token = jwt.sign(
+                { role: 'admin', id: 'admin-static-id' },
+                process.env.JWT_SECRET,
+                { expiresIn: '12h' }
+            );
+
+            return res.json({
+                success: true,
+                data: {
+                    accessToken: token,
+                    user: {
+                        id: 'admin-static-id',
+                        username: 'admin',
+                        role: 'admin'
+                    }
+                }
+            });
+        }
+
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid admin credentials'
+        });
+    } catch (error) {
         next(error);
     }
 };
@@ -93,6 +128,7 @@ const changePassword = async (req, res, next) => {
 module.exports = {
     register,
     login,
+    adminLogin,
     firebaseAuth,
     refresh,
     logout,

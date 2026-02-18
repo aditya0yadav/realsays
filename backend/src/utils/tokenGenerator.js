@@ -17,7 +17,6 @@ const generateAccessToken = (user, panelistId = null) => {
 };
 
 const generateRefreshToken = () => {
-    // Basic random string token
     return crypto.randomBytes(40).toString('hex');
 };
 

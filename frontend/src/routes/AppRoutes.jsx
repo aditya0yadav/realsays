@@ -19,6 +19,10 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import ResearchPanels from '../pages/info/ResearchPanels';
 import FAQ from '../pages/info/FAQ';
 
+// Admin Pages
+import QualificationMapping from '../pages/admin/QualificationMapping';
+import AdminLogin from '../pages/admin/AdminLogin';
+
 const AppRoutes = () => {
     return (
         <>
@@ -29,6 +33,7 @@ const AppRoutes = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
 
                 <Route path="/" element={<RootLayout />}>
                     <Route index element={<Home />} />
@@ -41,6 +46,9 @@ const AppRoutes = () => {
                     <Route path="terms-of-service" element={<TermsOfService />} />
                     <Route path="privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="cookie-policy" element={<CookiePolicy />} />
+
+                    {/* Admin Routes */}
+                    <Route path="admin/mappings" element={<QualificationMapping />} />
 
                     {/* Add more routes here later */}
                 </Route>

@@ -15,4 +15,13 @@ const trackingController = require('./controllers/tracking.controller');
 router.get('/callback/goweb', trackingController.handleGoWebCallback);
 router.get('/callback/zamplia', trackingController.handleZampliaCallback);
 
+// Qualification Mapping Routes
+const mappingController = require('./controllers/mapping.controller');
+const { adminAuth } = require('../../middleware/adminAuth.middleware');
+
+router.get('/mappings/initial-data', adminAuth, mappingController.getInitialData);
+router.get('/mappings/:providerId', adminAuth, mappingController.getProviderMappings);
+router.post('/mappings/attribute', adminAuth, mappingController.saveAttributeMapping);
+router.post('/mappings/option', adminAuth, mappingController.saveOptionMapping);
+
 module.exports = router;

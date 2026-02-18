@@ -2,7 +2,7 @@ const axios = require('axios');
 const CircuitBreaker = require('opossum');
 
 const breakerOptions = {
-    timeout: 30000,
+    timeout: 50000,
     errorThresholdPercentage: 50,
     resetTimeout: 25 * 60 * 1000 // 25 minutes
 };

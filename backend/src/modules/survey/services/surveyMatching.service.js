@@ -45,6 +45,7 @@ class SurveyMatchingService {
                 failedReasons.push(`Missing attribute: ${internalKey}`);
                 continue;
             }
+            console.log(userAttr, "userAttr")
 
             // 3. Translate user value if mapping exists
             let userValue = userAttr ? userAttr.value : null;
@@ -84,23 +85,54 @@ class SurveyMatchingService {
      * Helper to check if a value satisfies a requirement
      */
     static checkRequirement(req, userValue) {
-        if (req.type === 'list') {
-            return Array.isArray(req.allowed_values) && req.allowed_values.includes(String(userValue));
+        // Handle Missing Value
+        if (userValue === undefined || userValue === null || userValue === 'N/A') {
+            return false;
         }
 
+        // 1. LIST TYPE (Exact or Case-Insensitive Match)
+        if (req.type === 'list') {
+            if (!Array.isArray(req.allowed_values)) return false;
+
+            // Convert everything to string for comparison
+            const userStr = String(userValue).trim();
+            return req.allowed_values.some(v => String(v).trim() === userStr);
+        }
+
+        // 2. RANGE TYPE (Numeric Comparison)
         if (req.type === 'range') {
             const val = Number(userValue);
-            return !isNaN(val) && val >= req.min && val <= req.max;
+
+            // If user value is not a number, fail
+            if (isNaN(val)) return false;
+
+            // Ensure min/max are numbers
+            const min = Number(req.min);
+            const max = Number(req.max);
+
+            if (isNaN(min) || isNaN(max)) return false;
+
+            return val >= min && val <= max;
         }
 
+        // 3. TEXT TYPE (Can be range string or list)
         if (req.type === 'text') {
             if (req.allowed_values && req.allowed_values.length > 0) {
-                const range = String(req.allowed_values[0]);
-                if (range.includes('-')) {
-                    const [min, max] = range.replace(/\s/g, '').split('-').map(Number);
-                    const val = Number(userValue);
-                    return !isNaN(val) && val >= min && val <= max;
+                const allowed = req.allowed_values[0];
+                const allowedStr = String(allowed).trim();
+
+                // Handle "18-24" style ranges in text
+                if (allowedStr.includes('-') && !isNaN(parseFloat(allowedStr))) {
+                    const parts = allowedStr.split('-');
+                    if (parts.length === 2) {
+                        const min = Number(parts[0].trim());
+                        const max = Number(parts[1].trim());
+                        const val = Number(userValue);
+                        return !isNaN(val) && val >= min && val <= max;
+                    }
                 }
+
+                // Fallback to simple inclusion
                 return req.allowed_values.includes(String(userValue));
             }
             return true;

@@ -33,12 +33,7 @@ const SurveyOptionMapping = sequelize.define('SurveyOptionMapping', {
     tableName: 'survey_option_mappings',
     timestamps: true,
     underscored: true,
-    indexes: [
-        {
-            unique: true,
-            fields: ['attribute_mapping_id', 'provider_value']
-        }
-    ]
+    indexes: []
 });
 
 module.exports = SurveyOptionMapping;

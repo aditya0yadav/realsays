@@ -1,1103 +1,13 @@
 {
-  "lastFetched": 1771225251617,
-  "count": 20,
+  "lastFetched": 1771401630062,
+  "count": 10,
   "data": [
     {
-      "provider": "goweb",
-      "providerSurveyId": "120191",
-      "title": "Age 25-65 Y.O; HRDMs in any industry & company size in given zips",
-      "payout": 6,
-      "duration": "25 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 55,
-          "max": 64
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 65,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "job_title",
-          "type": "list",
-          "allowed_values": [
-            "job_title_004572"
-          ]
-        },
-        {
-          "key": "b2b_department",
-          "type": "list",
-          "allowed_values": [
-            "b2b_department_00432",
-            "b2b_department_004337"
-          ]
-        },
-        {
-          "key": "employment_industry",
-          "type": "list",
-          "allowed_values": [
-            "employment_industry_00365",
-            "employment_industry_00366",
-            "employment_industry_00367",
-            "employment_industry_00368",
-            "employment_industry_00369",
-            "employment_industry_00370",
-            "employment_industry_00371",
-            "employment_industry_00372",
-            "employment_industry_00373",
-            "employment_industry_00374",
-            "employment_industry_00375",
-            "employment_industry_00376",
-            "employment_industry_00377",
-            "employment_industry_00378",
-            "employment_industry_00379",
-            "employment_industry_00380",
-            "employment_industry_00381",
-            "employment_industry_00382",
-            "employment_industry_00383",
-            "employment_industry_00384",
-            "employment_industry_00385",
-            "employment_industry_00386",
-            "employment_industry_00387",
-            "employment_industry_00388",
-            "employment_industry_00389",
-            "employment_industry_00390",
-            "employment_industry_00391",
-            "employment_industry_00392",
-            "employment_industry_00393",
-            "employment_industry_00394",
-            "employment_industry_00395",
-            "employment_industry_00396",
-            "employment_industry_00397",
-            "employment_industry_00398",
-            "employment_industry_00399",
-            "employment_industry_00400",
-            "employment_industry_00401",
-            "employment_industry_00402",
-            "employment_industry_00403",
-            "employment_industry_00404",
-            "employment_industry_00405",
-            "employment_industry_00406",
-            "employment_industry_00407",
-            "employment_industry_00408",
-            "employment_industry_00409",
-            "employment_industry_00410",
-            "employment_industry_00411",
-            "employment_industry_00412",
-            "employment_industry_00413"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 10,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "120191",
-        "parentID": "0",
-        "clientID": "664",
-        "surveyCPI": "6.00",
-        "surveyTargetCount": 10,
-        "LOI": "25",
-        "IR": "35",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2B",
-        "projectBrief": "Age 25-65 Y.O; HRDMs in any industry & company size in given zips",
-        "vAPICPC": "6.00"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "124169",
-      "title": "a blend of home owners and gen pop audience aged 18+ residing in Denver.",
-      "payout": 1.2,
-      "duration": "3 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 55,
-          "max": 64
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 65,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "living_status",
-          "type": "list",
-          "allowed_values": [
-            "living_status_00358",
-            "living_status_00360"
-          ]
-        },
-        {
-          "key": "state",
-          "type": "list",
-          "allowed_values": [
-            "Colorado",
-            "California",
-            "District of Columbia",
-            "Indiana",
-            "Maryland",
-            "Massachusetts",
-            "New York",
-            "North Carolina",
-            "Virginia",
-            "Washington",
-            "Maine",
-            "New Hampshire",
-            "Rhode Island",
-            "Vermont"
-          ]
-        },
-        {
-          "key": "annual_hhi",
-          "type": "list",
-          "allowed_values": [
-            "annual_hhi_002330",
-            "annual_hhi_002331",
-            "annual_hhi_002332",
-            "annual_hhi_002333",
-            "annual_hhi_002334",
-            "annual_hhi_002335",
-            "annual_hhi_002336",
-            "annual_hhi_002337",
-            "annual_hhi_002338",
-            "annual_hhi_002339",
-            "annual_hhi_002340",
-            "annual_hhi_002341",
-            "annual_hhi_002342",
-            "annual_hhi_002343",
-            "annual_hhi_002344",
-            "annual_hhi_002345",
-            "annual_hhi_002346",
-            "annual_hhi_002347",
-            "annual_hhi_002348",
-            "annual_hhi_002349",
-            "annual_hhi_002350",
-            "annual_hhi_002351",
-            "annual_hhi_002352",
-            "annual_hhi_002353"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 500,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "124169",
-        "parentID": "0",
-        "clientID": "153",
-        "surveyCPI": "1.20",
-        "surveyTargetCount": 500,
-        "LOI": "3",
-        "IR": "45",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "2",
-        "studyType": "B2C",
-        "projectBrief": "a blend of home owners and gen pop audience aged 18+ residing in Denver.",
-        "vAPICPC": "1.20"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "125524",
-      "title": "Smartphone owners, GenPop aged 18+",
-      "payout": 1.2,
-      "duration": "10 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_002"
-          ]
-        },
-        {
-          "key": "mobilephone_user",
-          "type": "list",
-          "allowed_values": [
-            "mobilephone_user_00831",
-            "mobilephone_user_00832",
-            "mobilephone_user_00833"
-          ]
-        },
-        {
-          "key": "cell_type",
-          "type": "list",
-          "allowed_values": [
-            "cell_type_003287"
-          ]
-        },
-        {
-          "key": "annual_hhi",
-          "type": "list",
-          "allowed_values": [
-            "annual_hhi_002330",
-            "annual_hhi_002331",
-            "annual_hhi_002332",
-            "annual_hhi_002333",
-            "annual_hhi_002334",
-            "annual_hhi_002335",
-            "annual_hhi_002336",
-            "annual_hhi_002337",
-            "annual_hhi_002338",
-            "annual_hhi_002339",
-            "annual_hhi_002340",
-            "annual_hhi_002341",
-            "annual_hhi_002342",
-            "annual_hhi_002343",
-            "annual_hhi_002344",
-            "annual_hhi_002345",
-            "annual_hhi_002346",
-            "annual_hhi_002347",
-            "annual_hhi_002348",
-            "annual_hhi_002349",
-            "annual_hhi_002350",
-            "annual_hhi_002351",
-            "annual_hhi_002352",
-            "annual_hhi_002353"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 103,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "125524",
-        "parentID": "0",
-        "clientID": "153",
-        "surveyCPI": "1.20",
-        "surveyTargetCount": 103,
-        "LOI": "10",
-        "IR": "60",
-        "countrieISOcode": "KR",
-        "languageCode": "ko",
-        "languageCountryCode": "ko-KR",
-        "projectSupportedDevice": "2",
-        "studyType": "B2C",
-        "projectBrief": "Smartphone owners, GenPop aged 18+",
-        "vAPICPC": "1.20"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126056",
-      "title": "No Description available",
-      "payout": 0.37,
-      "duration": "20 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 29,
-          "max": 60
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "ethnicity",
-          "type": "list",
-          "allowed_values": [
-            "ethnicity_0010",
-            "ethnicity_0011",
-            "ethnicity_0012",
-            "ethnicity_0013",
-            "ethnicity_0014",
-            "ethnicity_0015",
-            "ethnicity_0016",
-            "ethnicity_003",
-            "ethnicity_004",
-            "ethnicity_005",
-            "ethnicity_006",
-            "ethnicity_007",
-            "ethnicity_008",
-            "ethnicity_009"
-          ]
-        },
-        {
-          "key": "race",
-          "type": "list",
-          "allowed_values": [
-            "race_00295",
-            "race_00296",
-            "race_00297",
-            "race_00298",
-            "race_00299",
-            "race_00300",
-            "race_00301",
-            "race_00302",
-            "race_00303",
-            "race_00304",
-            "race_00305",
-            "race_00306",
-            "race_00307",
-            "race_00308",
-            "race_00309",
-            "race_00310"
-          ]
-        },
-        {
-          "key": "b2b_industry",
-          "type": "list",
-          "allowed_values": [
-            "b2b_industry_001857",
-            "b2b_industry_001858",
-            "b2b_industry_001859",
-            "b2b_industry_001860",
-            "b2b_industry_001861",
-            "b2b_industry_001862",
-            "b2b_industry_001863",
-            "b2b_industry_001864",
-            "b2b_industry_001865",
-            "b2b_industry_001866",
-            "b2b_industry_001867",
-            "b2b_industry_001868",
-            "b2b_industry_001869",
-            "b2b_industry_001870",
-            "b2b_industry_001871",
-            "b2b_industry_001872",
-            "b2b_industry_001873",
-            "b2b_industry_001874",
-            "b2b_industry_001875",
-            "b2b_industry_001876",
-            "b2b_industry_001877",
-            "b2b_industry_001878",
-            "b2b_industry_001879",
-            "b2b_industry_001880",
-            "b2b_industry_001881",
-            "b2b_industry_001882",
-            "b2b_industry_001883",
-            "b2b_industry_001884",
-            "b2b_industry_001885",
-            "b2b_industry_001886",
-            "b2b_industry_001887",
-            "b2b_industry_001888",
-            "b2b_industry_001889",
-            "b2b_industry_001890",
-            "b2b_industry_001891",
-            "b2b_industry_001892",
-            "b2b_industry_001893",
-            "b2b_industry_001894",
-            "b2b_industry_001895",
-            "b2b_industry_001896",
-            "b2b_industry_001897",
-            "b2b_industry_001898",
-            "b2b_industry_001899",
-            "b2b_industry_001900",
-            "b2b_industry_001901",
-            "b2b_industry_001902",
-            "b2b_industry_001903",
-            "b2b_industry_001904",
-            "b2b_industry_001905",
-            "b2b_industry_001906",
-            "b2b_industry_001907",
-            "b2b_industry_001908"
-          ]
-        },
-        {
-          "key": "annual_hhi",
-          "type": "list",
-          "allowed_values": [
-            "annual_hhi_002349",
-            "annual_hhi_002350",
-            "annual_hhi_002351",
-            "annual_hhi_002352",
-            "annual_hhi_002353",
-            "annual_hhi_002354"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 59,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126056",
-        "parentID": "0",
-        "clientID": "1863",
-        "surveyCPI": "0.37",
-        "surveyTargetCount": 59,
-        "LOI": "20",
-        "IR": "55",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2C",
-        "projectBrief": "",
-        "vAPICPC": "0.37"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126241",
-      "title": "Gen Pop",
-      "payout": 1.2,
-      "duration": "20 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 45
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 46,
-          "max": 54
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 55,
-          "max": 64
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_002"
-          ]
-        },
-        {
-          "key": "state",
-          "type": "list",
-          "allowed_values": [
-            "Alabama",
-            "Alaska",
-            "American Samoa",
-            "Arizona",
-            "Arkansas",
-            "Armed Forces Africa",
-            "Armed Forces Americas",
-            "Armed Forces Canada",
-            "Armed Forces Europe",
-            "Armed Forces Middle East",
-            "Armed Forces Pacific",
-            "California",
-            "Colorado",
-            "Connecticut",
-            "Delaware",
-            "District of Columbia",
-            "Federated States Of Micronesia",
-            "Florida",
-            "Georgia",
-            "Guam",
-            "Hawaii",
-            "Idaho",
-            "Illinois",
-            "Indiana",
-            "Iowa",
-            "Kansas",
-            "Kentucky",
-            "Louisiana",
-            "Maine",
-            "Marshall Islands",
-            "Maryland",
-            "Massachusetts",
-            "Michigan",
-            "Minnesota",
-            "Mississippi",
-            "Missouri",
-            "Montana",
-            "Nebraska",
-            "Nevada",
-            "New Hampshire",
-            "New Jersey",
-            "New Mexico",
-            "New York",
-            "North Carolina",
-            "North Dakota",
-            "Northern Mariana Islands",
-            "Ohio",
-            "Oklahoma",
-            "Oregon",
-            "Palau",
-            "Pennsylvania",
-            "Puerto Rico",
-            "Rhode Island",
-            "South Carolina",
-            "South Dakota",
-            "Tennessee",
-            "Texas",
-            "Utah",
-            "Vermont",
-            "Virgin Islands",
-            "Virginia",
-            "Washington",
-            "West Virginia",
-            "Wisconsin",
-            "Wyoming"
-          ]
-        },
-        {
-          "key": "annual_hhi",
-          "type": "list",
-          "allowed_values": [
-            "annual_hhi_002333",
-            "annual_hhi_002334",
-            "annual_hhi_002335",
-            "annual_hhi_002336",
-            "annual_hhi_002337",
-            "annual_hhi_002338",
-            "annual_hhi_002339",
-            "annual_hhi_002340",
-            "annual_hhi_002341",
-            "annual_hhi_002342",
-            "annual_hhi_002343",
-            "annual_hhi_002344",
-            "annual_hhi_002345",
-            "annual_hhi_002346",
-            "annual_hhi_002347",
-            "annual_hhi_002348",
-            "annual_hhi_002349",
-            "annual_hhi_002350",
-            "annual_hhi_002351"
-          ]
-        },
-        {
-          "key": "region",
-          "type": "list",
-          "allowed_values": [
-            "region_005052",
-            "region_005054",
-            "region_005060"
-          ]
-        },
-        {
-          "key": "ethnic_identity_2",
-          "type": "list",
-          "allowed_values": [
-            "ethnic_identity_2_003719",
-            "ethnic_identity_2_003720",
-            "ethnic_identity_2_003727",
-            "ethnic_identity_2_003731"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 532,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126241",
-        "parentID": "0",
-        "clientID": "153",
-        "surveyCPI": "1.20",
-        "surveyTargetCount": 532,
-        "LOI": "20",
-        "IR": "60",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "2",
-        "studyType": "B2C",
-        "projectBrief": "Gen Pop",
-        "vAPICPC": "1.20"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126245",
-      "title": "Gen Pop",
-      "payout": 1.2,
-      "duration": "20 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "state",
-          "type": "list",
-          "allowed_values": [
-            "Baden-Württemberg",
-            "Bayern",
-            "Berlin",
-            "Brandenburg",
-            "Bremen",
-            "Hamburg",
-            "Hessen",
-            "Mecklenburg-Vorpommern",
-            "Niedersachsen",
-            "Nordrhein-Westfalen",
-            "Rheinland-Pfalz",
-            "Saarland",
-            "Sachsen",
-            "Sachsen-Anhalt",
-            "Schleswig-Holstein",
-            "Thüringen"
-          ]
-        },
-        {
-          "key": "annual_hhi",
-          "type": "list",
-          "allowed_values": [
-            "annual_hhi_002330",
-            "annual_hhi_002331",
-            "annual_hhi_002332",
-            "annual_hhi_002333",
-            "annual_hhi_002334",
-            "annual_hhi_002335",
-            "annual_hhi_002336",
-            "annual_hhi_002337",
-            "annual_hhi_002338",
-            "annual_hhi_002339",
-            "annual_hhi_002340",
-            "annual_hhi_002341",
-            "annual_hhi_002342",
-            "annual_hhi_002343",
-            "annual_hhi_002344",
-            "annual_hhi_002345",
-            "annual_hhi_002346",
-            "annual_hhi_002347",
-            "annual_hhi_002348",
-            "annual_hhi_002349",
-            "annual_hhi_002350",
-            "annual_hhi_002351",
-            "annual_hhi_002352",
-            "annual_hhi_002353"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 303,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126245",
-        "parentID": "126241",
-        "clientID": "153",
-        "surveyCPI": "1.20",
-        "surveyTargetCount": 303,
-        "LOI": "20",
-        "IR": "60",
-        "countrieISOcode": "DE",
-        "languageCode": "de",
-        "languageCountryCode": "de-DE",
-        "projectSupportedDevice": "2",
-        "studyType": "B2C",
-        "projectBrief": "Gen Pop",
-        "vAPICPC": "0.00"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126307",
-      "title": "No Description available",
-      "payout": 0.21,
-      "duration": "15 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "ethnicity",
-          "type": "list",
-          "allowed_values": [
-            "ethnicity_0010",
-            "ethnicity_0011",
-            "ethnicity_0012",
-            "ethnicity_0013",
-            "ethnicity_0014",
-            "ethnicity_0015",
-            "ethnicity_0016",
-            "ethnicity_003",
-            "ethnicity_004",
-            "ethnicity_005",
-            "ethnicity_006",
-            "ethnicity_007",
-            "ethnicity_008",
-            "ethnicity_009"
-          ]
-        },
-        {
-          "key": "race",
-          "type": "list",
-          "allowed_values": [
-            "race_00295",
-            "race_00296",
-            "race_00297",
-            "race_00298",
-            "race_00299",
-            "race_00300",
-            "race_00301",
-            "race_00302",
-            "race_00303",
-            "race_00304",
-            "race_00305",
-            "race_00306",
-            "race_00307",
-            "race_00308",
-            "race_00309",
-            "race_00310"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 1416,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126307",
-        "parentID": "0",
-        "clientID": "1863",
-        "surveyCPI": "0.21",
-        "surveyTargetCount": 1416,
-        "LOI": "15",
-        "IR": "70",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2C",
-        "projectBrief": "",
-        "vAPICPC": "0.21"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126338",
-      "title": "No Description available",
-      "payout": 0.11,
-      "duration": "16 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 114,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126338",
-        "parentID": "0",
-        "clientID": "1863",
-        "surveyCPI": "0.11",
-        "surveyTargetCount": 114,
-        "LOI": "16",
-        "IR": "65",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2C",
-        "projectBrief": "",
-        "vAPICPC": "0.11"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126384",
-      "title": "No Description available",
-      "payout": 0.18,
-      "duration": "20 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 590,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126384",
-        "parentID": "0",
-        "clientID": "1863",
-        "surveyCPI": "0.18",
-        "surveyTargetCount": 590,
-        "LOI": "20",
-        "IR": "50",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2C",
-        "projectBrief": "",
-        "vAPICPC": "0.18"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126396",
-      "title": "No Description available",
-      "payout": 0.18,
-      "duration": "18 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 175,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126396",
-        "parentID": "0",
-        "clientID": "1863",
-        "surveyCPI": "0.18",
-        "surveyTargetCount": 175,
-        "LOI": "18",
-        "IR": "65",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2C",
-        "projectBrief": "",
-        "vAPICPC": "0.18"
-      }
-    },
-    {
       "provider": "zamplia",
-      "providerSurveyId": "1783657171",
-      "title": "1783657158",
-      "payout": 0.8,
-      "duration": "5 mins",
-      "qualifications": [
-        {
-          "id": "6853",
-          "type": "list",
-          "allowed_values": [
-            "69423",
-            "69424"
-          ]
-        },
-        {
-          "id": "4289",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 760,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783657171,
-        "Name": "1783657158",
-        "TotalCompleteRequired": 760,
-        "CPI": 0.8,
-        "LOI": 5,
-        "IR": 91,
-        "LastUpdateTimeStamp": "2026-02-12T00:01:32.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "English-GB",
-        "SurveyEndDate": "2026-02-27T00:01:32.000Z",
-        "Device": "Both",
-        "IndustryId": "20",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 54,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:01:32.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783660811",
-      "title": "1783659323",
+      "providerSurveyId": "1758023524",
+      "title": "1758023523",
       "payout": 1,
-      "duration": "12 mins",
+      "duration": "11 mins",
       "qualifications": [
         {
           "id": "1",
@@ -1105,350 +15,6 @@
           "allowed_values": [
             "1",
             "2"
-          ]
-        },
-        {
-          "id": "3",
-          "type": "list",
-          "allowed_values": [
-            "500277",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "482386"
-          ]
-        },
-        {
-          "id": "29",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 937,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783660811,
-        "Name": "1783659323",
-        "TotalCompleteRequired": 937,
-        "CPI": 1,
-        "LOI": 12,
-        "IR": 87,
-        "LastUpdateTimeStamp": "2026-02-12T00:04:26.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "En-US",
-        "SurveyEndDate": "2026-02-27T00:04:27.000Z",
-        "Device": "Both",
-        "IndustryId": "31",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 4,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:04:26.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783661356",
-      "title": "1783660811",
-      "payout": 1.1,
-      "duration": "10 mins",
-      "qualifications": [
-        {
-          "id": "1",
-          "type": "list",
-          "allowed_values": [
-            "1",
-            "2"
-          ]
-        },
-        {
-          "id": "3",
-          "type": "list",
-          "allowed_values": [
-            "500277",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "482386"
-          ]
-        },
-        {
-          "id": "29",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 825,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783661356,
-        "Name": "1783660811",
-        "TotalCompleteRequired": 825,
-        "CPI": 1.1,
-        "LOI": 10,
-        "IR": 80,
-        "LastUpdateTimeStamp": "2026-02-12T00:05:38.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "En-US",
-        "SurveyEndDate": "2026-02-27T00:05:38.000Z",
-        "Device": "Both",
-        "IndustryId": "14",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 4,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:05:38.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783662090",
-      "title": "1783661462",
-      "payout": 0.8,
-      "duration": "5 mins",
-      "qualifications": [
-        {
-          "id": "1087",
-          "type": "list",
-          "allowed_values": [
-            "7912",
-            "7913"
-          ]
-        },
-        {
-          "id": "1093",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 496,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783662090,
-        "Name": "1783661462",
-        "TotalCompleteRequired": 496,
-        "CPI": 0.8,
-        "LOI": 5,
-        "IR": 94,
-        "LastUpdateTimeStamp": "2026-02-12T00:06:49.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "English-CA",
-        "SurveyEndDate": "2026-02-27T00:06:49.000Z",
-        "Device": "Both",
-        "IndustryId": "3",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 14,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:06:49.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783662656",
-      "title": "1783662655",
-      "payout": 0.85,
-      "duration": "7 mins",
-      "qualifications": [
-        {
-          "id": "3408",
-          "type": "list",
-          "allowed_values": [
-            "29335",
-            "29336"
-          ]
-        },
-        {
-          "id": "3436",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 294,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783662656,
-        "Name": "1783662655",
-        "TotalCompleteRequired": 294,
-        "CPI": 0.85,
-        "LOI": 7,
-        "IR": 98,
-        "LastUpdateTimeStamp": "2026-02-12T00:07:27.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "German-DE",
-        "SurveyEndDate": "2026-02-27T00:07:27.000Z",
-        "Device": "Both",
-        "IndustryId": "27",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 24,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:07:27.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783663781",
-      "title": "1783663780",
-      "payout": 0.8,
-      "duration": "6 mins",
-      "qualifications": [
-        {
-          "id": "6496",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 325,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783663781,
-        "Name": "1783663780",
-        "TotalCompleteRequired": 325,
-        "CPI": 0.8,
-        "LOI": 6,
-        "IR": 98,
-        "LastUpdateTimeStamp": "2026-02-12T00:08:27.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "English-NZ",
-        "SurveyEndDate": "2026-02-27T00:08:27.000Z",
-        "Device": "Both",
-        "IndustryId": "16",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 33,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:08:27.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783665510",
-      "title": "1783664021",
-      "payout": 0.85,
-      "duration": "9 mins",
-      "qualifications": [
-        {
-          "id": "1",
-          "type": "list",
-          "allowed_values": [
-            "1",
-            "2"
-          ]
-        },
-        {
-          "id": "4",
-          "type": "list",
-          "allowed_values": [
-            "482396",
-            "564167",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30",
-            "31",
-            "32",
-            "33"
-          ]
-        },
-        {
-          "id": "7",
-          "type": "list",
-          "allowed_values": [
-            "482398",
-            "482387",
-            "482388",
-            "482389",
-            "482390",
-            "482391",
-            "482392",
-            "482393",
-            "482394",
-            "482395",
-            "500278",
-            "500279",
-            "500280",
-            "500281",
-            "73",
-            "74",
-            "75",
-            "76",
-            "77",
-            "78",
-            "79",
-            "80",
-            "81",
-            "82",
-            "83",
-            "84"
           ]
         },
         {
@@ -1502,128 +68,21 @@
         }
       ],
       "quota": {
-        "required": 414,
+        "required": 1268,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
-        "SurveyId": 1783665510,
-        "Name": "1783664021",
-        "TotalCompleteRequired": 414,
-        "CPI": 0.85,
-        "LOI": 9,
-        "IR": 92,
-        "LastUpdateTimeStamp": "2026-02-12T00:09:23.000Z",
-        "IsSurveyGroupExist": 0,
-        "LanguageCode": "En-US",
-        "SurveyEndDate": "2026-02-27T00:09:24.000Z",
-        "Device": "Both",
-        "IndustryId": "16",
-        "StudyTypes": "ADHOC",
-        "IsRecontactSurvey": 0,
-        "CollectPII": 0,
-        "LanguageId": 4,
-        "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:09:23.000Z",
-        "status": "Live"
-      }
-    },
-    {
-      "provider": "zamplia",
-      "providerSurveyId": "1783666073",
-      "title": "1783665551",
-      "payout": 1.1,
-      "duration": "11 mins",
-      "qualifications": [
-        {
-          "id": "37",
-          "type": "list",
-          "allowed_values": [
-            "768",
-            "769",
-            "770",
-            "563490"
-          ]
-        },
-        {
-          "id": "1",
-          "type": "list",
-          "allowed_values": [
-            "1",
-            "2"
-          ]
-        },
-        {
-          "id": "3",
-          "type": "list",
-          "allowed_values": [
-            "500277",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "482386"
-          ]
-        },
-        {
-          "id": "4",
-          "type": "list",
-          "allowed_values": [
-            "482396",
-            "564167",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23",
-            "24",
-            "25",
-            "26",
-            "27",
-            "28",
-            "29",
-            "30",
-            "31",
-            "32",
-            "33"
-          ]
-        },
-        {
-          "id": "29",
-          "type": "text",
-          "allowed_values": [
-            "18-99"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 312,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "SurveyId": 1783666073,
-        "Name": "1783665551",
-        "TotalCompleteRequired": 312,
-        "CPI": 1.1,
+        "SurveyId": 1758023524,
+        "Name": "1758023523",
+        "TotalCompleteRequired": 1268,
+        "CPI": 1,
         "LOI": 11,
-        "IR": 79,
-        "LastUpdateTimeStamp": "2026-02-12T00:10:15.000Z",
+        "IR": 83,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
-        "SurveyEndDate": "2026-02-27T00:10:16.000Z",
+        "SurveyEndDate": "2026-02-11T22:31:51.000Z",
         "Device": "Both",
         "IndustryId": "21",
         "StudyTypes": "ADHOC",
@@ -1631,16 +90,108 @@
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:10:15.000Z",
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
         "status": "Live"
       }
     },
     {
       "provider": "zamplia",
-      "providerSurveyId": "1783666074",
-      "title": "1783666073",
-      "payout": 0.9,
-      "duration": "8 mins",
+      "providerSurveyId": "1758050906",
+      "title": "1758050905",
+      "payout": 1,
+      "duration": "11 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1243,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758050906,
+        "Name": "1758050905",
+        "TotalCompleteRequired": 1243,
+        "CPI": 1,
+        "LOI": 11,
+        "IR": 86,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-11T22:54:05.000Z",
+        "Device": "Both",
+        "IndustryId": "24",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758144892",
+      "title": "1758144891",
+      "payout": 1.3,
+      "duration": "9 mins",
       "qualifications": [
         {
           "id": "37",
@@ -1661,35 +212,45 @@
           ]
         },
         {
-          "id": "7",
-          "type": "list",
+          "id": "9",
+          "type": "text",
           "allowed_values": [
-            "482398",
-            "482387",
-            "482388",
-            "482389",
-            "482390",
-            "482391",
-            "482392",
-            "482393",
-            "482394",
-            "482395",
-            "500278",
-            "500279",
-            "500280",
-            "500281",
-            "73",
-            "74",
-            "75",
-            "76",
-            "77",
-            "78",
-            "79",
-            "80",
-            "81",
-            "82",
-            "83",
-            "84"
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
           ]
         },
         {
@@ -1701,41 +262,83 @@
         }
       ],
       "quota": {
-        "required": 700,
+        "required": 704,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
-        "SurveyId": 1783666074,
-        "Name": "1783666073",
-        "TotalCompleteRequired": 700,
-        "CPI": 0.9,
-        "LOI": 8,
-        "IR": 90,
-        "LastUpdateTimeStamp": "2026-02-12T00:10:40.000Z",
+        "SurveyId": 1758144892,
+        "Name": "1758144891",
+        "TotalCompleteRequired": 704,
+        "CPI": 1.3,
+        "LOI": 9,
+        "IR": 72,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
         "IsSurveyGroupExist": 0,
         "LanguageCode": "En-US",
-        "SurveyEndDate": "2026-02-27T00:10:41.000Z",
+        "SurveyEndDate": "2026-02-12T00:27:13.000Z",
         "Device": "Both",
-        "IndustryId": "25",
+        "IndustryId": "22",
         "StudyTypes": "ADHOC",
         "IsRecontactSurvey": 0,
         "CollectPII": 0,
         "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:10:40.000Z",
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
         "status": "Live"
       }
     },
     {
       "provider": "zamplia",
-      "providerSurveyId": "1783666075",
-      "title": "1783666074",
-      "payout": 0.75,
-      "duration": "5 mins",
+      "providerSurveyId": "1758153949",
+      "title": "1758150367",
+      "payout": 0.9,
+      "duration": "9 mins",
       "qualifications": [
         {
-          "id": "6932",
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
           "type": "text",
           "allowed_values": [
             "18-99"
@@ -1743,32 +346,560 @@
         }
       ],
       "quota": {
-        "required": 665,
+        "required": 1088,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
-        "SurveyId": 1783666075,
-        "Name": "1783666074",
-        "TotalCompleteRequired": 665,
-        "CPI": 0.75,
-        "LOI": 5,
-        "IR": 91,
-        "LastUpdateTimeStamp": "2026-02-12T00:10:41.000Z",
+        "SurveyId": 1758153949,
+        "Name": "1758150367",
+        "TotalCompleteRequired": 1088,
+        "CPI": 0.9,
+        "LOI": 9,
+        "IR": 88,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
         "IsSurveyGroupExist": 0,
-        "LanguageCode": "Swedish-SE",
-        "SurveyEndDate": "2026-02-27T00:10:41.000Z",
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T00:34:08.000Z",
         "Device": "Both",
-        "IndustryId": "2",
+        "IndustryId": "26",
         "StudyTypes": "ADHOC",
         "IsRecontactSurvey": 0,
         "CollectPII": 0,
-        "LanguageId": 48,
+        "LanguageId": 4,
         "FieldDays": null,
-        "SurveyCreatedAt": "2026-02-12T00:10:41.000Z",
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758176898",
+      "title": "1758176897",
+      "payout": 1.1,
+      "duration": "12 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1189,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758176898,
+        "Name": "1758176897",
+        "TotalCompleteRequired": 1189,
+        "CPI": 1.1,
+        "LOI": 12,
+        "IR": 82,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T00:54:08.000Z",
+        "Device": "Both",
+        "IndustryId": "29",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758341246",
+      "title": "1758337949",
+      "payout": 0.95,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1174,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758341246,
+        "Name": "1758337949",
+        "TotalCompleteRequired": 1174,
+        "CPI": 0.95,
+        "LOI": 9,
+        "IR": 85,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T03:34:18.000Z",
+        "Device": "Both",
+        "IndustryId": "21",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758608888",
+      "title": "1758608887",
+      "payout": 1,
+      "duration": "10 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1229,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758608888,
+        "Name": "1758608887",
+        "TotalCompleteRequired": 1229,
+        "CPI": 1,
+        "LOI": 10,
+        "IR": 84,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T08:14:27.000Z",
+        "Device": "Both",
+        "IndustryId": "21",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758669755",
+      "title": "1758669754",
+      "payout": 1,
+      "duration": "12 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1265,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758669755,
+        "Name": "1758669754",
+        "TotalCompleteRequired": 1265,
+        "CPI": 1,
+        "LOI": 12,
+        "IR": 85,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T09:14:29.000Z",
+        "Device": "Both",
+        "IndustryId": "10",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758791122",
+      "title": "1758791121",
+      "payout": 1,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1244,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758791122,
+        "Name": "1758791121",
+        "TotalCompleteRequired": 1244,
+        "CPI": 1,
+        "LOI": 9,
+        "IR": 83,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T11:14:32.000Z",
+        "Device": "Both",
+        "IndustryId": "24",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerSurveyId": "1758835820",
+      "title": "1758835512",
+      "payout": 0.95,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1266,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758835820,
+        "Name": "1758835512",
+        "TotalCompleteRequired": 1266,
+        "CPI": 0.95,
+        "LOI": 9,
+        "IR": 86,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T11:54:32.000Z",
+        "Device": "Both",
+        "IndustryId": "7",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
         "status": "Live"
       }
     }
   ],
-  "auditTimestamp": "2026-02-16T07:00:51.617Z"
+  "auditTimestamp": "2026-02-18T08:00:30.062Z"
 }
