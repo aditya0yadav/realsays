@@ -21,7 +21,7 @@ const AdminLayout = () => {
         { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
         { path: '/admin/users', icon: Users, label: 'Users' },
         { path: '/admin/panels', icon: Activity, label: 'Panel Analytics' },
-        { path: '/admin/analytics', icon: BarChart2, label: 'Growth Stats' },
+        // { path: '/admin/analytics', icon: BarChart2, label: 'Growth Stats' },
     ];
 
     const handleSearch = (e) => {

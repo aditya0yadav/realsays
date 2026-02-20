@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import Chart from 'react-apexcharts';
 import { adminService } from '../../services/admin-api';
-import AdminUserDetails from './AdminUserDetails';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const AdminDashboard = () => {
@@ -15,7 +14,6 @@ const AdminDashboard = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
     const [timeframe, setTimeframe] = useState('30d'); // today | 7d | 30d | all
-    const [selectedUserId, setSelectedUserId] = useState(null);
 
     useEffect(() => {
         fetchStats();
@@ -33,6 +31,10 @@ const AdminDashboard = () => {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleViewProfile = (userId) => {
+        window.open(`/admin/users/${userId}`, '_blank');
     };
 
     if (loading) {
@@ -207,7 +209,7 @@ const AdminDashboard = () => {
                             {stats.recentUsers?.slice(0, 6).map((user, i) => (
                                 <div
                                     key={i}
-                                    onClick={() => setSelectedUserId(user.id)}
+                                    onClick={() => handleViewProfile(user.id)}
                                     className="flex items-center justify-between group cursor-pointer hover:translate-x-1 transition-transform"
                                 >
                                     <div className="flex items-center gap-3">
@@ -273,24 +275,6 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-
-            <AnimatePresence>
-                {selectedUserId && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setSelectedUserId(null)}
-                            className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-all"
-                        />
-                        <AdminUserDetails
-                            userId={selectedUserId}
-                            onClose={() => setSelectedUserId(null)}
-                        />
-                    </>
-                )}
-            </AnimatePresence>
         </div>
     );
 };
