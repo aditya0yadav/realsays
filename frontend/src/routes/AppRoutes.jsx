@@ -22,6 +22,12 @@ import FAQ from '../pages/info/FAQ';
 // Admin Pages
 import QualificationMapping from '../pages/admin/QualificationMapping';
 import AdminLogin from '../pages/admin/AdminLogin';
+import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminLayout from '../pages/admin/AdminLayout';
+import AdminAnalytics from '../pages/admin/AdminAnalytics';
+import AdminUsers from '../pages/admin/AdminUsers';
+import AdminPanelAnalytics from '../pages/admin/AdminPanelAnalytics';
+import { Navigate } from 'react-router-dom';
 
 const AppRoutes = () => {
     return (
@@ -46,11 +52,16 @@ const AppRoutes = () => {
                     <Route path="terms-of-service" element={<TermsOfService />} />
                     <Route path="privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="cookie-policy" element={<CookiePolicy />} />
+                </Route>
 
-                    {/* Admin Routes */}
-                    <Route path="admin/mappings" element={<QualificationMapping />} />
-
-                    {/* Add more routes here later */}
+                {/* Admin Routes with Layout */}
+                <Route path="/admin" element={<AdminLayout />}>
+                    <Route index element={<Navigate to="/admin/dashboard" replace />} />
+                    <Route path="dashboard" element={<AdminDashboard />} />
+                    <Route path="analytics" element={<AdminAnalytics />} />
+                    <Route path="panels" element={<AdminPanelAnalytics />} />
+                    <Route path="users" element={<AdminUsers />} />
+                    <Route path="mappings" element={<QualificationMapping />} />
                 </Route>
             </Routes>
         </>

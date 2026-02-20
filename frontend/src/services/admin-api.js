@@ -31,4 +31,55 @@ adminApi.interceptors.response.use(
     }
 );
 
+// API Methods
+const getDashboardStats = async () => {
+    const response = await adminApi.get('/admin/dashboard-stats');
+    return response.data;
+};
+
+const getInitialData = async () => {
+    const response = await adminApi.get('/survey/mappings/initial-data');
+    return response.data;
+};
+
+const getProviderMappings = async (providerId) => {
+    const response = await adminApi.get(`/survey/mappings/${providerId}`);
+    return response.data;
+};
+
+const saveAttributeMapping = async (data) => {
+    const response = await adminApi.post('/survey/mappings/attribute', data);
+    return response.data;
+};
+
+const saveOptionMapping = async (data) => {
+    const response = await adminApi.post('/survey/mappings/option', data);
+    return response.data;
+};
+
+export const adminService = {
+    getDashboardStats,
+    getInitialData,
+    // --- User Management ---
+    getUsers: async (params = {}) => {
+        const response = await adminApi.get('/admin/users', { params });
+        return response.data;
+    },
+
+    getUserDetails: async (userId) => {
+        const response = await adminApi.get(`/admin/users/${userId}`);
+        return response.data;
+    },
+
+    getLeaderboard: async () => {
+        const response = await adminApi.get('/admin/leaderboard');
+        return response.data;
+    },
+
+    // --- Provider Mappings ---
+    getProviderMappings, // Kept existing method
+    saveAttributeMapping,
+    saveOptionMapping
+};
+
 export default adminApi;

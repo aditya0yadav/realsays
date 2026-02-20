@@ -18,6 +18,15 @@ const userService = {
     },
 
     /**
+     * Update user profile details
+     * @param {Object} data - The profile data to update
+     */
+    updateProfile: async (data) => {
+        const response = await api.put('/user/profile', data);
+        return response.data;
+    },
+
+    /**
      * Update user avatar
      * @param {File} file - The image file to upload
      */

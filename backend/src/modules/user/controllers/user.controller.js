@@ -68,6 +68,12 @@ const getProfile = async (req, res) => {
 /**
  * Get consolidated user profile summary (identity + persona)
  */
+/**
+ * Get consolidated user profile summary (identity + persona)
+ */
+/**
+ * Get consolidated user profile summary (identity + persona)
+ */
 const getProfileSummary = async (req, res) => {
     try {
         const user = await User.findByPk(req.user.id, {
@@ -110,6 +116,8 @@ const getProfileSummary = async (req, res) => {
             name: user.panelist ? `${user.panelist.first_name || ''} ${user.panelist.last_name || ''}`.trim() : null,
             panelist: user.panelist ? {
                 id: user.panelist.id,
+                first_name: user.panelist.first_name,
+                last_name: user.panelist.last_name,
                 status: user.panelist.status,
                 quality_score: user.panelist.quality_score,
                 balance: user.panelist.balance,
@@ -136,6 +144,37 @@ const getProfileSummary = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Failed to fetch profile summary'
+        });
+    }
+};
+
+/**
+ * Update user profile details (Reverted to basic info only)
+ */
+const updateProfile = async (req, res) => {
+    try {
+        const { first_name, last_name } = req.body;
+        const userId = req.user.id;
+
+        // Update Panelist model
+        const updateData = {};
+        if (first_name !== undefined) updateData.first_name = first_name;
+        if (last_name !== undefined) updateData.last_name = last_name;
+
+        if (Object.keys(updateData).length > 0) {
+            await Panelist.update(updateData, { where: { user_id: userId } });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Profile updated successfully'
+        });
+
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to update profile'
         });
     }
 };
@@ -241,5 +280,6 @@ module.exports = {
     getProfile,
     getProfileSummary,
     getWallet,
-    getHomeStats
+    getHomeStats,
+    updateProfile
 };

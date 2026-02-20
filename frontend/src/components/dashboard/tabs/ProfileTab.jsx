@@ -1,33 +1,61 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { User, Shield, Bell, Settings, LogOut, Camera, Loader2, Mail, MapPin, Calendar, Briefcase, Award, ChevronRight, Fingerprint, Lock, X, CheckCircle2, AlertCircle } from 'lucide-react';
+import { User, Mail, MapPin, Globe, Camera, Save, Loader2, UploadCloud } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
 import userService from '../../../services/user.service';
+import { toast } from 'react-hot-toast';
 
 const ProfileTab = () => {
-    const { user, refreshUser, logout, changePassword } = useAuth();
-    const [uploading, setUploading] = useState(false);
+    const { user, refreshUser } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [showPasswordModal, setShowPasswordModal] = useState(false);
-    const [passwordData, setPasswordData] = useState({
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: ''
-    });
-    const [passwordStatus, setPasswordStatus] = useState({ loading: false, error: null, success: false });
+    const [saving, setSaving] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef(null);
 
-    // Refresh user data on mount to ensure we have the latest summary
-    useEffect(() => {
-        const loadData = async () => {
-            setLoading(true);
-            await refreshUser();
-            setLoading(false);
-        };
-        loadData();
-    }, []);
+    const [formData, setFormData] = useState({
+        first_name: '',
+        last_name: '',
+        email: '',
+        city: '',
+        zip_code: '',
+        bio: '',
+        timezone: '',
+        country: ''
+    });
 
-    const handleAvatarClick = () => {
-        fileInputRef.current?.click();
+    useEffect(() => {
+        if (user) {
+            setFormData({
+                first_name: user.panelist?.first_name || '',
+                last_name: user.panelist?.last_name || '',
+                email: user.email || '',
+                username: user.username || '',
+                phone: user.panelist?.phone || '',
+                city: user.panelist?.city || '',
+                country: user.panelist?.country || '',
+                zip_code: user.panelist?.zip_code || '',
+                bio: user.panelist?.bio || '',
+                timezone: user.panelist?.timezone || ''
+            });
+        }
+    }, [user]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSave = async () => {
+        setSaving(true);
+        try {
+            await userService.updateProfile(formData);
+            await refreshUser();
+            toast.success("Profile updated successfully");
+        } catch (error) {
+            console.error(error);
+            toast.error("Failed to update profile");
+        } finally {
+            setSaving(false);
+        }
     };
 
     const handleFileChange = async (e) => {
@@ -36,36 +64,14 @@ const ProfileTab = () => {
 
         try {
             setUploading(true);
-            const response = await userService.updateAvatar(file);
-            if (response.success) {
-                await refreshUser();
-            }
+            await userService.updateAvatar(file);
+            await refreshUser();
+            toast.success("Avatar updated");
         } catch (error) {
             console.error('Failed to upload avatar:', error);
-            alert('Failed to upload avatar. Please try again.');
+            toast.error("Failed to upload avatar");
         } finally {
             setUploading(false);
-        }
-    };
-
-    const handlePasswordChangeSubmit = async (e) => {
-        e.preventDefault();
-        if (passwordData.newPassword !== passwordData.confirmPassword) {
-            setPasswordStatus({ ...passwordStatus, error: 'New passwords do not match' });
-            return;
-        }
-
-        try {
-            setPasswordStatus({ loading: true, error: null, success: false });
-            await changePassword(passwordData.oldPassword, passwordData.newPassword);
-            setPasswordStatus({ loading: false, error: null, success: true });
-            setPasswordData({ oldPassword: '', newPassword: '', confirmPassword: '' });
-            setTimeout(() => {
-                setShowPasswordModal(false);
-                setPasswordStatus({ loading: false, error: null, success: false });
-            }, 2000);
-        } catch (error) {
-            setPasswordStatus({ loading: false, error: error || 'Failed to change password', success: false });
         }
     };
 
@@ -78,239 +84,242 @@ const ProfileTab = () => {
         return user.avatar_url;
     };
 
-    const avatarUrl = getAvatarUrl();
-    const responses = user?.panelist?.responses || {};
-
-    if (loading && !user) {
-        return (
-            <div className="flex items-center justify-center h-64">
-                <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-            </div>
-        );
-    }
-
     return (
-        <div className="max-w-4xl mx-auto py-4 space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-1000 relative">
-            {/* Header Section - Stripped & Minimalist */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-12 border-b border-slate-200/60">
-                <div className="flex items-center gap-8">
-                    {/* Minimalist Avatar */}
-                    <div className="relative group/avatar">
-                        <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
-                        <div
-                            onClick={handleAvatarClick}
-                            className="w-24 h-24 rounded-full bg-slate-100 flex items-center justify-center cursor-pointer relative overflow-hidden ring-1 ring-slate-200 transition-all hover:ring-blue-500/30"
-                        >
-                            {avatarUrl ? (
-                                <img src={avatarUrl} alt={user?.name} className="w-full h-full object-cover" />
-                            ) : (
-                                <User size={32} className="text-slate-300" strokeWidth={1} />
-                            )}
-                            <div className={`absolute inset-0 bg-[#0F1E3A]/40 backdrop-blur-[2px] transition-opacity duration-300 flex items-center justify-center ${uploading ? 'opacity-100' : 'opacity-0 group-hover/avatar:opacity-100'}`}>
-                                {uploading ? (
-                                    <Loader2 className="text-white animate-spin w-5 h-5" />
-                                ) : (
-                                    <Camera className="text-white w-5 h-5" />
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="space-y-1">
-                        <h1 className="text-3xl font-bold text-[#0F1E3A] tracking-tight">
-                            {user?.name || 'Researcher'}
-                        </h1>
-                        <p className="text-slate-500 font-medium flex items-center gap-2">
-                            <Mail size={14} className="text-slate-400" /> {user?.email}
-                        </p>
-                    </div>
+        <div className="max-w-6xl mx-auto p-6 md:p-10 font-sans text-slate-800">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-slate-900 mb-1">Account/Setting</h1>
+                    <h2 className="text-lg font-semibold text-slate-700">Setting Details</h2>
+                    <p className="text-sm text-slate-500">Update your photo and personal details here.</p>
                 </div>
-
-                <div className="flex items-center gap-3">
-                    <button className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 transition-all active:scale-95">
-                        Edit
+                <div className="flex gap-3">
+                    <button
+                        className="px-6 py-2.5 rounded-lg border border-slate-200 text-slate-600 font-medium hover:bg-slate-50 transition-colors"
+                        onClick={() => refreshUser()} // Reset changes logic could be here
+                    >
+                        Cancel
                     </button>
                     <button
-                        onClick={logout}
-                        className="px-5 py-2.5 rounded-xl bg-[#0F1E3A] text-white font-bold text-sm hover:opacity-90 transition-all active:scale-95"
+                        onClick={handleSave}
+                        disabled={saving}
+                        className="px-6 py-2.5 rounded-lg bg-[#5B6CFF] text-white font-medium hover:bg-blue-600 transition-colors disabled:opacity-70 flex items-center gap-2"
                     >
-                        Sign Out
+                        {saving && <Loader2 className="w-4 h-4 animate-spin" />}
+                        Save
                     </button>
                 </div>
             </div>
 
-            {/* Content Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-                {/* Left: Research Identity (The core data) */}
-                <div className="lg:col-span-8 space-y-10">
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <Fingerprint className="w-5 h-5 text-[#0F1E3A]" />
-                            <h2 className="text-xl font-bold text-[#0F1E3A] tracking-tight">Research Identity</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Left Column: Personal Information Form */}
+                <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+                    <h3 className="text-lg font-bold text-slate-900 mb-6 pb-4 border-b border-slate-100">Personal information</h3>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        {/* First Name */}
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-600">First Name</label>
+                            <input
+                                type="text"
+                                name="first_name"
+                                value={formData.first_name}
+                                onChange={handleChange}
+                                placeholder="Enter first name"
+                                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all"
+                            />
                         </div>
 
-                        <div className="space-y-0 divide-y divide-slate-100">
-                            {Object.entries(responses).map(([key, data]) => (
-                                <div key={key} className="py-4 flex items-center justify-between group">
-                                    <div className="space-y-0.5">
-                                        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">{data.title}</p>
-                                        <p className="text-slate-900 font-medium capitalize">
-                                            {typeof data.value === 'string' ? data.value : JSON.stringify(data.value)}
-                                        </p>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-slate-200 group-hover:text-slate-400 transition-colors" />
-                                </div>
-                            ))}
-                            {Object.keys(responses).length === 0 && (
-                                <div className="py-8 text-center bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                                    <p className="text-slate-500 font-medium">No persona data found.</p>
-                                    <button className="text-blue-600 font-bold text-sm mt-1 hover:underline">Complete Onboarding</button>
-                                </div>
-                            )}
+                        {/* Last Name */}
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-slate-600">Last Name</label>
+                            <input
+                                type="text"
+                                name="last_name"
+                                value={formData.last_name}
+                                onChange={handleChange}
+                                placeholder="Enter last name"
+                                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all"
+                            />
                         </div>
                     </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        {/* Email Address */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Email Address</label>
+                            <div className="relative">
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    disabled
+                                    className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        {/* City */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500">City</label>
+                            <div className="relative">
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                <input
+                                    type="text"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Country Name */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Country Name</label>
+                            <div className="relative">
+                                <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                <input
+                                    type="text"
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Zip code */}
+                        <div className="space-y-2">
+                            <label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Zip code</label>
+                            <div className="relative">
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                                <input
+                                    type="text"
+                                    name="zip_code"
+                                    value={formData.zip_code}
+                                    onChange={handleChange}
+                                    placeholder="Enter zip code"
+                                    className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all outline-none"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bio */}
+                    <div className="space-y-2 mb-6">
+                        <label className="text-sm font-medium text-slate-600">Bio <span className="text-slate-400 font-normal">(Write a short introduction)</span></label>
+                        <div className="relative">
+                            <textarea
+                                name="bio"
+                                value={formData.bio}
+                                onChange={handleChange}
+                                rows={4}
+                                className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all resize-none"
+                                placeholder="Lorem ipsum..."
+                            />
+                            <div className="absolute right-4 bottom-4 text-slate-400">
+                                <span className="cursor-pointer hover:text-slate-600">B</span> <span className="ml-1 cursor-pointer hover:text-slate-600">/</span> <span className="ml-1 cursor-pointer hover:text-slate-600">U</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Timezone */}
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-600">Timezone</label>
+                        <select
+                            name="timezone"
+                            value={formData.timezone}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:border-[#5B6CFF] transition-all appearance-none"
+                        >
+                            <option value="">Select Timezone</option>
+                            <option value="PST">Pacific Standard Time</option>
+                            <option value="EST">Eastern Standard Time</option>
+                            <option value="UTC">UTC</option>
+                            <option value="IST">Indian Standard Time</option>
+                        </select>
+                    </div>
+
                 </div>
 
-                {/* Right: Insights & Stats */}
-                <div className="lg:col-span-4 space-y-12">
-                    {/* Stats Module */}
-                    <div className="space-y-6">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Insights</h3>
-                        <div className="space-y-8">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center">
-                                    <Award className="w-5 h-5 text-amber-500" />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Trust Score</p>
-                                    <p className="text-lg font-bold text-[#0F1E3A]">{user?.panelist?.quality_score || 0}%</p>
-                                </div>
+                {/* Right Column: Photo & Integrations */}
+                <div className="space-y-8">
+                    {/* Your Photo Card */}
+                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
+                        <h3 className="text-lg font-bold text-slate-900 mb-6">Your Photo</h3>
+
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 rounded-full bg-slate-100 overflow-hidden ring-2 ring-white shadow-md">
+                                {getAvatarUrl() ? (
+                                    <img src={getAvatarUrl()} alt="Profile" className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-[#5B6CFF] text-white font-bold text-lg">
+                                        {user?.email?.[0]?.toUpperCase()}
+                                    </div>
+                                )}
                             </div>
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center">
-                                    <Briefcase className="w-5 h-5 text-blue-500" />
-                                </div>
-                                <div>
-                                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Contributions</p>
-                                    <p className="text-lg font-bold text-[#0F1E3A]">12 Studies</p>
+                            <div>
+                                <h4 className="font-bold text-slate-900 text-sm">Edit your photo</h4>
+                                <div className="flex gap-2 text-xs">
+                                    <button onClick={() => fileInputRef.current?.click()} className="text-slate-400 hover:text-slate-600">Update</button>
+                                    <span className="text-slate-300">•</span>
+                                    <button className="text-slate-400 hover:text-red-500">Delete</button>
                                 </div>
                             </div>
                         </div>
+
+                        <div
+                            onClick={() => fileInputRef.current?.click()}
+                            className="border-2 border-dashed border-[#5B6CFF]/30 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-slate-50 transition-colors group relative overflow-hidden"
+                        >
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                                accept="image/*"
+                                className="hidden"
+                            />
+
+                            {uploading ? (
+                                <Loader2 className="w-8 h-8 text-[#5B6CFF] animate-spin mb-3" />
+                            ) : (
+                                <div className="w-10 h-10 rounded-full bg-[#5B6CFF]/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                    <UploadCloud className="w-5 h-5 text-[#5B6CFF]" />
+                                </div>
+                            )}
+
+                            <p className="text-sm font-medium text-[#5B6CFF] mb-1">Click to upload <span className="text-slate-500 font-normal">or drag and drop</span></p>
+                            <p className="text-xs text-slate-400">SVG, PNG, JPG or GIF</p>
+                            <p className="text-xs text-slate-400">(max, 800x400px)</p>
+                        </div>
                     </div>
 
-                    {/* Security Module */}
-                    <div className="space-y-6 pt-12 border-t border-slate-100">
-                        <h3 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Security</h3>
-                        <div className="space-y-4">
-                            <div className="p-5 rounded-2xl bg-white border border-slate-100 shadow-sm space-y-4">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                                        <Lock className="w-4 h-4 text-blue-600" />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-sm font-bold text-slate-900">Password & Security</h4>
-                                        <p className="text-xs text-slate-400">Manage your account access</p>
-                                    </div>
+                    {/* Google Integration Card */}
+                    <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                {/* Google Icon Mock */}
+                                <div className="w-8 h-8 flex items-center justify-center bg-white rounded-full border border-slate-200">
+                                    <span className="font-bold text-lg"><span className="text-blue-500">G</span><span className="text-red-500">o</span><span className="text-yellow-500">o</span><span className="text-blue-500">g</span><span className="text-green-500">l</span><span className="text-red-500">e</span></span>
                                 </div>
-                                <button
-                                    onClick={() => setShowPasswordModal(true)}
-                                    className="w-full py-3 px-4 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-between group"
-                                >
-                                    <span>Change Password</span>
-                                    <ChevronRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1 transition-transform" />
-                                </button>
+                                <div>
+                                    <p className="text-xs text-slate-500 leading-tight">Use Google to sign in to your<br />account. <a href="#" className="text-[#5B6CFF]">Click here to learn more.</a></p>
+                                </div>
                             </div>
+
+                            {user?.google_id ? (
+                                <span className="px-3 py-1 rounded bg-[#5B6CFF]/10 text-[#5B6CFF] text-xs font-bold">Connected</span>
+                            ) : (
+                                <button className="px-3 py-1 rounded bg-slate-100 text-slate-600 text-xs font-bold hover:bg-slate-200">Connect</button>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-
-            {/* Change Password Modal */}
-            {showPasswordModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0F1E3A]/40 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl p-10 relative overflow-hidden animate-in zoom-in-95 duration-300">
-                        <button
-                            onClick={() => setShowPasswordModal(false)}
-                            className="absolute top-8 right-8 text-slate-400 hover:text-slate-900 transition-colors"
-                        >
-                            <X size={24} />
-                        </button>
-
-                        <div className="mb-8">
-                            <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6">
-                                <Lock className="text-blue-500" size={28} />
-                            </div>
-                            <h2 className="text-2xl font-bold text-[#0F1E3A] tracking-tight">Update Password</h2>
-                            <p className="text-slate-500 text-sm mt-2 font-medium">Ensure your account stays secure.</p>
-                        </div>
-
-                        <form onSubmit={handlePasswordChangeSubmit} className="space-y-5">
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">Current Password</label>
-                                <input
-                                    type="password"
-                                    required
-                                    value={passwordData.oldPassword}
-                                    onChange={(e) => setPasswordData({ ...passwordData, oldPassword: e.target.value })}
-                                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">New Password</label>
-                                <input
-                                    type="password"
-                                    required
-                                    value={passwordData.newPassword}
-                                    onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-                            <div className="space-y-1.5">
-                                <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest pl-1">Confirm New Password</label>
-                                <input
-                                    type="password"
-                                    required
-                                    value={passwordData.confirmPassword}
-                                    onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
-                                    className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white transition-all"
-                                    placeholder="••••••••"
-                                />
-                            </div>
-
-                            {passwordStatus.error && (
-                                <div className="p-4 rounded-2xl bg-red-50 flex items-center gap-3 text-red-600 text-sm font-bold border border-red-100 animate-in shake-in duration-300">
-                                    <AlertCircle size={18} />
-                                    {passwordStatus.error}
-                                </div>
-                            )}
-
-                            {passwordStatus.success && (
-                                <div className="p-4 rounded-2xl bg-green-50 flex items-center gap-3 text-green-600 text-sm font-bold border border-green-100">
-                                    <CheckCircle2 size={18} />
-                                    Password updated successfully!
-                                </div>
-                            )}
-
-                            <button
-                                type="submit"
-                                disabled={passwordStatus.loading || passwordStatus.success}
-                                className="w-full py-4 rounded-2xl bg-[#0F1E3A] text-white font-bold text-sm shadow-xl shadow-blue-900/10 hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed group active:scale-95 mt-4"
-                            >
-                                {passwordStatus.loading ? (
-                                    <Loader2 className="animate-spin w-4 h-4" />
-                                ) : (
-                                    <>
-                                        Update Password
-                                        <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                                    </>
-                                )}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };

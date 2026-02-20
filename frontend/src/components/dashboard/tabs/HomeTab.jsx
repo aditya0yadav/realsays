@@ -17,21 +17,36 @@ const HomeTab = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!user) {
+            console.log('HomeTab: No user found in useAuth, skipping fetch.');
+            return;
+        }
+
         const fetchStats = async () => {
+            console.log('HomeTab: Fetching stats for user:', user);
             try {
+                console.log('HomeTab: Calling userService.getHomeStats()...');
                 const response = await userService.getHomeStats();
+                console.log('HomeTab: API Response:', response);
+
                 if (response.success) {
                     setStats(response.data);
+                } else {
+                    console.warn('HomeTab: API returned success:false', response);
                 }
             } catch (error) {
-                console.error('Failed to fetch home stats:', error);
+                console.error('HomeTab: Failed to fetch home stats:', error);
+                if (error.response) {
+                    console.error('HomeTab: Error Status:', error.response.status);
+                    console.error('HomeTab: Error Data:', error.response.data);
+                }
             } finally {
                 setLoading(false);
             }
         };
 
         fetchStats();
-    }, []);
+    }, [user]);
 
     const formatTime = (dateString) => {
         const now = new Date();
@@ -227,25 +242,32 @@ const HomeTab = () => {
                             <h3 className="text-xl font-sans font-[400] text-slate-800 mb-6 flex items-center gap-2">
                                 <Clock className="w-5 h-5 text-cyan-500" /> Activity
                             </h3>
-                            <div className="space-y-4 flex-1">
-                                {stats.recent_activities.length > 0 ? (
-                                    stats.recent_activities.map((act, i) => (
-                                        <div key={i} className="group p-4 rounded-2xl bg-slate-50 border border-slate-100/50 hover:border-blue-100 hover:bg-white hover:shadow-lg hover:shadow-blue-500/5 transition-all cursor-pointer">
-                                            <div className="flex items-center justify-between mb-1">
-                                                <span className="text-sm font-[600] text-slate-700 tracking-tight truncate pr-4">{act.title}</span>
-                                                <span className="text-blue-600 text-sm font-bold leading-none">{act.reward}</span>
+                            {/* Recent Activity */}
+                            <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h3 className="font-bold text-slate-900">Recent Activity</h3>
+                                    <button className="text-sm text-[#5B6CFF] font-medium hover:underline">View All</button>
+                                </div>
+                                <div className="space-y-4">
+                                    {stats?.recent_activities?.length > 0 ? (
+                                        stats.recent_activities.map((activity, index) => (
+                                            <div key={index} className="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-colors">
+                                                <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
+                                                    <TrendingUp className="w-5 h-5" />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <h4 className="font-medium text-slate-900">{activity.description}</h4>
+                                                    <p className="text-xs text-slate-500">{new Date(activity.created_at).toLocaleDateString()}</p>
+                                                </div>
+                                                <span className={`text-sm font-bold ${activity.amount > 0 ? 'text-green-500' : 'text-slate-900'}`}>
+                                                    {activity.amount > 0 ? '+' : ''}{activity.amount ? `$${activity.amount}` : ''}
+                                                </span>
                                             </div>
-                                            <div className="flex items-center justify-between">
-                                                <span className="text-[10px] uppercase font-bold tracking-widest text-slate-400">{act.status}</span>
-                                                <span className="text-[10px] font-medium text-slate-300">{formatTime(act.time)}</span>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="text-center py-10">
-                                        <p className="text-slate-400 text-sm">No recent activity</p>
-                                    </div>
-                                )}
+                                        ))
+                                    ) : (
+                                        <p className="text-slate-500 text-sm text-center py-4">No recent activity</p>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </>

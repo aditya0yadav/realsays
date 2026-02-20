@@ -1,272 +1,7 @@
 {
-  "lastFetched": 1771425476913,
+  "lastFetched": 1771582494460,
   "count": 20,
   "data": [
-    {
-      "provider": "goweb",
-      "providerSurveyId": "120191",
-      "title": "Age 25-65 Y.O; HRDMs in any industry & company size in given zips",
-      "payout": 6,
-      "duration": "25 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 55,
-          "max": 64
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 65,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "job_title",
-          "type": "list",
-          "allowed_values": [
-            "job_title_004572"
-          ]
-        },
-        {
-          "key": "b2b_department",
-          "type": "list",
-          "allowed_values": [
-            "b2b_department_00432",
-            "b2b_department_004337"
-          ]
-        },
-        {
-          "key": "employment_industry",
-          "type": "list",
-          "allowed_values": [
-            "employment_industry_00365",
-            "employment_industry_00366",
-            "employment_industry_00367",
-            "employment_industry_00368",
-            "employment_industry_00369",
-            "employment_industry_00370",
-            "employment_industry_00371",
-            "employment_industry_00372",
-            "employment_industry_00373",
-            "employment_industry_00374",
-            "employment_industry_00375",
-            "employment_industry_00376",
-            "employment_industry_00377",
-            "employment_industry_00378",
-            "employment_industry_00379",
-            "employment_industry_00380",
-            "employment_industry_00381",
-            "employment_industry_00382",
-            "employment_industry_00383",
-            "employment_industry_00384",
-            "employment_industry_00385",
-            "employment_industry_00386",
-            "employment_industry_00387",
-            "employment_industry_00388",
-            "employment_industry_00389",
-            "employment_industry_00390",
-            "employment_industry_00391",
-            "employment_industry_00392",
-            "employment_industry_00393",
-            "employment_industry_00394",
-            "employment_industry_00395",
-            "employment_industry_00396",
-            "employment_industry_00397",
-            "employment_industry_00398",
-            "employment_industry_00399",
-            "employment_industry_00400",
-            "employment_industry_00401",
-            "employment_industry_00402",
-            "employment_industry_00403",
-            "employment_industry_00404",
-            "employment_industry_00405",
-            "employment_industry_00406",
-            "employment_industry_00407",
-            "employment_industry_00408",
-            "employment_industry_00409",
-            "employment_industry_00410",
-            "employment_industry_00411",
-            "employment_industry_00412",
-            "employment_industry_00413"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 10,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "120191",
-        "parentID": "0",
-        "clientID": "664",
-        "surveyCPI": "6.00",
-        "surveyTargetCount": 10,
-        "LOI": "25",
-        "IR": "35",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2B",
-        "projectBrief": "Age 25-65 Y.O; HRDMs in any industry & company size in given zips",
-        "vAPICPC": "6.00"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "124140",
-      "title": "C level Employees in below States in Finance Operations Information Technology/IT Departments States California Connecticut Illinois Massachusetts New Jersey Ohio Pennsylvania Texas",
-      "payout": 7.2,
-      "duration": "17 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 55,
-          "max": 64
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 65,
-          "max": 99
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "job_title",
-          "type": "list",
-          "allowed_values": [
-            "job_title_001946",
-            "job_title_004587",
-            "job_title_004601",
-            "job_title_004602",
-            "job_title_004610",
-            "job_title_004634",
-            "job_title_004638"
-          ]
-        },
-        {
-          "key": "b2b_department",
-          "type": "list",
-          "allowed_values": [
-            "b2b_department_00433",
-            "b2b_department_00437",
-            "b2b_department_00440",
-            "b2b_department_00441",
-            "b2b_department_00442",
-            "b2b_department_004660"
-          ]
-        },
-        {
-          "key": "number_of_employees",
-          "type": "list",
-          "allowed_values": [
-            "number_of_employees_002065",
-            "number_of_employees_002066",
-            "number_of_employees_002067",
-            "number_of_employees_002068",
-            "number_of_employees_002069",
-            "number_of_employees_002070"
-          ]
-        },
-        {
-          "key": "state",
-          "type": "list",
-          "allowed_values": [
-            "Massachusetts",
-            "New Jersey",
-            "New York",
-            "Pennsylvania"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 33,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "124140",
-        "parentID": "0",
-        "clientID": "664",
-        "surveyCPI": "7.20",
-        "surveyTargetCount": 33,
-        "LOI": "17",
-        "IR": "60",
-        "countrieISOcode": "US",
-        "languageCode": "en",
-        "languageCountryCode": "en-US",
-        "projectSupportedDevice": "3",
-        "studyType": "B2B",
-        "projectBrief": "C level Employees in below States in Finance Operations Information Technology/IT Departments States California Connecticut Illinois Massachusetts New Jersey Ohio Pennsylvania Texas",
-        "vAPICPC": "0.00"
-      }
-    },
     {
       "provider": "goweb",
       "providerSurveyId": "124540",
@@ -364,7 +99,7 @@
         }
       ],
       "quota": {
-        "required": 31,
+        "required": 27,
         "remaining": 0
       },
       "status": "active",
@@ -373,7 +108,7 @@
         "parentID": "124140",
         "clientID": "664",
         "surveyCPI": "7.20",
-        "surveyTargetCount": 31,
+        "surveyTargetCount": 27,
         "LOI": "17",
         "IR": "60",
         "countrieISOcode": "US",
@@ -383,6 +118,113 @@
         "studyType": "B2B",
         "projectBrief": "C level Employees in below States in Finance Operations Information Technology/IT Departments States California Connecticut Illinois Massachusetts New Jersey Ohio Pennsylvania Texas",
         "vAPICPC": "0.00"
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerSurveyId": "125524",
+      "title": "Smartphone owners, GenPop aged 18+",
+      "payout": 1.2,
+      "duration": "10 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 24
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 25,
+          "max": 34
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 35,
+          "max": 44
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 45,
+          "max": 54
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_002"
+          ]
+        },
+        {
+          "key": "mobilephone_user",
+          "type": "list",
+          "allowed_values": [
+            "mobilephone_user_00831",
+            "mobilephone_user_00832",
+            "mobilephone_user_00833"
+          ]
+        },
+        {
+          "key": "cell_type",
+          "type": "list",
+          "allowed_values": [
+            "cell_type_003287"
+          ]
+        },
+        {
+          "key": "annual_hhi",
+          "type": "list",
+          "allowed_values": [
+            "annual_hhi_002330",
+            "annual_hhi_002331",
+            "annual_hhi_002332",
+            "annual_hhi_002333",
+            "annual_hhi_002334",
+            "annual_hhi_002335",
+            "annual_hhi_002336",
+            "annual_hhi_002337",
+            "annual_hhi_002338",
+            "annual_hhi_002339",
+            "annual_hhi_002340",
+            "annual_hhi_002341",
+            "annual_hhi_002342",
+            "annual_hhi_002343",
+            "annual_hhi_002344",
+            "annual_hhi_002345",
+            "annual_hhi_002346",
+            "annual_hhi_002347",
+            "annual_hhi_002348",
+            "annual_hhi_002349",
+            "annual_hhi_002350",
+            "annual_hhi_002351",
+            "annual_hhi_002352",
+            "annual_hhi_002353"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 103,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "125524",
+        "parentID": "0",
+        "clientID": "153",
+        "surveyCPI": "1.20",
+        "surveyTargetCount": 103,
+        "LOI": "10",
+        "IR": "60",
+        "countrieISOcode": "KR",
+        "languageCode": "ko",
+        "languageCountryCode": "ko-KR",
+        "projectSupportedDevice": "2",
+        "studyType": "B2C",
+        "projectBrief": "Smartphone owners, GenPop aged 18+",
+        "vAPICPC": "1.20"
       }
     },
     {
@@ -567,10 +409,28 @@
           "max": 64
         },
         {
+          "key": "age",
+          "type": "range",
+          "min": 65,
+          "max": 54
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 55,
+          "max": 64
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 65,
+          "max": 99
+        },
+        {
           "key": "gender",
           "type": "list",
           "allowed_values": [
-            "gender_002"
+            "gender_001"
           ]
         },
         {
@@ -690,7 +550,7 @@
         }
       ],
       "quota": {
-        "required": 532,
+        "required": 100,
         "remaining": 0
       },
       "status": "active",
@@ -699,7 +559,7 @@
         "parentID": "0",
         "clientID": "153",
         "surveyCPI": "1.20",
-        "surveyTargetCount": 532,
+        "surveyTargetCount": 100,
         "LOI": "20",
         "IR": "60",
         "countrieISOcode": "US",
@@ -709,120 +569,6 @@
         "studyType": "B2C",
         "projectBrief": "Gen Pop",
         "vAPICPC": "1.20"
-      }
-    },
-    {
-      "provider": "goweb",
-      "providerSurveyId": "126245",
-      "title": "Gen Pop",
-      "payout": 1.2,
-      "duration": "20 mins",
-      "qualifications": [
-        {
-          "key": "age",
-          "type": "range",
-          "min": 18,
-          "max": 24
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 25,
-          "max": 34
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 35,
-          "max": 44
-        },
-        {
-          "key": "age",
-          "type": "range",
-          "min": 45,
-          "max": 54
-        },
-        {
-          "key": "gender",
-          "type": "list",
-          "allowed_values": [
-            "gender_001",
-            "gender_002"
-          ]
-        },
-        {
-          "key": "state",
-          "type": "list",
-          "allowed_values": [
-            "Baden-Württemberg",
-            "Bayern",
-            "Berlin",
-            "Brandenburg",
-            "Bremen",
-            "Hamburg",
-            "Hessen",
-            "Mecklenburg-Vorpommern",
-            "Niedersachsen",
-            "Nordrhein-Westfalen",
-            "Rheinland-Pfalz",
-            "Saarland",
-            "Sachsen",
-            "Sachsen-Anhalt",
-            "Schleswig-Holstein",
-            "Thüringen"
-          ]
-        },
-        {
-          "key": "annual_hhi",
-          "type": "list",
-          "allowed_values": [
-            "annual_hhi_002330",
-            "annual_hhi_002331",
-            "annual_hhi_002332",
-            "annual_hhi_002333",
-            "annual_hhi_002334",
-            "annual_hhi_002335",
-            "annual_hhi_002336",
-            "annual_hhi_002337",
-            "annual_hhi_002338",
-            "annual_hhi_002339",
-            "annual_hhi_002340",
-            "annual_hhi_002341",
-            "annual_hhi_002342",
-            "annual_hhi_002343",
-            "annual_hhi_002344",
-            "annual_hhi_002345",
-            "annual_hhi_002346",
-            "annual_hhi_002347",
-            "annual_hhi_002348",
-            "annual_hhi_002349",
-            "annual_hhi_002350",
-            "annual_hhi_002351",
-            "annual_hhi_002352",
-            "annual_hhi_002353"
-          ]
-        }
-      ],
-      "quota": {
-        "required": 303,
-        "remaining": 0
-      },
-      "status": "active",
-      "raw_data": {
-        "surveyID": "126245",
-        "parentID": "126241",
-        "clientID": "153",
-        "surveyCPI": "1.20",
-        "surveyTargetCount": 303,
-        "LOI": "20",
-        "IR": "60",
-        "countrieISOcode": "DE",
-        "languageCode": "de",
-        "languageCountryCode": "de-DE",
-        "projectSupportedDevice": "2",
-        "studyType": "B2C",
-        "projectBrief": "Gen Pop",
-        "vAPICPC": "0.00"
       }
     },
     {
@@ -1043,6 +789,93 @@
       }
     },
     {
+      "provider": "goweb",
+      "providerSurveyId": "126401",
+      "title": "No Description available",
+      "payout": 0.51,
+      "duration": "18 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 235,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126401",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.51",
+        "surveyTargetCount": 235,
+        "LOI": "18",
+        "IR": "70",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.51"
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerSurveyId": "126606",
+      "title": "No Description available",
+      "payout": 0.37,
+      "duration": "17 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 335,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126606",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.37",
+        "surveyTargetCount": 335,
+        "LOI": "17",
+        "IR": "70",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.37"
+      }
+    },
+    {
       "provider": "zamplia",
       "providerSurveyId": "1758023524",
       "title": "1758023523",
@@ -1108,14 +941,14 @@
         }
       ],
       "quota": {
-        "required": 1268,
+        "required": 1257,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758023524,
         "Name": "1758023523",
-        "TotalCompleteRequired": 1268,
+        "TotalCompleteRequired": 1257,
         "CPI": 1,
         "LOI": 11,
         "IR": 83,
@@ -1200,14 +1033,14 @@
         }
       ],
       "quota": {
-        "required": 1243,
+        "required": 1218,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758050906,
         "Name": "1758050905",
-        "TotalCompleteRequired": 1243,
+        "TotalCompleteRequired": 1218,
         "CPI": 1,
         "LOI": 11,
         "IR": 86,
@@ -1302,14 +1135,14 @@
         }
       ],
       "quota": {
-        "required": 704,
+        "required": 688,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758144892,
         "Name": "1758144891",
-        "TotalCompleteRequired": 704,
+        "TotalCompleteRequired": 688,
         "CPI": 1.3,
         "LOI": 9,
         "IR": 72,
@@ -1386,14 +1219,14 @@
         }
       ],
       "quota": {
-        "required": 1087,
+        "required": 1083,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758153949,
         "Name": "1758150367",
-        "TotalCompleteRequired": 1087,
+        "TotalCompleteRequired": 1083,
         "CPI": 0.9,
         "LOI": 9,
         "IR": 88,
@@ -1478,14 +1311,14 @@
         }
       ],
       "quota": {
-        "required": 1189,
+        "required": 1175,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758176898,
         "Name": "1758176897",
-        "TotalCompleteRequired": 1189,
+        "TotalCompleteRequired": 1175,
         "CPI": 1.1,
         "LOI": 12,
         "IR": 82,
@@ -1562,14 +1395,14 @@
         }
       ],
       "quota": {
-        "required": 1174,
+        "required": 1172,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758341246,
         "Name": "1758337949",
-        "TotalCompleteRequired": 1174,
+        "TotalCompleteRequired": 1172,
         "CPI": 0.95,
         "LOI": 9,
         "IR": 85,
@@ -1654,14 +1487,14 @@
         }
       ],
       "quota": {
-        "required": 1229,
+        "required": 1228,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758608888,
         "Name": "1758608887",
-        "TotalCompleteRequired": 1229,
+        "TotalCompleteRequired": 1228,
         "CPI": 1,
         "LOI": 10,
         "IR": 84,
@@ -1941,5 +1774,5 @@
       }
     }
   ],
-  "auditTimestamp": "2026-02-18T14:37:56.913Z"
+  "auditTimestamp": "2026-02-20T10:14:54.460Z"
 }
