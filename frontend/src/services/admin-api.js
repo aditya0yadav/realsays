@@ -32,8 +32,8 @@ adminApi.interceptors.response.use(
 );
 
 // API Methods
-const getDashboardStats = async () => {
-    const response = await adminApi.get('/admin/dashboard-stats');
+const getDashboardStats = async (params = {}) => {
+    const response = await adminApi.get('/admin/dashboard-stats', { params });
     return response.data;
 };
 

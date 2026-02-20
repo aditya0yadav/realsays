@@ -43,7 +43,7 @@ const AdminPanelAnalytics = () => {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-slate-100 pb-8">
                 <div className="space-y-1">
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Panel Traffic Intelligence</h1>
+                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-display">Panel Traffic Intelligence</h1>
                     <p className="text-slate-500 text-sm font-medium">Real-time telemetry and success analysis across survey nodes.</p>
                 </div>
                 <button

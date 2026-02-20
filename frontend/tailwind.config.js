@@ -12,6 +12,10 @@ export default {
                     secondary: '#FF8E00',
                 },
             },
+            fontFamily: {
+                sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+                display: ['Outfit', 'Plus Jakarta Sans', 'sans-serif'],
+            },
             keyframes: {
                 float: {
                     '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },

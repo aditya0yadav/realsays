@@ -1,19 +1,44 @@
 const { sequelize } = require('../../../config/database');
-const { User, Panelist } = require('../../../models');
-
+const {
+    User, Panelist, SurveyCompletion, Survey, SurveyProvider,
+    PersonaAttribute, AttributeDefinition
+} = require('../../../models');
 const { Op } = require('sequelize');
-const { SurveyCompletion, Survey, SurveyProvider } = require('../../../models');
+
+console.log('Admin Controller Loaded');
 
 const getDashboardStats = async (req, res) => {
+    console.log('getDashboardStats called with range:', req.query.range);
     try {
-        // 1. Total Users
-        const totalUsers = await User.count();
+        const { range = '30d' } = req.query;
+        let whereRange = {};
 
-        // 2. Total Earnings (Sum of lifetime_earnings from Panelists)
-        const earningsResult = await Panelist.sum('lifetime_earnings');
+        if (range !== 'all') {
+            const dateLimit = new Date();
+            if (range === 'today') dateLimit.setHours(0, 0, 0, 0);
+            else if (range === '7d') dateLimit.setDate(dateLimit.getDate() - 7);
+            else if (range === '30d') dateLimit.setDate(dateLimit.getDate() - 30);
+
+            whereRange = {
+                created_at: { [Op.gte]: dateLimit }
+            };
+        }
+
+        console.log('Fetching totalUsers...');
+        const totalUsers = await User.count({ where: whereRange });
+
+        console.log('Fetching totalEarnings...');
+        const earningsResult = await Panelist.sum('lifetime_earnings', { where: whereRange });
         const totalEarnings = earningsResult || 0;
 
-        // 3. Top 10 Earners
+        console.log('Fetching completion counts...');
+        const totalAttempts = await SurveyCompletion.count({ where: whereRange });
+        const successfulCompletions = await SurveyCompletion.count({
+            where: { ...whereRange, status: 'complete' }
+        });
+        const conversionRate = totalAttempts > 0 ? ((successfulCompletions / totalAttempts) * 100).toFixed(1) : "0.0";
+
+        console.log('Fetching topEarners...');
         const topEarners = await Panelist.findAll({
             limit: 10,
             order: [['lifetime_earnings', 'DESC']],
@@ -25,35 +50,36 @@ const getDashboardStats = async (req, res) => {
             attributes: ['id', 'user_id', 'first_name', 'last_name', 'lifetime_earnings', 'balance', 'status']
         });
 
-        // 4. Recent Signups (Last 5)
+        console.log('Fetching recentUsers...');
         const recentUsers = await User.findAll({
             limit: 5,
             order: [['created_at', 'DESC']],
+            include: [{
+                model: Panelist,
+                as: 'panelist',
+                attributes: ['first_name', 'last_name']
+            }],
             attributes: ['id', 'email', 'created_at']
         });
 
-        // 5. Signup Stats (Last 7 Days)
-        const sevenDaysAgo = new Date();
-        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
+        console.log('Fetching signupStats...');
+        const chartDate = new Date();
+        chartDate.setDate(chartDate.getDate() - 7);
         const signupStats = await User.findAll({
             attributes: [
                 [sequelize.fn('DATE', sequelize.col('created_at')), 'date'],
                 [sequelize.fn('COUNT', sequelize.col('id')), 'count']
             ],
             where: {
-                created_at: {
-                    [Op.gte]: sevenDaysAgo
-                }
+                created_at: { [Op.gte]: chartDate }
             },
             group: [sequelize.fn('DATE', sequelize.col('created_at'))],
             order: [[sequelize.fn('DATE', sequelize.col('created_at')), 'ASC']]
         });
 
-        // 6. Provider Analytics (Traffic from Panel Wise)
+        console.log('Fetching providerStats...');
         const allProviders = await SurveyProvider.findAll({ attributes: ['id', 'name'] });
         const providerStats = await Promise.all(allProviders.map(async (provider) => {
-            // Fix: Use literal and explicit table aliasing to avoid ambiguity in SQLite/Sequelize
             const completions = await SurveyCompletion.findAll({
                 include: [{
                     model: Survey,
@@ -61,6 +87,7 @@ const getDashboardStats = async (req, res) => {
                     where: { provider_id: provider.id },
                     attributes: []
                 }],
+                where: whereRange,
                 attributes: [
                     [sequelize.literal('SurveyCompletion.status'), 'status'],
                     [sequelize.fn('COUNT', sequelize.literal('*')), 'count']
@@ -69,7 +96,6 @@ const getDashboardStats = async (req, res) => {
                 raw: true
             });
 
-            // Format stats for this provider
             const statsMap = completions.reduce((acc, curr) => {
                 const status = curr.status;
                 const count = parseInt(curr.count || curr['count'] || 0);
@@ -90,13 +116,22 @@ const getDashboardStats = async (req, res) => {
             };
         }));
 
+        console.log('Sending response...');
         res.json({
             success: true,
             data: {
                 totalUsers,
                 totalEarnings: parseFloat(totalEarnings).toFixed(2),
+                conversionRate,
                 topEarners,
-                recentUsers,
+                recentUsers: recentUsers.map(u => ({
+                    id: u.id,
+                    email: u.email,
+                    created_at: u.created_at,
+                    first_name: u.panelist?.first_name || 'Anonymous',
+                    last_name: u.panelist?.last_name || '',
+                    name: u.panelist ? `${u.panelist.first_name || ''} ${u.panelist.last_name || ''}`.trim() : 'Anonymous'
+                })),
                 signupStats,
                 providerStats
             }
@@ -108,11 +143,8 @@ const getDashboardStats = async (req, res) => {
     }
 };
 
-/**
- * Get paginated list of users with search and summary stats
- * GET /api/admin/users
- */
 const getUsers = async (req, res) => {
+    console.log('getUsers called');
     try {
         const { search, page = 1, limit = 10, sortBy = 'created_at', order = 'DESC', status, country, startDate, endDate } = req.query;
         const offset = (page - 1) * limit;
@@ -142,13 +174,13 @@ const getUsers = async (req, res) => {
                 model: Panelist,
                 as: 'panelist',
                 where: Object.keys(panelistWhere).length > 0 ? panelistWhere : null,
-                required: Object.keys(panelistWhere).length > 0, // Inner join if filtering by panelist attributes
+                required: Object.keys(panelistWhere).length > 0,
                 attributes: ['first_name', 'last_name', 'status', 'lifetime_earnings', 'completions_count', 'balance', 'country_code']
             }],
             limit: parseInt(limit),
             offset: parseInt(offset),
             order: [[sortBy, order]],
-            distinct: true // Important for correct count with includes
+            distinct: true
         });
 
         const users = rows.map(user => ({
@@ -157,7 +189,7 @@ const getUsers = async (req, res) => {
             created_at: user.created_at,
             last_login: user.last_login,
             name: user.panelist ? `${user.panelist.first_name || ''} ${user.panelist.last_name || ''}`.trim() : 'N/A',
-            status: user.panelist?.status || 'Active', // Default if no panelist? Or 'Incomplete'
+            status: user.panelist?.status || 'Active',
             lifetime_earnings: parseFloat(user.panelist?.lifetime_earnings || 0),
             balance: parseFloat(user.panelist?.balance || 0),
             completions_count: user.panelist?.completions_count || 0
@@ -181,39 +213,47 @@ const getUsers = async (req, res) => {
     }
 };
 
-/**
- * Get detailed report for a single user
- * GET /api/admin/users/:id
- */
 const getUserDetails = async (req, res) => {
+    console.log('getUserDetails called for ID:', req.params.id);
     try {
         const { id } = req.params;
 
         const user = await User.findByPk(id, {
             attributes: ['id', 'email', 'created_at', 'last_login', 'role', 'email_verified'],
-            include: [{
-                model: Panelist,
-                as: 'panelist',
-                include: [
-                    // Include Survey Completions for history
-                    {
-                        model: SurveyCompletion,
-                        as: 'survey_completions', // Make sure this alias exists in model or use default
-                        limit: 50, // Limit history
-                        order: [['created_at', 'DESC']],
-                        include: [{ model: Survey, as: 'survey', attributes: ['title'] }]
-                    }
-                ]
-            }]
+            include: [
+                {
+                    model: Panelist,
+                    as: 'panelist',
+                    include: [
+                        {
+                            model: SurveyCompletion,
+                            as: 'completions',
+                            limit: 50,
+                            order: [['created_at', 'DESC']],
+                            include: [{ model: Survey, as: 'survey', attributes: ['title'] }]
+                        },
+                        {
+                            model: PersonaAttribute,
+                            as: 'attributes',
+                            include: [{
+                                model: AttributeDefinition,
+                                as: 'definition',
+                                attributes: ['name', 'label', 'type']
+                            }]
+                        }
+                    ]
+                }
+            ]
         });
 
         if (!user) {
+            console.log('User not found');
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        // Format data
+        console.log('Formatting user details...');
         const panelist = user.panelist || {};
-        const activityLog = (panelist.survey_completions || []).map(c => ({
+        const activityLog = (panelist.completions || []).map(c => ({
             id: c.id,
             survey_title: c.survey ? c.survey.title : 'External Survey',
             status: c.status,
@@ -243,6 +283,12 @@ const getUserDetails = async (req, res) => {
                     quality_score: panelist.quality_score,
                     total_surveys: panelist.completions_count || 0
                 },
+                attributes: (panelist.attributes || []).map(attr => ({
+                    id: attr.id,
+                    label: attr.definition?.label || attr.definition?.name,
+                    value: attr.value,
+                    type: attr.definition?.type
+                })),
                 activity_log: activityLog
             }
         });
@@ -253,11 +299,8 @@ const getUserDetails = async (req, res) => {
     }
 };
 
-/**
- * Get Leaderboard (Top Earners)
- * GET /api/admin/leaderboard
- */
 const getLeaderboard = async (req, res) => {
+    console.log('getLeaderboard called');
     try {
         const leaders = await Panelist.findAll({
             limit: 50,
@@ -274,7 +317,7 @@ const getLeaderboard = async (req, res) => {
             rank: index + 1,
             id: p.id,
             name: `${p.first_name || ''} ${p.last_name || ''}`.trim(),
-            email: p.user ? p.user.email : 'Unknown', // Mask this in frontend if needed
+            email: p.user ? p.user.email : 'Unknown',
             avatar: p.user ? p.user.avatar_url : null,
             earnings: parseFloat(p.lifetime_earnings),
             surveys: p.completions_count,

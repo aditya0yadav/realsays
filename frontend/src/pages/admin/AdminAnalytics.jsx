@@ -109,7 +109,7 @@ const AdminAnalytics = () => {
             {/* Professional Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Growth & Performance</h1>
+                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight font-display">Growth & Performance</h1>
                     <p className="text-slate-500 text-sm font-medium mt-1">Detailed analysis of user acquisition and engagement trends.</p>
                 </div>
                 <div className="flex items-center gap-3">

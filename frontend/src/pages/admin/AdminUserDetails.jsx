@@ -1,19 +1,61 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { X, Mail, Calendar, MapPin, DollarSign, Activity, Clock, Shield, Award } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Mail, Calendar, MapPin, DollarSign, Activity, Clock, Shield, Award, User, Target, BarChart3, Loader2 } from 'lucide-react';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { adminService } from '../../services/admin-api';
 
-const AdminUserDetails = ({ user, onClose }) => {
-    if (!user) return null;
+const AdminUserDetails = ({ userId, userData, onClose }) => {
+    const [fullUser, setFullUser] = useState(userData || null);
+    const [loading, setLoading] = useState(!userData);
+    const [activeTab, setActiveTab] = useState('overview'); // overview | profile | activity
 
-    // Mock Data for charts (since we might not have historical granular data yet)
+    useEffect(() => {
+        if (userId) {
+            fetchUserDetails();
+        }
+    }, [userId]);
+
+    const fetchUserDetails = async () => {
+        try {
+            setLoading(true);
+            const response = await adminService.getUserDetails(userId);
+            if (response.success) {
+                setFullUser(response.data);
+            }
+        } catch (error) {
+            console.error('Failed to fetch user details', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (loading && !fullUser) {
+        return (
+            <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                className="fixed inset-y-0 right-0 w-full max-w-4xl bg-white shadow-2xl z-50 flex items-center justify-center"
+            >
+                <div className="flex flex-col items-center gap-4">
+                    <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+                    <p className="text-sm font-medium text-slate-400">Synchronizing panelist data...</p>
+                </div>
+            </motion.div>
+        );
+    }
+
+    if (!fullUser) return null;
+
+    const { profile, financials, stats, attributes, activity_log } = fullUser;
+
     const earningsData = [
-        { name: 'Jan', value: 0 },
-        { name: 'Feb', value: user.lifetime_earnings * 0.2 },
-        { name: 'Mar', value: user.lifetime_earnings * 0.4 },
-        { name: 'Apr', value: user.lifetime_earnings * 0.5 },
-        { name: 'May', value: user.lifetime_earnings * 0.8 },
-        { name: 'Jun', value: user.lifetime_earnings }
+        { name: 'Jan', value: financials.lifetime_earnings * 0.2 },
+        { name: 'Feb', value: financials.lifetime_earnings * 0.4 },
+        { name: 'Mar', value: financials.lifetime_earnings * 0.5 },
+        { name: 'Apr', value: financials.lifetime_earnings * 0.7 },
+        { name: 'May', value: financials.lifetime_earnings * 0.9 },
+        { name: 'Jun', value: financials.lifetime_earnings }
     ];
 
     return (
@@ -21,196 +63,190 @@ const AdminUserDetails = ({ user, onClose }) => {
             initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
-            className="fixed inset-y-0 right-0 w-full max-w-6xl bg-[#F8F9FE] shadow-2xl z-50 flex flex-col md:flex-row overflow-hidden"
+            className="fixed inset-y-0 right-0 w-full max-w-5xl bg-[#F8F9FB] shadow-2xl z-50 flex flex-col md:flex-row overflow-hidden border-l border-slate-200"
         >
-            {/* Close Button Mobile */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md z-50 md:hidden"
-            >
-                <X className="w-5 h-5" />
-            </button>
-
-            {/* LEFT: Main Dashboard Area */}
-            <div className="flex-1 p-6 md:p-8 overflow-y-auto space-y-6">
-                <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-bold text-[#6366F1]">Profile Overview</h2>
-                </div>
-
-                {/* Top Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* Card 1: Earnings */}
-                    <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 relative overflow-hidden">
-                        <div className="relative z-10">
-                            <h3 className="text-3xl font-bold text-slate-800">${user.lifetime_earnings.toFixed(2)}</h3>
-                            <p className="text-slate-400 text-sm mt-1">Total Earnings</p>
-                        </div>
-                        <div className="absolute right-0 bottom-0 top-0 w-1/2 opacity-20">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={earningsData}>
-                                    <defs>
-                                        <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="#6366F1" stopOpacity={0.8} />
-                                            <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
-                                        </linearGradient>
-                                    </defs>
-                                    <Area type="monotone" dataKey="value" stroke="#6366F1" fillOpacity={1} fill="url(#colorVal)" />
-                                </AreaChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-
-                    {/* Card 2: Balance */}
-                    <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-                        <div className="flex items-start justify-between">
+            {/* Main Area */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col h-full bg-slate-50/30">
+                {/* Header Section */}
+                <div className="bg-white px-8 pt-8 pb-6 border-b border-slate-100 sticky top-0 z-20">
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center border border-indigo-100">
+                                <User className="w-7 h-7 text-indigo-600" />
+                            </div>
                             <div>
-                                <h3 className="text-3xl font-bold text-slate-800">${user.balance?.toFixed(2) || '0.00'}</h3>
-                                <p className="text-slate-400 text-sm mt-1">Current Balance</p>
-                            </div>
-                            <div className="p-3 bg-emerald-50 text-emerald-500 rounded-2xl">
-                                <DollarSign className="w-6 h-6" />
+                                <h2 className="text-xl font-bold text-slate-900 font-display">{profile.name || 'Anonymous User'}</h2>
+                                <p className="text-sm text-slate-400 font-medium">{profile.email}</p>
                             </div>
                         </div>
+                        <button onClick={onClose} className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors md:hidden">
+                            <X className="w-5 h-5 text-slate-400" />
+                        </button>
                     </div>
 
-                    {/* Card 3: Quality Score */}
-                    <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-                        <div className="flex items-start justify-between">
-                            <div>
-                                <h3 className="text-3xl font-bold text-slate-800">{user.stats?.quality_score || 100}%</h3>
-                                <p className="text-slate-400 text-sm mt-1">Quality Score</p>
-                            </div>
-                            <div className="p-3 bg-amber-50 text-amber-500 rounded-2xl">
-                                <Award className="w-6 h-6" />
-                            </div>
-                        </div>
+                    <div className="flex items-center gap-8">
+                        {['overview', 'profile', 'activity'].map(tab => (
+                            <button
+                                key={tab}
+                                onClick={() => setActiveTab(tab)}
+                                className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all relative ${activeTab === tab ? 'text-indigo-600' : 'text-slate-400 hover:text-slate-600'}`}
+                            >
+                                {tab}
+                                {activeTab === tab && (
+                                    <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-full" />
+                                )}
+                            </button>
+                        ))}
                     </div>
                 </div>
 
-                {/* Main Activities Chart */}
-                <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 h-96">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-lg font-bold text-slate-800">Earnings Activity</h3>
-                        <div className="flex gap-2 text-xs">
-                            <span className="flex items-center gap-1 text-[#6366F1]"><div className="w-2 h-2 rounded-full bg-[#6366F1]"></div> Income</span>
-                        </div>
-                    </div>
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={earningsData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                            <defs>
-                                <linearGradient id="colorMain" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#818cf8" stopOpacity={0.1} />
-                                    <stop offset="95%" stopColor="#818cf8" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94A3B8' }} dy={10} />
-                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94A3B8' }} />
-                            <Tooltip
-                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
-                            />
-                            <Area type="monotone" dataKey="value" stroke="#6366F1" strokeWidth={3} fill="url(#colorMain)" />
-                        </AreaChart>
-                    </ResponsiveContainer>
-                </div>
-
-                {/* Recent Activity List */}
-                <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
-                    <h3 className="text-lg font-bold text-slate-800 mb-6">Recent Interaction</h3>
-                    <div className="space-y-4">
-                        {user.activity_log?.length > 0 ? (
-                            user.activity_log.map((activity) => (
-                                <div key={activity.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-slate-400 shadow-sm">
-                                            <Activity className="w-5 h-5" />
+                <div className="p-8 space-y-8">
+                    {activeTab === 'overview' && (
+                        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            {/* Performance Cards */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {[
+                                    { label: 'Lifetime Yield', value: `$${financials.lifetime_earnings.toFixed(2)}`, icon: DollarSign, color: 'indigo' },
+                                    { label: 'Current Balance', value: `$${financials.balance.toFixed(2)}`, icon: Activity, color: 'emerald' },
+                                    { label: 'Quality Score', value: `${stats.quality_score || 100}%`, icon: Shield, color: 'amber' }
+                                ].map((card, i) => (
+                                    <div key={i} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className={`p-3 rounded-xl bg-${card.color}-50 text-${card.color}-600`}>
+                                                <card.icon className="w-5 h-5" />
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4 className="font-bold text-slate-800">{activity.survey_title}</h4>
-                                            <p className="text-xs text-slate-400">{new Date(activity.date).toLocaleDateString()}</p>
-                                        </div>
+                                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{card.label}</span>
+                                        <h4 className="text-2xl font-bold text-slate-900 mt-1 font-display tracking-tight">{card.value}</h4>
                                     </div>
-                                    <span className={`font-bold ${activity.status === 'complete' ? 'text-emerald-500' : 'text-slate-400'}`}>
-                                        +{activity.payout.toFixed(2)}
-                                    </span>
-                                </div>
-                            ))
-                        ) : (
-                            <p className="text-slate-400 text-center py-4">No recent activity found.</p>
-                        )}
-                    </div>
-                </div>
+                                ))}
+                            </div>
 
-            </div>
+                            {/* Chart Area */}
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm h-80">
+                                <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider opacity-50 mb-8">Performance Trajectory</h3>
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <AreaChart data={earningsData}>
+                                        <defs>
+                                            <linearGradient id="colorEarnings" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="5%" stopColor="#6366F1" stopOpacity={0.1} />
+                                                <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
+                                            </linearGradient>
+                                        </defs>
+                                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} dy={10} />
+                                        <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                                        <Tooltip
+                                            contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
+                                            formatter={(value) => [`$${value.toFixed(2)}`, 'Earnings']}
+                                        />
+                                        <Area type="monotone" dataKey="value" stroke="#6366F1" strokeWidth={3} fill="url(#colorEarnings)" />
+                                    </AreaChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                    )}
 
-            {/* RIGHT: Profile Sidebar */}
-            <div className="w-full md:w-96 bg-white border-l border-slate-100 p-8 flex flex-col h-full overflow-y-auto">
-                <div className="flex justify-between items-start mb-8">
-                    <h3 className="text-xl font-bold text-slate-800">User Profile</h3>
-                    <button onClick={onClose} className="p-2 hover:bg-slate-50 rounded-full text-slate-400">
-                        <X className="w-5 h-5" />
-                    </button>
-                </div>
-
-                {/* Avatar Area */}
-                <div className="flex flex-col items-center mb-8">
-                    <div className="w-32 h-32 rounded-full p-1 border-2 border-dashed border-[#6366F1] mb-4 relative">
-                        <div className="w-full h-full rounded-full bg-slate-100 overflow-hidden">
-                            {user.avatar ? (
-                                <img src={user.avatar} alt="User" className="w-full h-full object-cover" />
+                    {activeTab === 'profile' && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in slide-in-from-right-4 duration-500">
+                            {attributes.length > 0 ? (
+                                attributes.map(attr => (
+                                    <div key={attr.id} className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+                                        <div className="space-y-1">
+                                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{attr.label}</span>
+                                            <p className="text-sm font-bold text-slate-900">{attr.value || 'Not Disclosed'}</p>
+                                        </div>
+                                        <Target className="w-4 h-4 text-indigo-300" />
+                                    </div>
+                                ))
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-[#6366F1] bg-indigo-50">
-                                    {user.name?.charAt(0)}
+                                <div className="col-span-2 py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200">
+                                    <p className="text-slate-400 text-sm font-medium">No persona attributes available for this panelist.</p>
                                 </div>
                             )}
                         </div>
-                        {/* Status Badge */}
-                        <div className={`absolute bottom-2 right-2 w-6 h-6 rounded-full border-4 border-white ${user.status === 'active' ? 'bg-emerald-500' : 'bg-slate-400'}`} />
-                    </div>
-                    <h2 className="text-2xl font-bold text-slate-900">{user.name}</h2>
-                    <p className="text-slate-400">User</p>
+                    )}
+
+                    {activeTab === 'activity' && (
+                        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                            {activity_log.length > 0 ? (
+                                activity_log.map(activity => (
+                                    <div key={activity.id} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between group hover:border-indigo-100 transition-colors">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center">
+                                                <BarChart3 className="w-5 h-5 text-slate-400 group-hover:text-indigo-500 transition-colors" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-sm font-bold text-slate-900">{activity.survey_title}</h4>
+                                                <p className="text-[11px] text-slate-400 font-medium">{new Date(activity.date).toLocaleDateString()}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className={`text-sm font-bold ${activity.status === 'complete' ? 'text-emerald-500' : 'text-slate-400'}`}>
+                                                {activity.status === 'complete' ? '+' : ''}${activity.payout.toFixed(2)}
+                                            </span>
+                                            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-300">{activity.status}</p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="py-20 text-center bg-white rounded-3xl border border-dashed border-slate-200">
+                                    <p className="text-slate-400 text-sm font-medium">No survey activity recorded.</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Right Sidebar - Critical Info */}
+            <div className="w-full md:w-96 bg-white border-l border-slate-100 p-8 flex flex-col z-30">
+                <div className="flex justify-between items-center mb-10 h-10">
+                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Administrative Details</h3>
+                    <button onClick={onClose} className="p-2 hover:bg-slate-50 rounded-xl transition-colors hidden md:block">
+                        <X className="w-5 h-5 text-slate-300" />
+                    </button>
                 </div>
 
-                {/* Status Section */}
-                <div className="space-y-6">
-                    <div className="bg-[#6366F1]/5 p-6 rounded-2xl">
-                        <div className="flex justify-between items-center mb-2">
-                            <span className="text-[#6366F1] font-bold">Account Status</span>
-                            <span className="text-2xl font-bold text-[#6366F1]">Active</span>
-                        </div>
-                        <div className="w-full bg-white h-2 rounded-full overflow-hidden">
-                            <div className="w-full h-full bg-[#6366F1]"></div>
+                <div className="space-y-10">
+                    <div>
+                        <div className="bg-slate-50 p-6 rounded-3xl space-y-4 border border-slate-100">
+                            {[
+                                { label: 'Account ID', value: `#${profile.id.substring(0, 8)}`, icon: Shield },
+                                { label: 'Last Interaction', value: profile.last_login ? new Date(profile.last_login).toLocaleDateString() : 'Never', icon: Clock },
+                                { label: 'Enrollment', value: new Date(profile.joined_at).toLocaleDateString(), icon: Calendar },
+                                { label: 'Security Status', value: profile.verified ? 'Verified' : 'Unverified', icon: Target }
+                            ].map((info, i) => (
+                                <div key={i} className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <info.icon className="w-3.5 h-3.5 text-slate-300" />
+                                        <span className="text-[11px] font-semibold text-slate-400">{info.label}</span>
+                                    </div>
+                                    <span className={`text-[11px] font-bold ${info.label === 'Security Status' ? (profile.verified ? 'text-emerald-500' : 'text-amber-500') : 'text-slate-900'}`}>
+                                        {info.value}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
                     <div className="space-y-4">
-                        <div className="flex items-center gap-4 text-slate-600">
-                            <Mail className="w-5 h-5 text-slate-400" />
-                            <span className="text-sm font-medium">{user.email}</span>
-                        </div>
-                        <div className="flex items-center gap-4 text-slate-600">
-                            <Calendar className="w-5 h-5 text-slate-400" />
-                            <span className="text-sm font-medium">Joined {new Date(user.joined_at).toLocaleDateString()}</span>
-                        </div>
-                        <div className="flex items-center gap-4 text-slate-600">
-                            <Clock className="w-5 h-5 text-slate-400" />
-                            <span className="text-sm font-medium">Last Login: {user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never'}</span>
-                        </div>
-                        <div className="flex items-center gap-4 text-slate-600">
-                            <MapPin className="w-5 h-5 text-slate-400" />
-                            <span className="text-sm font-medium">{user.country || 'Unknown Location'}</span>
+                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-2">Governing Actions</h4>
+                        <div className="space-y-3">
+                            <button className="w-full py-4 px-6 bg-slate-900 text-white rounded-2xl text-[11px] font-bold hover:bg-indigo-600 transition-all shadow-lg shadow-slate-900/10 active:scale-[0.98]">
+                                Send Security Alert
+                            </button>
+                            <button className="w-full py-4 px-6 bg-white border border-slate-100 text-red-500 rounded-2xl text-[11px] font-bold hover:bg-red-50 hover:border-red-100 transition-all active:scale-[0.98]">
+                                Suspend Account
+                            </button>
                         </div>
                     </div>
 
-                    <div className="pt-8 border-t border-slate-100">
-                        <h4 className="font-bold text-slate-900 mb-4">Actions</h4>
-                        <div className="grid grid-cols-2 gap-3">
-                            <button className="py-3 px-4 bg-slate-50 rounded-xl text-slate-600 font-bold text-sm hover:bg-slate-100 transition-colors">
-                                Reset Pass
-                            </button>
-                            <button className="py-3 px-4 bg-red-50 rounded-xl text-red-500 font-bold text-sm hover:bg-red-100 transition-colors">
-                                Ban User
-                            </button>
+                    <div className="mt-auto pt-10">
+                        <div className="p-6 rounded-3xl bg-indigo-50 border border-indigo-100 flex flex-col items-center text-center">
+                            <BarChart3 className="w-8 h-8 text-indigo-400 mb-2" />
+                            <h5 className="text-xs font-bold text-indigo-900 mb-1">Total Completions</h5>
+                            <p className="text-2xl font-bold text-indigo-600 font-display">{stats.total_surveys}</p>
                         </div>
                     </div>
                 </div>
