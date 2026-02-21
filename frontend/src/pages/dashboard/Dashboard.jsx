@@ -8,7 +8,7 @@ import {
     Settings,
     LogOut
 } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import logo from '../../assets/logo.png';
 
@@ -21,6 +21,7 @@ import ProfileCompletionModal from '../../components/profile/ProfileCompletionMo
 
 const Dashboard = () => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const activeTab = searchParams.get('tab') || 'discover';
 
@@ -28,6 +29,11 @@ const Dashboard = () => {
 
     const setActiveTab = (tab) => {
         setSearchParams({ tab });
+    };
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/');
     };
 
     // Render helper
@@ -50,7 +56,7 @@ const Dashboard = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
                 user={user}
-                logout={logout}
+                logout={handleLogout}
             />
 
             {/* Main Content Area */}

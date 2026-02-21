@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     User, Mail, MapPin, Globe, Camera, Save, Loader2,
     Settings, Grid, Lock, Activity, ChevronRight, Edit3,
@@ -109,6 +109,7 @@ const CustomMultiSelect = ({ value = [], options, onChange, label }) => {
 
 const ProfileTab = () => {
     const { user, refreshUser, logout } = useAuth();
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
@@ -339,8 +340,17 @@ const ProfileTab = () => {
                         <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
                             <h1 className="text-4xl font-display font-bold text-slate-900 tracking-tight">{user?.username || 'Member'}</h1>
                             <div className="flex items-center gap-2">
-                                <span className="p-1 px-3 bg-indigo-50 text-indigo-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-indigo-100/50">Verified Panelist</span>
                                 <span className="p-1 px-3 bg-emerald-50 text-emerald-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-emerald-100/50">Level {Math.floor(stats.completions / 10) + 1}</span>
+                                <button
+                                    onClick={async () => {
+                                        await logout();
+                                        navigate('/');
+                                    }}
+                                    className="lg:hidden flex items-center gap-2 p-1.5 px-3 bg-red-50 text-red-600 rounded-full text-[10px] font-black uppercase tracking-widest border border-red-100/30 active:scale-95 transition-all ml-auto md:ml-0"
+                                >
+                                    <LogOut className="w-3 h-3" />
+                                    Sign Out
+                                </button>
                             </div>
                         </div>
                         <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-6">
@@ -432,23 +442,6 @@ const ProfileTab = () => {
                         </motion.div>
                     )}
                 </AnimatePresence>
-            </div>
-
-            {/* Mobile-Only Account Actions */}
-            <div className="mt-16 pt-12 border-t border-slate-100 lg:hidden">
-                <div className="space-y-4">
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Account Management</p>
-                    <button
-                        onClick={logout}
-                        className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-red-50 text-red-600 rounded-[2rem] font-display font-bold border border-red-100/50 active:scale-95 transition-all"
-                    >
-                        <LogOut className="w-5 h-5" />
-                        Sign Out of Session
-                    </button>
-                    <p className="text-center text-[10px] text-slate-400 font-medium px-8 leading-relaxed">
-                        Securely terminate your current session. You will need to sign in again to access your dashboard.
-                    </p>
-                </div>
             </div>
         </div>
     );

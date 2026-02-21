@@ -69,7 +69,7 @@ const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
                         </div>
                         <button
                             onClick={logout}
-                            className="xl:block lg:hidden p-2.5 text-white/20 hover:text-red-400 hover:bg-red-400/10 rounded-xl transition-all"
+                            className="block p-2.5 text-white/20 hover:text-red-400 hover:bg-red-400/10 rounded-xl transition-all"
                             title="Logout"
                         >
                             <LogOut size={16} />
