@@ -293,12 +293,14 @@ const ProfileTab = () => {
 
     const getAvatarUrl = () => {
         if (!user?.avatar_url) return null;
+        let url = user.avatar_url;
         if (user.avatar_url.startsWith('/uploads')) {
             const { hostname, protocol } = window.location;
             const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `${protocol}//${hostname}:5000`;
-            return `${baseUrl}${user.avatar_url}`;
+            url = `${baseUrl}${user.avatar_url}`;
         }
-        return user.avatar_url;
+        console.log('DEBUG: ProfileTab Avatar URL:', url);
+        return url;
     };
 
     const completionPercentage = () => {
