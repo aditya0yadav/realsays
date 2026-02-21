@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { Wallet, Lock, User } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { getAssetUrl } from '../../services/api';
 
 const Header = () => {
     const { user, isAuthenticated } = useAuth();
@@ -11,13 +12,7 @@ const Header = () => {
     const getAvatarUrl = () => {
         const path = user?.avatar_url || user?.panelist?.profile_picture;
         if (!path) return `https://api.dicebear.com/7.x/initials/svg?seed=${user?.name || user?.email || 'User'}&backgroundColor=5B6CFF,0F1E3A&fontFamily=Arial&fontSize=40`;
-
-        if (path.startsWith('/uploads')) {
-            const { hostname, protocol } = window.location;
-            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `${protocol}//${hostname}:5000`;
-            return `${baseUrl}${path}`;
-        }
-        return path;
+        return getAssetUrl(path);
     };
 
     const avatarUrl = getAvatarUrl();

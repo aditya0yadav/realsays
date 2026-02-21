@@ -7,6 +7,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { Country, State, City } from 'country-state-city';
 import { useAuth } from '../../../hooks/useAuth';
+import api, { getAssetUrl } from '../../../services/api';
 import userService from '../../../services/user.service';
 import personaService from '../../../services/persona.service';
 import { toast } from 'react-hot-toast';
@@ -292,14 +293,8 @@ const ProfileTab = () => {
     };
 
     const getAvatarUrl = () => {
-        if (!user?.avatar_url) return null;
-        let url = user.avatar_url;
-        if (user.avatar_url.startsWith('/uploads')) {
-            const { hostname, protocol } = window.location;
-            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `${protocol}//${hostname}:5000`;
-            url = `${baseUrl}${user.avatar_url}`;
-        }
-        console.log('DEBUG: ProfileTab Avatar URL:', url);
+        const url = getAssetUrl(user?.avatar_url);
+        if (url) console.log('DEBUG: ProfileTab Avatar URL:', url);
         return url;
     };
 

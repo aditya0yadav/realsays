@@ -10,6 +10,7 @@ import {
     Search,
     ChevronRight
 } from 'lucide-react';
+import { getAssetUrl } from '../../services/api';
 import logo from '../../assets/logo.png';
 
 const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
@@ -53,7 +54,7 @@ const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
                             <div className="w-10 h-10 min-w-[40px] rounded-full p-[2px] bg-gradient-to-tr from-indigo-500 to-blue-400 border border-white/10 shadow-lg flex items-center justify-center text-xs text-white font-black uppercase overflow-hidden transition-transform group-hover:scale-110 duration-500">
                                 {user?.avatar_url ? (
                                     <img
-                                        src={user.avatar_url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace('/api', '') || `${window.location.protocol}//${window.location.hostname}:5000`}${user.avatar_url}` : user.avatar_url}
+                                        src={getAssetUrl(user.avatar_url)}
                                         alt={user?.name}
                                         className="w-full h-full rounded-full object-cover"
                                     />
