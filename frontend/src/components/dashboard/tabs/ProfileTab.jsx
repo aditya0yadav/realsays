@@ -294,8 +294,8 @@ const ProfileTab = () => {
     const getAvatarUrl = () => {
         if (!user?.avatar_url) return null;
         if (user.avatar_url.startsWith('/uploads')) {
-            const { hostname } = window.location;
-            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `http://${hostname}:5000`;
+            const { hostname, protocol } = window.location;
+            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `${protocol}//${hostname}:5000`;
             return `${baseUrl}${user.avatar_url}`;
         }
         return user.avatar_url;

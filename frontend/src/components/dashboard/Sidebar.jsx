@@ -23,10 +23,10 @@ const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
             </div>
 
             {/* Logo Section */}
-            <div className="p-8 relative z-10">
-                <div className="flex items-center gap-3 group cursor-pointer">
-                    <div className="p-2 bg-white/5 group-hover:border-indigo-500/50 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-                        <img src={logo} alt="RealSays" className="h-6 w-auto brightness-0 invert" />
+            <div className="p-8 pb-4 relative z-10">
+                <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setActiveTab('home')}>
+                    <div className="transition-all duration-500 group-hover:drop-shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                        <img src={logo} alt="RealSays" className="h-10 w-auto brightness-0 invert" />
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@ const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
                             <div className="w-10 h-10 min-w-[40px] rounded-full p-[2px] bg-gradient-to-tr from-indigo-500 to-blue-400 border border-white/10 shadow-lg flex items-center justify-center text-xs text-white font-black uppercase overflow-hidden transition-transform group-hover:scale-110 duration-500">
                                 {user?.avatar_url ? (
                                     <img
-                                        src={user.avatar_url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace('/api', '') || `http://${window.location.hostname}:5000`}${user.avatar_url}` : user.avatar_url}
+                                        src={user.avatar_url.startsWith('/uploads') ? `${import.meta.env.VITE_API_URL?.replace('/api', '') || `${window.location.protocol}//${window.location.hostname}:5000`}${user.avatar_url}` : user.avatar_url}
                                         alt={user?.name}
                                         className="w-full h-full rounded-full object-cover"
                                     />

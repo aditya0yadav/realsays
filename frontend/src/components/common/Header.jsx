@@ -13,8 +13,8 @@ const Header = () => {
         if (!path) return `https://api.dicebear.com/7.x/initials/svg?seed=${user?.name || user?.email || 'User'}&backgroundColor=5B6CFF,0F1E3A&fontFamily=Arial&fontSize=40`;
 
         if (path.startsWith('/uploads')) {
-            const { hostname } = window.location;
-            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `http://${hostname}:5000`;
+            const { hostname, protocol } = window.location;
+            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `${protocol}//${hostname}:5000`;
             return `${baseUrl}${path}`;
         }
         return path;
