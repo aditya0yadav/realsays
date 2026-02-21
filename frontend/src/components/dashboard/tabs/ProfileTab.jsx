@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
     User, Mail, MapPin, Globe, Camera, Save, Loader2,
     Settings, Grid, Lock, Activity, ChevronRight, Edit3,
