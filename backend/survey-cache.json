@@ -1,5 +1,5 @@
 {
-  "lastFetched": 1771660639053,
+  "lastFetched": 1771667397213,
   "count": 20,
   "data": [
     {
@@ -1495,14 +1495,14 @@
         }
       ],
       "quota": {
-        "required": 1170,
+        "required": 1169,
         "remaining": 0
       },
       "status": "active",
       "raw_data": {
         "SurveyId": 1758341246,
         "Name": "1758337949",
-        "TotalCompleteRequired": 1170,
+        "TotalCompleteRequired": 1169,
         "CPI": 0.95,
         "LOI": 9,
         "IR": 85,
@@ -1907,5 +1907,5 @@
       }
     }
   ],
-  "auditTimestamp": "2026-02-21T07:57:19.053Z"
+  "auditTimestamp": "2026-02-21T09:49:57.213Z"
 }

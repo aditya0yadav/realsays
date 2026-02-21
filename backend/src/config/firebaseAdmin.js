@@ -1,15 +1,35 @@
 const admin = require("firebase-admin");
 
-// You will need to download your service account key from Firebase Console
-// and place it in a secure location (e.g., config/firebase-service-account.json)
-// and reference it via environment variables.
+const fs = require('fs');
+const path = require('path');
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || "{}");
+const credPath = path.join(process.cwd(), 'realsays-cred.json');
+let serviceAccount;
 
-if (Object.keys(serviceAccount).length > 0) {
+if (fs.existsSync(credPath)) {
+    try {
+        serviceAccount = require(credPath);
+        console.log('Firebase: Loaded credentials from realsays-cred.json');
+    } catch (e) {
+        console.error('Firebase: Error loading realsays-cred.json:', e.message);
+    }
+}
+
+if (!serviceAccount && process.env.FIREBASE_SERVICE_ACCOUNT) {
+    try {
+        serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+        console.log('Firebase: Loaded credentials from environment variable');
+    } catch (e) {
+        console.error('Firebase: Error parsing FIREBASE_SERVICE_ACCOUNT env:', e.message);
+    }
+}
+
+if (serviceAccount) {
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
     });
+} else {
+    console.warn('Firebase: No credentials found. Admin features may be disabled.');
 }
 
 module.exports = admin;
