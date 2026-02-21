@@ -23,8 +23,10 @@ const Signup = () => {
 
             if (response.data.success) {
                 // Google signup success
-                localStorage.setItem('accessToken', idToken);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
+                const { user, accessToken, refreshToken } = response.data;
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                localStorage.setItem('user', JSON.stringify(user));
                 window.location.href = '/onboarding';
             }
         } catch (error) {
@@ -48,8 +50,10 @@ const Signup = () => {
             // 3. Sync with our Backend
             const response = await api.post('/auth/firebase', { idToken });
             if (response.data.success) {
-                localStorage.setItem('accessToken', idToken);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
+                const { user, accessToken, refreshToken } = response.data;
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                localStorage.setItem('user', JSON.stringify(user));
                 window.location.href = '/onboarding';
             }
         } catch (error) {

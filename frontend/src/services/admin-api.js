@@ -1,7 +1,13 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+    if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+    const { hostname } = window.location;
+    return `http://${hostname}:5000/api`;
+};
+
 const adminApi = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: getBaseURL(),
     headers: {
         'Content-Type': 'application/json'
     }

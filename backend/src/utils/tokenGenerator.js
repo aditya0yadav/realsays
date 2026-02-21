@@ -12,7 +12,7 @@ const generateAccessToken = (user, panelistId = null) => {
     }
 
     return jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: '15m'
+        expiresIn: '7d'
     });
 };
 

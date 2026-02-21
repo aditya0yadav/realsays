@@ -14,6 +14,7 @@ import Login from '../pages/auth/Login';
 import Signup from '../pages/auth/Signup';
 import Onboarding from '../pages/onboarding/Onboarding';
 import Dashboard from '../pages/dashboard/Dashboard';
+import SurveyStatus from '../pages/survey/SurveyStatus';
 
 // Info Pages
 import ResearchPanels from '../pages/info/ResearchPanels';
@@ -41,6 +42,7 @@ const AppRoutes = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/survey-status" element={<SurveyStatus />} />
                 <Route path="/admin/login" element={<AdminLogin />} />
 
                 <Route path="/" element={<RootLayout />}>

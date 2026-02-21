@@ -10,8 +10,10 @@ const breakerOptions = {
 
 const fetchBreaker = new CircuitBreaker(async (config, limit) => {
     const { listUrl, auth } = config;
+    const separator = listUrl.includes('?') ? '&' : '?';
+    const finalUrl = `${listUrl}${separator}countrieISOcode=US`;
     const { data } = await axios.get(
-        listUrl,
+        finalUrl,
         {
             headers: {
                 'Authorization': auth.app_key,

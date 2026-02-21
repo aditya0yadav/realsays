@@ -1,4 +1,4 @@
-const admin = require('../config/firebaseAdmin');
+const jwt = require('jsonwebtoken');
 const { User, Panelist } = require('../models');
 
 const protect = async (req, res, next) => {
@@ -9,43 +9,25 @@ const protect = async (req, res, next) => {
         req.headers.authorization.startsWith('Bearer')
     ) {
         try {
-            // Verify Firebase ID Token
             token = req.headers.authorization.split(' ')[1];
 
-            // Verify Firebase ID Token
-            const decodedToken = await admin.auth().verifyIdToken(token);
+            // Verify our internal JWT
+            const decodedAccess = jwt.verify(token, process.env.JWT_SECRET);
 
-            // Find user by Google ID (Firebase UID)
-            let user = await User.findOne({
-                where: { google_id: decodedToken.uid },
+            // Find user in database
+            const user = await User.findByPk(decodedAccess.id, {
                 attributes: { exclude: ['password_hash'] }
             });
 
-            // Fallback: If not found by google_id, try by email (especially for older accounts or email login)
             if (!user) {
-                user = await User.findOne({
-                    where: { email: decodedToken.email },
-                    attributes: { exclude: ['password_hash'] }
-                });
-
-                // If found by email but missing google_id, update it
-                if (user && !user.google_id) {
-                    user.google_id = decodedToken.uid;
-                    await user.save();
-                }
-            }
-
-            if (!user) {
-                res.status(401);
-                throw new Error('Not authorized, user not found in database');
+                return res.status(401).json({ message: 'Not authorized, user not found' });
             }
 
             // Fetch panelist data if available
             const panelist = await Panelist.findOne({ where: { user_id: user.id } });
 
             if (panelist && panelist.status === 'banned') {
-                res.status(403);
-                throw new Error('Access denied. Account is banned.');
+                return res.status(403).json({ message: 'Access denied. Account is banned.' });
             }
 
             req.user = user;
@@ -55,15 +37,11 @@ const protect = async (req, res, next) => {
 
             next();
         } catch (error) {
-            console.error('Middleware Auth Error for token:', token?.substring(0, 10) + '...', error.message);
-            res.status(401);
-            if (!res.headersSent) {
-                res.json({ message: 'Not authorized, token failed' });
-            }
+            console.error('Middleware Auth Error:', error.message);
+            res.status(401).json({ message: 'Not authorized, token failed' });
         }
     } else {
-        res.status(401);
-        res.json({ message: 'Not authorized, no token' });
+        res.status(401).json({ message: 'Not authorized, no token' });
     }
 };
 

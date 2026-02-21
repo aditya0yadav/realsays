@@ -89,17 +89,15 @@ const Dashboard = () => {
 const MobileNavLink = ({ icon, active, onClick }) => (
     <button
         onClick={onClick}
-        className={`relative p-4 flex flex-col items-center justify-center gap-1 transition-all ${active ? 'text-white' : 'text-white/30'}`}
+        className={`relative flex-1 py-1 flex flex-col items-center justify-center transition-all ${active ? 'text-indigo-400' : 'text-white/40'}`}
     >
         <div className="relative z-10">
             {React.cloneElement(icon, { size: 24, strokeWidth: active ? 2.5 : 2 })}
         </div>
         {active && (
             <motion.div
-                layoutId="mobileActiveGlow"
-                className="absolute inset-0 bg-gradient-to-tr from-[#5B6CFF] to-[#4FD1E8] rounded-full blur-xl opacity-30"
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 0.3, scale: 1.2 }}
+                layoutId="mobileActiveIndicator_premium"
+                className="absolute -bottom-2 w-1.5 h-1.5 bg-indigo-400 rounded-full shadow-[0_0_10px_rgba(129,140,248,0.8)]"
             />
         )}
     </button>

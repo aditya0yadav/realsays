@@ -16,7 +16,9 @@ const AdminLogin = () => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/admin/login', {
+            const { hostname } = window.location;
+            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `http://${hostname}:5000`;
+            const response = await axios.post(`${baseUrl}/api/auth/admin/login`, {
                 username,
                 password
             });

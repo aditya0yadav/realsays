@@ -1,7 +1,14 @@
 import axios from 'axios';
 
+const getBaseURL = () => {
+    if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+    // Fallback to current hostname for mobile/other device access
+    const { hostname } = window.location;
+    return `http://${hostname}:5000/api`;
+};
+
 const api = axios.create({
-    baseURL: 'http://localhost:5000/api', // Backend hosted on port 5000
+    baseURL: getBaseURL(),
     headers: {
         'Content-Type': 'application/json',
     },
@@ -35,7 +42,7 @@ api.interceptors.response.use(
                 if (refreshToken) {
                     try {
                         // Attempting token refresh
-                        const { data } = await axios.post('http://localhost:5000/api/auth/refresh', {
+                        const { data } = await axios.post(`${getBaseURL()}/auth/refresh`, {
                             refreshToken,
                         });
 

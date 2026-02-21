@@ -37,7 +37,7 @@ const register = async (userData, userAgent) => {
 
     // Store refresh token
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7); // 7 days
+    expiresAt.setDate(expiresAt.getDate() + 30); // 30 days
 
     await RefreshToken.create({
         user_id: user.id,
@@ -135,7 +135,7 @@ const refreshAccessToken = async (token, userAgent) => {
 
     const newRefreshTokenString = generateRefreshToken();
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
+    expiresAt.setDate(expiresAt.getDate() + 30); // 30 days
 
     await RefreshToken.create({
         user_id: user.id,
@@ -229,6 +229,22 @@ const firebaseLogin = async (decodedToken, userAgent) => {
     user.last_login = new Date();
     await user.save();
 
+    // Generate tokens for session persistence
+    const panelistId = user.panelist ? user.panelist.id : null;
+    const accessToken = generateAccessToken(user, panelistId);
+    const refreshTokenString = generateRefreshToken();
+
+    // Store refresh token (30 days shelf life)
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 30);
+
+    await RefreshToken.create({
+        user_id: user.id,
+        token: refreshTokenString,
+        expires_at: expiresAt,
+        user_agent: userAgent
+    });
+
     return {
         user: {
             id: user.id,
@@ -237,7 +253,9 @@ const firebaseLogin = async (decodedToken, userAgent) => {
             firstName: user.panelist ? user.panelist.first_name : null,
             lastName: user.panelist ? user.panelist.last_name : null,
             avatar: user.avatar_url || (user.panelist ? user.panelist.profile_picture : null)
-        }
+        },
+        accessToken,
+        refreshToken: refreshTokenString
     };
 };
 

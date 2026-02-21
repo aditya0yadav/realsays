@@ -71,5 +71,46 @@ module.exports = [
         title: 'What is your race?',
         type: 'single-select',
         options: ['White', 'Black/African American', 'Asian', 'Native Hawaiian/Pacific Islander', 'American Indian/Alaska Native', 'Other', 'Prefer not to answer']
+    },
+    {
+        key: 'state',
+        title: 'Which state/region do you live in?',
+        type: 'single-select',
+        options: [] // Will be dynamically populated or managed 
+    },
+    {
+        key: 'city',
+        title: 'Which city do you live in?',
+        type: 'single-select',
+        options: [] // Will be dynamically populated
+    },
+    {
+        key: 'job_title',
+        title: 'Which best describes your job role?',
+        type: 'single-select',
+        options: [
+            'C-Level Executive (CEO, CTO, etc.)',
+            'SVP / VP / Director',
+            'Manager / Supervisor',
+            'Administrative / Clerical',
+            'Sales / Business Development',
+            'Marketing / Communications',
+            'Software Engineering / IT',
+            'Legal / Compliance',
+            'Finance / Accounting',
+            'Human Resources',
+            'Healthcare / Medical',
+            'Education / Academic',
+            'Scientific / Research',
+            'Creative / Design',
+            'Student',
+            'Retired / Not Employed'
+        ]
+    },
+    {
+        key: 'children',
+        title: 'How many children do you have under 18?',
+        type: 'single-select',
+        options: ['None', '1', '2', '3', '4', '5+']
     }
 ];

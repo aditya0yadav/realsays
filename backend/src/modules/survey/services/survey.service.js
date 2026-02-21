@@ -42,9 +42,8 @@ async function getAllSurveys(panelistId, forceFetch = false) {
             await refreshSurveyRegistry(true);
         }
 
-        // 1. Get Registry from Redis
-        const cachedRegistry = await redis.get('survey_registry');
-        const surveyRegistryData = cachedRegistry ? JSON.parse(cachedRegistry) : [];
+        // 1. Get Registry from Local Memory
+        const surveyRegistryData = surveyRegistry.data || [];
 
         if (!panelistId) return surveyRegistryData;
 
@@ -207,6 +206,7 @@ function standardizeSurvey(s, providerSlug) {
     // Basic extraction with fallbacks
     return {
         provider: providerSlug,
+        providerId: s.providerId, // Ensure the DB UUID is preserved
         providerSurveyId: String(s.providerSurveyId || s.surveyID || s.SurveyId),
         title: s.title || s.projectBrief || s.Name || 'Survey Mission',
         payout: parseFloat(s.payout || s.surveyCPI || s.CPI) || 0,
@@ -227,16 +227,19 @@ function standardizeSurvey(s, providerSlug) {
  */
 async function refreshSurveyRegistry(forceFetch = false) {
     try {
-        const lastFetched = await redis.get('survey_registry_last_fetched');
+        const lastFetched = surveyRegistry.lastFetched;
         const now = Date.now();
 
-        if (!forceFetch && lastFetched && (now - parseInt(lastFetched) < CACHE_DURATION)) {
+        if (!forceFetch && lastFetched && (now - lastFetched < CACHE_DURATION)) {
             return;
         }
 
-        // Set a lock/cooldown to prevent multiple simultaneous fetches across instances
-        const lock = await redis.set('survey_fetch_lock', 'true', 'NX', 'PX', 30000); // 30s lock
-        if (!lock && !forceFetch) return;
+        // Lock logic can remain if Redis is available, but for now we prioritize local refresh
+        // Optional: Skip lock for local dev if hit with forceFetch
+        if (process.env.NODE_ENV === 'production' && !forceFetch) {
+            const lock = await redis.set('survey_fetch_lock', 'true', 'NX', 'PX', 30000); // 30s lock
+            if (!lock) return;
+        }
 
         const activeProviders = await SurveyProvider.findAll({ where: { is_active: true } });
 
@@ -312,10 +315,15 @@ async function refreshSurveyRegistry(forceFetch = false) {
         const flattened = results.flat();
         const standardizedData = flattened.map(s => standardizeSurvey(s, s.provider));
 
-        // Save to Redis
-        await redis.set('survey_registry', JSON.stringify(standardizedData));
-        await redis.set('survey_registry_last_fetched', String(Date.now()));
-        await redis.del('survey_fetch_lock');
+        // Update In-Memory Registry
+        surveyRegistry.data = standardizedData;
+        surveyRegistry.lastFetched = Date.now();
+
+        // Optional: Mirror to Redis for other instances if available, but don't depend on it
+        try {
+            await redis.set('survey_registry', JSON.stringify(standardizedData), 'EX', 3600);
+            await redis.del('survey_fetch_lock');
+        } catch (e) { }
 
         // Persist to file for debugging/audit
         try {
@@ -396,25 +404,28 @@ async function refreshSurveyRegistry(forceFetch = false) {
  * Persists a survey to the DB only when the user decides to visit/take it
  */
 async function persistSurveyOnVisit(providerSlug, providerSurveyId) {
-    const cachedRegistry = await redis.get('survey_registry');
-    const surveyRegistryData = cachedRegistry ? JSON.parse(cachedRegistry) : [];
+    const surveyRegistryData = surveyRegistry.data || [];
 
     const surveyData = surveyRegistryData.find(s =>
         s.provider === providerSlug && s.providerSurveyId === providerSurveyId
     );
 
+    // Get Provider from DB to ensure we have the ID, especially if cache is stale
+    const provider = await SurveyProvider.findOne({ where: { slug: providerSlug } });
+    if (!provider) return null;
+
     if (!surveyData) {
         // If not in cache, check if already in DB
-        return await Survey.findOne({ where: { provider_survey_id: providerSurveyId } });
+        return await Survey.findOne({ where: { provider_survey_id: providerSurveyId, provider_id: provider.id } });
     }
 
     const [survey, created] = await Survey.findOrCreate({
         where: {
-            provider_id: surveyData.providerId,
+            provider_id: provider.id,
             provider_survey_id: surveyData.providerSurveyId
         },
         defaults: {
-            provider_id: surveyData.providerId,
+            provider_id: provider.id,
             provider_survey_id: surveyData.providerSurveyId,
             title: surveyData.title,
             payout: surveyData.payout,

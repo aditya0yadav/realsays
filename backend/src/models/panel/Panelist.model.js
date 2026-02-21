@@ -62,6 +62,26 @@ const Panelist = sequelize.define('Panelist', {
     profile_picture: {
         type: DataTypes.STRING(1024),
         allowNull: true
+    },
+    bio: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    city: {
+        type: DataTypes.STRING(100),
+        allowNull: true
+    },
+    zip_code: {
+        type: DataTypes.STRING(20),
+        allowNull: true
+    },
+    timezone: {
+        type: DataTypes.STRING(100),
+        allowNull: true
+    },
+    country: {
+        type: DataTypes.STRING(100),
+        allowNull: true
     }
 }, {
     tableName: 'panelists',

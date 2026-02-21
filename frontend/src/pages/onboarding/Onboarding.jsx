@@ -234,7 +234,11 @@ const Onboarding = () => {
                                     className="w-full max-w-sm mx-auto"
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={animationPhase === 'content' ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-                                    transition={{ delay: 0.8, duration: 0.4 }}
+                                    transition={{
+                                        delay: (currentQuestion.question.length * 0.01) + 0.5,
+                                        duration: 0.5,
+                                        ease: "easeOut"
+                                    }}
                                 >
                                     {isTextInput ? (
                                         <motion.form

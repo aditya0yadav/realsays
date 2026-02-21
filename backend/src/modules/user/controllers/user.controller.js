@@ -82,7 +82,7 @@ const getProfileSummary = async (req, res) => {
                 {
                     model: Panelist,
                     as: 'panelist',
-                    attributes: ['id', 'first_name', 'last_name', 'status', 'quality_score', 'balance', 'lifetime_earnings'],
+                    attributes: ['id', 'first_name', 'last_name', 'status', 'quality_score', 'balance', 'lifetime_earnings', 'bio', 'city', 'zip_code', 'timezone', 'country'],
                     include: [
                         {
                             model: PersonaAttribute,
@@ -124,6 +124,11 @@ const getProfileSummary = async (req, res) => {
                 pending_bonus: user.panelist.pending_bonus,
                 completions_count: user.panelist.completions_count,
                 lifetime_earnings: user.panelist.lifetime_earnings,
+                bio: user.panelist.bio,
+                city: user.panelist.city,
+                zip_code: user.panelist.zip_code,
+                timezone: user.panelist.timezone,
+                country: user.panelist.country,
                 responses: user.panelist.attributes.reduce((acc, attr) => {
                     acc[attr.definition.key] = {
                         value: attr.value,
@@ -153,13 +158,18 @@ const getProfileSummary = async (req, res) => {
  */
 const updateProfile = async (req, res) => {
     try {
-        const { first_name, last_name } = req.body;
+        const { first_name, last_name, bio, city, zip_code, timezone, country } = req.body;
         const userId = req.user.id;
 
         // Update Panelist model
         const updateData = {};
         if (first_name !== undefined) updateData.first_name = first_name;
         if (last_name !== undefined) updateData.last_name = last_name;
+        if (bio !== undefined) updateData.bio = bio;
+        if (city !== undefined) updateData.city = city;
+        if (zip_code !== undefined) updateData.zip_code = zip_code;
+        if (timezone !== undefined) updateData.timezone = timezone;
+        if (country !== undefined) updateData.country = country;
 
         if (Object.keys(updateData).length > 0) {
             await Panelist.update(updateData, { where: { user_id: userId } });

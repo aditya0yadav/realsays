@@ -21,8 +21,10 @@ const Login = () => {
 
             if (response.data.success) {
                 // Login success
-                localStorage.setItem('accessToken', idToken);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
+                const { user, accessToken, refreshToken } = response.data;
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                localStorage.setItem('user', JSON.stringify(user));
                 window.location.href = '/dashboard';
             }
         } catch (error) {
@@ -42,8 +44,10 @@ const Login = () => {
             // 2. Sync with our Backend
             const response = await api.post('/auth/firebase', { idToken });
             if (response.data.success) {
-                localStorage.setItem('accessToken', idToken);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
+                const { user, accessToken, refreshToken } = response.data;
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                localStorage.setItem('user', JSON.stringify(user));
                 window.location.href = '/dashboard';
             }
         } catch (error) {
