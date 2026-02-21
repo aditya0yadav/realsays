@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
     User, Mail, MapPin, Globe, Camera, Save, Loader2,
     Settings, Grid, Lock, Activity, ChevronRight, Edit3,
-    FileText, CheckCircle2, AlertCircle, Sparkles, ChevronDown, Check, Square, CheckSquare, Search
+    FileText, CheckCircle2, AlertCircle, Sparkles, ChevronDown, Check, Square, CheckSquare, Search, LogOut
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Country, State, City } from 'country-state-city';
@@ -108,7 +108,7 @@ const CustomMultiSelect = ({ value = [], options, onChange, label }) => {
 // --- Main Component ---
 
 const ProfileTab = () => {
-    const { user, refreshUser } = useAuth();
+    const { user, refreshUser, logout } = useAuth();
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
@@ -432,6 +432,23 @@ const ProfileTab = () => {
                         </motion.div>
                     )}
                 </AnimatePresence>
+            </div>
+
+            {/* Mobile-Only Account Actions */}
+            <div className="mt-16 pt-12 border-t border-slate-100 lg:hidden">
+                <div className="space-y-4">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Account Management</p>
+                    <button
+                        onClick={logout}
+                        className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-red-50 text-red-600 rounded-[2rem] font-display font-bold border border-red-100/50 active:scale-95 transition-all"
+                    >
+                        <LogOut className="w-5 h-5" />
+                        Sign Out of Session
+                    </button>
+                    <p className="text-center text-[10px] text-slate-400 font-medium px-8 leading-relaxed">
+                        Securely terminate your current session. You will need to sign in again to access your dashboard.
+                    </p>
+                </div>
             </div>
         </div>
     );
