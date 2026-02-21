@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const getBaseURL = () => {
     if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-    // Fallback to current hostname for mobile/other device access
-    const { hostname } = window.location;
-    return `http://${hostname}:5000/api`;
+    // Fallback to current hostname and protocol for mobile/production access
+    const { hostname, protocol } = window.location;
+    return `${protocol}//${hostname}:5000/api`;
 };
 
 const api = axios.create({
