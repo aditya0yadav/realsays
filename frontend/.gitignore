@@ -3,3 +3,6 @@ node_modules
 .DS_Store
 coverage
 dist
+dev.sqlite
+database.js
+survey-cache.json 
