@@ -2,9 +2,18 @@ import axios from 'axios';
 
 const getBaseURL = () => {
     if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-    // Fallback to current hostname and protocol for mobile/production access
+
     const { hostname, protocol } = window.location;
-    return `${protocol}//${hostname}:5000/api`;
+
+    // In local development (localhost or IP), we use port 5000
+    const isLocal = hostname === 'localhost' || /^(\d+\.){3}\d+$/.test(hostname);
+
+    if (isLocal) {
+        return `${protocol}//${hostname}:5000/api`;
+    }
+
+    // In production, we typically use the standard HTTPS/HTTP port controlled by a proxy (like Nginx)
+    return `${protocol}//${hostname}/api`;
 };
 
 const api = axios.create({
