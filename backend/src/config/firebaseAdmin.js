@@ -9,7 +9,6 @@ let serviceAccount;
 if (fs.existsSync(credPath)) {
     try {
         serviceAccount = require(credPath);
-        console.log('Firebase: Loaded credentials from realsays-cred.json');
     } catch (e) {
         console.error('Firebase: Error loading realsays-cred.json:', e.message);
     }
@@ -18,7 +17,6 @@ if (fs.existsSync(credPath)) {
 if (!serviceAccount && process.env.FIREBASE_SERVICE_ACCOUNT) {
     try {
         serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-        console.log('Firebase: Loaded credentials from environment variable');
     } catch (e) {
         console.error('Firebase: Error parsing FIREBASE_SERVICE_ACCOUNT env:', e.message);
     }

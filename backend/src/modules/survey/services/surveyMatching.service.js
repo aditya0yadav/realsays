@@ -45,7 +45,6 @@ class SurveyMatchingService {
                 failedReasons.push(`Missing attribute: ${internalKey}`);
                 continue;
             }
-            console.log(userAttr, "userAttr")
 
             // 3. Translate user value if mapping exists
             let userValue = userAttr ? userAttr.value : null;

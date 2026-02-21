@@ -5,10 +5,7 @@ const {
 } = require('../../../models');
 const { Op } = require('sequelize');
 
-console.log('Admin Controller Loaded');
-
 const getDashboardStats = async (req, res) => {
-    console.log('getDashboardStats called with range:', req.query.range);
     try {
         const { range = '30d' } = req.query;
         let whereRange = {};
@@ -24,21 +21,21 @@ const getDashboardStats = async (req, res) => {
             };
         }
 
-        console.log('Fetching totalUsers...');
+
         const totalUsers = await User.count({ where: whereRange });
 
-        console.log('Fetching totalEarnings...');
+
         const earningsResult = await Panelist.sum('lifetime_earnings', { where: whereRange });
         const totalEarnings = earningsResult || 0;
 
-        console.log('Fetching completion counts...');
+
         const totalAttempts = await SurveyCompletion.count({ where: whereRange });
         const successfulCompletions = await SurveyCompletion.count({
             where: { ...whereRange, status: 'complete' }
         });
         const conversionRate = totalAttempts > 0 ? ((successfulCompletions / totalAttempts) * 100).toFixed(1) : "0.0";
 
-        console.log('Fetching topEarners...');
+
         const topEarners = await Panelist.findAll({
             limit: 10,
             order: [['lifetime_earnings', 'DESC']],
@@ -50,7 +47,7 @@ const getDashboardStats = async (req, res) => {
             attributes: ['id', 'user_id', 'first_name', 'last_name', 'lifetime_earnings', 'balance', 'status']
         });
 
-        console.log('Fetching recentUsers...');
+
         const recentUsers = await User.findAll({
             limit: 5,
             order: [['created_at', 'DESC']],
@@ -62,7 +59,7 @@ const getDashboardStats = async (req, res) => {
             attributes: ['id', 'email', 'created_at']
         });
 
-        console.log('Fetching signupStats...');
+
         const chartDate = new Date();
         chartDate.setDate(chartDate.getDate() - 7);
         const signupStats = await User.findAll({
@@ -77,7 +74,7 @@ const getDashboardStats = async (req, res) => {
             order: [[sequelize.fn('DATE', sequelize.col('created_at')), 'ASC']]
         });
 
-        console.log('Fetching providerStats...');
+
         const allProviders = await SurveyProvider.findAll({ attributes: ['id', 'name'] });
         const providerStats = await Promise.all(allProviders.map(async (provider) => {
             const completions = await SurveyCompletion.findAll({
@@ -116,7 +113,7 @@ const getDashboardStats = async (req, res) => {
             };
         }));
 
-        console.log('Sending response...');
+
         res.json({
             success: true,
             data: {
@@ -144,7 +141,6 @@ const getDashboardStats = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-    console.log('getUsers called');
     try {
         const { search, page = 1, limit = 10, sortBy = 'created_at', order = 'DESC', status, country, startDate, endDate } = req.query;
         const offset = (page - 1) * limit;
@@ -214,7 +210,6 @@ const getUsers = async (req, res) => {
 };
 
 const getUserDetails = async (req, res) => {
-    console.log('getUserDetails called for ID:', req.params.id);
     try {
         const { id } = req.params;
 
@@ -247,11 +242,10 @@ const getUserDetails = async (req, res) => {
         });
 
         if (!user) {
-            console.log('User not found');
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        console.log('Formatting user details...');
+
         const panelist = user.panelist || {};
         const activityLog = (panelist.completions || []).map(c => ({
             id: c.id,
@@ -300,7 +294,6 @@ const getUserDetails = async (req, res) => {
 };
 
 const getLeaderboard = async (req, res) => {
-    console.log('getLeaderboard called');
     try {
         const leaders = await Panelist.findAll({
             limit: 50,
