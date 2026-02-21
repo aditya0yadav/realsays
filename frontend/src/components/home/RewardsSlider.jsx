@@ -15,7 +15,7 @@ const RewardsSlider = () => {
                         PayPal is one of the world's leading payment platforms, and most of us have used it at some point, whether you're buying something on eBay, Amazon, or within your phone apps. This means you'll likely have many questions about how it works and how to use your PayPal cash. But wouldn't it be great to get some PayPal credit for free?
                     </p>
                     <p>
-                        Earn free PayPal cash with <span className="font-bold text-slate-900">RealSays</span>. Sign up, take surveys, and earn points convertible to cash. It’s fast, easy, and rewarding.
+                        Earn free PayPal cash with <span className="font-bold text-slate-900">startsayst</span>. Sign up, take surveys, and earn points convertible to cash. It’s fast, easy, and rewarding.
                     </p>
                 </>
             )
@@ -30,7 +30,7 @@ const RewardsSlider = () => {
                         Amazon is the go-to destination for almost anything you need, from daily essentials to tech gadgets. We all love the convenience of Prime delivery. But imagine filling up your cart and checking out without spending your own hard-earned money. That's the power of free Amazon Gift Cards.
                     </p>
                     <p>
-                        Shop for free on Amazon with <span className="font-bold text-slate-900">RealSays</span>. Share your feedback, earn points, and redeem them for Amazon Gift Cards. Your voice pays for your shopping!
+                        Shop for free on Amazon with <span className="font-bold text-slate-900">startsayst</span>. Share your feedback, earn points, and redeem them for Amazon Gift Cards. Your voice pays for your shopping!
                     </p>
                 </>
             )

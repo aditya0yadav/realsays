@@ -27,7 +27,7 @@ const Sidebar = ({ activeTab, setActiveTab, user, logout }) => {
             <div className="p-8 pb-4 relative z-10">
                 <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setActiveTab('home')}>
                     <div className="transition-all duration-500 group-hover:drop-shadow-[0_0_10px_rgba(99,102,241,0.3)]">
-                        <img src={logo} alt="RealSays" className="h-10 w-auto brightness-0 invert" />
+                        <img src={logo} alt="startsayst" className="h-10 w-auto" />
                     </div>
                 </div>
             </div>

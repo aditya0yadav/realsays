@@ -16,10 +16,10 @@ const Footer = () => {
                     {/* Column 1: Company Info */}
                     <div className="space-y-6">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <img src={logo} alt="RealSays Logo" className="h-12 w-auto brightness-0 invert" />
+                            <img src={logo} alt="startsayst Logo" className="h-12 w-auto" />
                         </Link>
                         <p className="text-gray-400 leading-relaxed text-[15px] max-w-xs">
-                            RealSays is a premier market research platform connecting voices globally. We empower individuals to monetize their time through meaningful surveys while helping organizations gain verified, actionable insights.
+                            <span className="text-white font-semibold">startsayst by RealSays</span> is a premier market research platform connecting voices globally. We empower individuals to monetize their time through meaningful surveys while helping organizations gain verified, actionable insights.
                         </p>
                     </div>
 
@@ -50,7 +50,7 @@ const Footer = () => {
                         <h4 className="text-lg font-semibold mb-2 text-white/90">Contact Us</h4>
                         <div className="space-y-4">
                             <a
-                                href="mailto:support@realsays.com"
+                                href="mailto:support@startsayst.com"
                                 className="flex items-center gap-3 text-gray-400 hover:text-[#4FD1E8] transition-all duration-200 group"
                             >
                                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#5B6CFF]/10 group-hover:text-[#4FD1E8]">
@@ -58,7 +58,7 @@ const Footer = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                 </div>
-                                <span className="text-base font-medium">support@realsays.com</span>
+                                <span className="text-base font-medium">support@startsayst.com</span>
                             </a>
                         </div>
                     </div>
@@ -66,7 +66,7 @@ const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
-                    <p>© {currentYear} RealSays. All rights reserved.</p>
+                    <p>© {currentYear} startsayst by RealSays. All rights reserved.</p>
                     <div className="flex gap-8">
                         <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
                         <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>

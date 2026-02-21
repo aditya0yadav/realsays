@@ -132,7 +132,7 @@ const Hero = () => {
 
                         {/* Description - appears after heading */}
                         <p className="text-xl lg:text-2xl leading-relaxed text-[#0F1E3A]/70 mb-8 animate-fade-in opacity-0" style={{ animationDelay: '1300ms', animationFillMode: 'forwards' }}>
-                            Fill and earn money from surveys with <span className="text-[#0F1E3A] font-semibold">RealSays</span>. You might boost market research today with your opinion.
+                            Fill and earn money from surveys with <span className="text-[#0F1E3A] font-semibold text-brand-gradient">startsayst by RealSays</span>. You might boost market research today with your opinion.
                         </p>
 
                         {/* Buttons - appear after description */}
@@ -305,7 +305,7 @@ const Hero = () => {
 
                             <div className="space-y-6">
                                 <p className="text-[#0F1E3A]/70 text-lg md:text-xl leading-relaxed">
-                                    Whether you're a student, a professional, or a homemaker, <span className="text-[#0F1E3A] font-medium">RealSays</span> is the perfect space to monetize your opinions.
+                                    Whether you're a student, a professional, or a homemaker, <span className="text-[#0F1E3A] font-medium">startsayst</span> is the perfect space to monetize your opinions.
                                 </p>
                                 <p className="text-[#0F1E3A]/70 text-lg md:text-xl leading-relaxed">
                                     Share your insights in your preferred language and grab quick rewards. Every voice matters in our growing global community.

@@ -11,7 +11,7 @@ const CookiePolicy = () => {
 
                 <div className="space-y-12 text-[#0F1E3A]/70 leading-relaxed text-lg">
                     <p>
-                        RealSays uses cookies and similar technologies to enhance your browsing experience and provide personalized survey matches. This policy explains what cookies are and how we use them.
+                        startsayst uses cookies and similar technologies to enhance your browsing experience and provide personalized survey matches. This policy explains what cookies are and how we use them.
                     </p>
 
                     <section>
@@ -42,7 +42,7 @@ const CookiePolicy = () => {
                     <section>
                         <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">Managing Cookies</h2>
                         <p>
-                            Most browsers allow you to control cookies through their settings. You can choose to block cookies or receive notification when a cookie is placed. Note that disabling essential cookies may impact your ability to use certain features of RealSays.
+                            Most browsers allow you to control cookies through their settings. You can choose to block cookies or receive notification when a cookie is placed. Note that disabling essential cookies may impact your ability to use certain features of startsayst.
                         </p>
                     </section>
 

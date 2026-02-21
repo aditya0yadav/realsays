@@ -6,11 +6,11 @@ const FAQ = () => {
 
     const faqs = [
         {
-            question: "How do I start earning rewards on RealSays?",
+            question: "How do I start earning rewards on startsayst?",
             answer: "Simply create a free account, complete your profile to 100%, and match with surveys. Once you complete a survey successfully, the rewards will be credited to your account balance."
         },
         {
-            question: "Is RealSays really free to join?",
+            question: "Is startsayst really free to join?",
             answer: "Yes, 100%! We will never ask for payment or subscription fees. Our platform is supported by the researchers who want to hear your voice."
         },
         {
@@ -26,8 +26,8 @@ const FAQ = () => {
             answer: "Most payouts are processed within 24-48 business hours. Some methods, like bank transfers, may take up to 3-5 business days depending on your financial institution."
         },
         {
-            question: "Can I use RealSays on my mobile device?",
-            answer: "Absolutely! RealSays is fully optimized for mobile browsers. You can take surveys on the go, whether you're commuting or relaxing at home."
+            question: "Can I use startsayst on my mobile device?",
+            answer: "Absolutely! startsayst is fully optimized for mobile browsers. You can take surveys on the go, whether you're commuting or relaxing at home."
         }
     ];
 
@@ -37,7 +37,7 @@ const FAQ = () => {
                 <div className="text-center mb-16">
                     <h2 className="text-[#5B6CFF] font-bold uppercase tracking-widest text-sm mb-4 border-b-2 border-[#5B6CFF] inline-block">Support Center</h2>
                     <h1 className="text-4xl md:text-5xl font-bold text-[#0F1E3A] mt-6 tracking-tight">Frequently Asked Questions</h1>
-                    <p className="text-[#0F1E3A]/70 text-lg mt-4 font-medium">Everything you need to know about getting the most out of RealSays.</p>
+                    <p className="text-[#0F1E3A]/70 text-lg mt-4 font-medium">Everything you need to know about getting the most out of startsayst.</p>
                 </div>
 
                 {/* Search Bar Placeholder */}
@@ -82,7 +82,7 @@ const FAQ = () => {
                 <div className="mt-20 text-center p-12 bg-white rounded-3xl border border-gray-100 shadow-sm">
                     <h3 className="text-2xl font-bold text-[#0F1E3A] mb-4">Still have questions?</h3>
                     <p className="text-gray-500 mb-8">Can't find the answer you're looking for? Reach out to our friendly support team.</p>
-                    <a href="mailto:support@realsays.com" className="px-8 py-4 bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-blue-500/20 transition-all inline-block active:scale-95 shadow-md">
+                    <a href="mailto:support@startsayst.com" className="px-8 py-4 bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-blue-500/20 transition-all inline-block active:scale-95 shadow-md">
                         Contact Support
                     </a>
                 </div>

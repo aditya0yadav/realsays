@@ -23,8 +23,11 @@ const Header = () => {
                 {/* Left Side: Institutional Branding */}
                 <div className="flex items-center">
                     <Link to="/" className="flex items-center gap-3 text-[#0F1E3A] no-underline hover:opacity-90">
-                        <img src={logo} alt="RealSays" className="h-10 w-auto object-contain" />
-                        <span className="hidden sm:inline-block text-gray-400 text-sm font-medium border-l border-gray-200 pl-3 ml-3">
+                        <div className="flex flex-col">
+                            <img src={logo} alt="startsayst" className="h-10 w-auto object-contain" />
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter leading-none ml-1">by RealSays</span>
+                        </div>
+                        <span className="hidden sm:inline-block text-gray-400 text-sm font-medium border-l border-gray-200 pl-3 ml-1">
                             Official Research Platform
                         </span>
                     </Link>

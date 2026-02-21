@@ -13,14 +13,14 @@ const TermsOfService = () => {
                     <section>
                         <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">1. Acceptance of Terms</h2>
                         <p>
-                            By accessing and using RealSays ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. We reserve the right to modify these terms at any time.
+                            By accessing and using startsayst ("the Platform"), you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. We reserve the right to modify these terms at any time.
                         </p>
                     </section>
 
                     <section>
                         <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">2. Eligibility</h2>
                         <p>
-                            You must be at least 18 years old to create an account on RealSays. By creating an account, you represent and warrant that you meet this age requirement and that all information you provide is accurate and complete.
+                            You must be at least 18 years old to create an account on startsayst. By creating an account, you represent and warrant that you meet this age requirement and that all information you provide is accurate and complete.
                         </p>
                     </section>
 
@@ -34,7 +34,7 @@ const TermsOfService = () => {
                     <section>
                         <h2 className="text-2xl font-bold text-[#0F1E3A] mb-4">4. Participation and Rewards</h2>
                         <p>
-                            RealSays provides opportunities to participate in market research surveys. Completion of these surveys may earn you rewards. We reserve the right to verify survey completion and may withhold rewards if we detect fraudulent activity or inconsistent responses.
+                            startsayst provides opportunities to participate in market research surveys. Completion of these surveys may earn you rewards. We reserve the right to verify survey completion and may withhold rewards if we detect fraudulent activity or inconsistent responses.
                         </p>
                         <ul className="list-disc pl-6 mt-4 space-y-2">
                             <li>Rewards are non-transferable.</li>
@@ -55,7 +55,7 @@ const TermsOfService = () => {
                         <p className="text-[#0F1E3A]/70">
                             If you have any questions regarding these Terms of Service, please contact our support team at:
                         </p>
-                        <p className="font-semibold text-[#5B6CFF] mt-2">support@realsays.com</p>
+                        <p className="font-semibold text-[#5B6CFF] mt-2">support@startsayst.com</p>
                     </section>
                 </div>
             </div>
