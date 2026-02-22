@@ -1,9 +1,9 @@
-const { sequelize } = require('../../../config/database');
 const {
     User, Panelist, SurveyCompletion, Survey, SurveyProvider,
     PersonaAttribute, AttributeDefinition
 } = require('../../../models');
 const { Op } = require('sequelize');
+const { syncRegistry } = require('../../survey/services/survey.service');
 
 const getDashboardStats = async (req, res) => {
     try {
@@ -326,9 +326,45 @@ const getLeaderboard = async (req, res) => {
     }
 };
 
+const getProviders = async (req, res) => {
+    try {
+        const providers = await SurveyProvider.findAll({
+            attributes: ['id', 'name', 'slug', 'is_active', 'updated_at']
+        });
+        res.json({ success: true, data: providers });
+    } catch (error) {
+        console.error('Get Providers Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch providers' });
+    }
+};
+
+const updateProviderStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { is_active } = req.body;
+
+        const provider = await SurveyProvider.findByPk(id);
+        if (!provider) {
+            return res.status(404).json({ success: false, message: 'Provider not found' });
+        }
+
+        await provider.update({ is_active });
+
+        // Force a registry sync to update the cache file immediately without fetching
+        await syncRegistry();
+
+        res.json({ success: true, message: `Provider ${provider.name} updated successfully` });
+    } catch (error) {
+        console.error('Update Provider Error:', error);
+        res.status(500).json({ success: false, message: 'Failed to update provider' });
+    }
+};
+
 module.exports = {
     getDashboardStats,
     getUsers,
     getUserDetails,
-    getLeaderboard
+    getLeaderboard,
+    getProviders,
+    updateProviderStatus
 };

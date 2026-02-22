@@ -85,7 +85,18 @@ export const adminService = {
     // --- Provider Mappings ---
     getProviderMappings, // Kept existing method
     saveAttributeMapping,
-    saveOptionMapping
+    saveOptionMapping,
+
+    // --- Provider Management ---
+    getProviders: async () => {
+        const response = await adminApi.get('/admin/providers');
+        return response.data;
+    },
+
+    updateProviderStatus: async (providerId, isActive) => {
+        const response = await adminApi.patch(`/admin/providers/${providerId}`, { is_active: isActive });
+        return response.data;
+    }
 };
 
 export default adminApi;

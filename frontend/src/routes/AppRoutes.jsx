@@ -29,6 +29,7 @@ import AdminAnalytics from '../pages/admin/AdminAnalytics';
 import AdminUsers from '../pages/admin/AdminUsers';
 import AdminPanelAnalytics from '../pages/admin/AdminPanelAnalytics';
 import AdminUserDetails from '../pages/admin/AdminUserDetails';
+import AdminProviderFilter from '../pages/admin/AdminProviderFilter';
 
 import { Navigate } from 'react-router-dom';
 
@@ -67,6 +68,7 @@ const AppRoutes = () => {
                     <Route path="users" element={<AdminUsers />} />
                     <Route path="users/:id" element={<AdminUserDetails />} />
                     <Route path="mappings" element={<QualificationMapping />} />
+                    <Route path="filter" element={<AdminProviderFilter />} />
                 </Route>
             </Routes>
         </>

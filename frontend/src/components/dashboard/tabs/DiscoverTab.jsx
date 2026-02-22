@@ -69,9 +69,9 @@ const DiscoverTab = () => {
                                 <div className="p-2 rounded-xl bg-cyan-50 text-cyan-600">
                                     <Sparkles className="w-5 h-5" />
                                 </div>
-                                <span className={`text-xs font-bold px-2 py-1 rounded-lg border uppercase tracking-wider ${getProviderStyle(survey.provider)}`}>
+                                {/* <span className={`text-xs font-bold px-2 py-1 rounded-lg border uppercase tracking-wider ${getProviderStyle(survey.provider)}`}>
                                     {survey.provider === 'goweb' ? 'GoWeb' : survey.provider.charAt(0).toUpperCase() + survey.provider.slice(1)}
-                                </span>
+                                </span> */}
                             </div>
                             <h3 className="text-lg font-sans font-[400] text-slate-900 mb-2 line-clamp-2 h-14">{survey.title}</h3>
                             <div className="flex items-center justify-between text-slate-400 text-sm mb-6">
