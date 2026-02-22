@@ -32,7 +32,7 @@ let surveyRegistry = {
     full: [],        // Unfiltered (All) data from last fetch
     lastFetched: null
 };
-const CACHE_DURATION = 35 * 60 * 1000; // 35 minutes
+const CACHE_DURATION = 2 * 60 * 1000; // 35 minutes
 
 /**
  * Main function to get matched surveys for a user
