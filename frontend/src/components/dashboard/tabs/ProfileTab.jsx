@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
     User, Mail, MapPin, Globe, Camera, Save, Loader2,
     Settings, Grid, Lock, Activity, ChevronRight, Edit3,
-    FileText, CheckCircle2, AlertCircle, Sparkles, ChevronDown, Check, Square, CheckSquare, Search, LogOut
+    FileText, CheckCircle2, AlertCircle, Sparkles, ChevronDown, Check, Square, CheckSquare, Search, LogOut,
+    X, Plus
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Country, State, City } from 'country-state-city';
@@ -17,91 +18,170 @@ import { toast } from 'react-hot-toast';
 
 const CustomSelect = ({ value, options = [], onChange, placeholder = "Search or select...", label }) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [isOpen, setIsOpen] = useState(!value);
 
     const filteredOptions = useMemo(() => {
         if (!searchQuery) return options.slice(0, 50);
         return options
-            .filter(opt => opt.toLowerCase().includes(searchQuery.toLowerCase()))
+            .filter(opt => opt?.toLowerCase().includes(searchQuery.toLowerCase()))
             .slice(0, 50);
     }, [options, searchQuery]);
+
+    useEffect(() => {
+        setIsOpen(!value);
+    }, [value]);
 
     return (
         <div className="space-y-4 pt-2">
             {label && <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">{label}</label>}
 
-            {/* Inline Search Bar */}
-            <div className="relative group/search">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/search:text-indigo-500 transition-colors" />
-                <input
-                    type="text"
-                    className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/20 text-sm font-bold placeholder:text-slate-300 transition-all font-sans"
-                    placeholder={placeholder}
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-            </div>
-
-            {/* Inline Options List */}
-            <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
-                {filteredOptions.length > 0 ? (
-                    filteredOptions.map((opt) => {
-                        const isSelected = value === opt;
-                        return (
-                            <motion.button
-                                key={opt}
-                                whileTap={{ scale: 0.98 }}
-                                onClick={() => {
-                                    onChange(opt);
-                                    setSearchQuery('');
-                                }}
-                                className={`w-full px-5 py-4 rounded-2xl text-sm font-bold transition-all border-2 flex items-center justify-between font-sans ${isSelected
-                                    ? 'bg-[#0F1E3A] text-white border-[#0F1E3A] shadow-md'
-                                    : 'bg-slate-50 border-transparent text-slate-500 hover:bg-white hover:border-slate-100 hover:text-slate-900 shadow-sm'
-                                    }`}
-                            >
-                                <span className="flex-1 text-left">{opt}</span>
-                                {isSelected && <CheckCircle2 className="w-5 h-5 text-cyan-400" />}
-                            </motion.button>
-                        );
-                    })
-                ) : (
-                    <div className="py-10 text-center">
-                        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest font-sans">No results found</p>
+            {value && !isOpen ? (
+                <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="w-full px-5 py-4 rounded-2xl bg-[#0F1E3A] text-white border-2 border-[#0F1E3A] shadow-md flex items-center justify-between font-sans group cursor-default"
+                >
+                    <span className="flex-1 text-left text-sm font-bold">{value}</span>
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onChange('');
+                            setIsOpen(true);
+                        }}
+                        className="p-1 hover:bg-white/10 rounded-full transition-colors"
+                    >
+                        <X className="w-5 h-5 text-cyan-400" />
+                    </button>
+                </motion.div>
+            ) : (
+                <>
+                    <div className="relative group/search">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within/search:text-indigo-500 transition-colors" />
+                        <input
+                            type="text"
+                            className="w-full h-12 pl-12 pr-4 bg-slate-50 border border-slate-100 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-indigo-500/5 focus:border-indigo-500/20 text-sm font-bold placeholder:text-slate-300 transition-all font-sans"
+                            placeholder={placeholder}
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
                     </div>
-                )}
-            </div>
+
+                    <div className="space-y-2 max-h-[300px] overflow-y-auto custom-scrollbar pr-1">
+                        {filteredOptions.length > 0 ? (
+                            filteredOptions.map((opt) => {
+                                const isSelected = value === opt;
+                                return (
+                                    <motion.button
+                                        key={opt}
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => {
+                                            onChange(opt);
+                                            setSearchQuery('');
+                                            setIsOpen(false);
+                                        }}
+                                        className={`w-full px-5 py-4 rounded-2xl text-sm font-bold transition-all border-2 flex items-center justify-between font-sans ${isSelected
+                                            ? 'bg-[#0F1E3A] text-white border-[#0F1E3A] shadow-md'
+                                            : 'bg-slate-50 border-transparent text-slate-500 hover:bg-white hover:border-slate-100 hover:text-slate-900 shadow-sm'
+                                            }`}
+                                    >
+                                        <span className="flex-1 text-left">{opt}</span>
+                                        {isSelected && <CheckCircle2 className="w-5 h-5 text-cyan-400" />}
+                                    </motion.button>
+                                );
+                            })
+                        ) : (
+                            <div className="py-10 text-center">
+                                <p className="text-slate-400 text-xs font-bold uppercase tracking-widest font-sans">No results found</p>
+                            </div>
+                        )}
+                    </div>
+                </>
+            )}
         </div>
     );
 };
 
 const CustomMultiSelect = ({ value = [], options, onChange, label }) => {
+    const [isOpen, setIsOpen] = useState(value.length === 0);
+
+    useEffect(() => {
+        if (value.length > 0) setIsOpen(false);
+        else setIsOpen(true);
+    }, [value.length]);
+
     return (
         <div className="space-y-3">
             {label && <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">{label}</label>}
-            <div className="grid grid-cols-1 gap-3 pt-1">
-                {options.map((opt) => {
-                    const isSelected = value.includes(opt);
-                    return (
-                        <motion.button
-                            key={opt}
-                            whileTap={{ scale: 0.98 }}
+
+            <div className="flex flex-wrap gap-2 pt-1 min-h-[50px]">
+                {value.map((opt) => (
+                    <motion.div
+                        key={opt}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="px-4 py-2 rounded-xl bg-[#0F1E3A] text-white flex items-center gap-3 text-xs font-bold border-2 border-[#0F1E3A] shadow-sm"
+                    >
+                        <span>{opt}</span>
+                        <button
                             onClick={() => {
-                                const newValue = isSelected
-                                    ? value.filter(v => v !== opt)
-                                    : [...value, opt];
+                                const newValue = value.filter(v => v !== opt);
                                 onChange(newValue);
+                                if (newValue.length === 0) setIsOpen(true);
                             }}
-                            className={`w-full px-5 py-4 rounded-2xl text-sm font-bold transition-all border-2 flex items-center gap-4 ${isSelected
-                                ? 'bg-[#0F1E3A] text-white border-[#0F1E3A] shadow-md'
-                                : 'bg-slate-50 border-transparent text-slate-500 hover:bg-white hover:border-slate-100 hover:text-slate-900 shadow-sm'
-                                }`}
+                            className="p-0.5 hover:bg-white/10 rounded-full transition-colors"
                         >
-                            {isSelected ? <CheckSquare className="w-5 h-5 text-cyan-400" /> : <Square className="w-5 h-5 opacity-20" />}
-                            <span className="flex-1 text-left">{opt}</span>
-                        </motion.button>
-                    );
-                })}
+                            <X className="w-3.5 h-3.5 text-cyan-400" />
+                        </button>
+                    </motion.div>
+                ))}
+
+                {!isOpen && (
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className="px-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 hover:bg-white hover:border-indigo-100 hover:text-indigo-600 transition-all text-xs font-bold flex items-center gap-2"
+                    >
+                        <Plus className="w-3.5 h-3.5" />
+                        Add More
+                    </button>
+                )}
             </div>
+
+            {isOpen && (
+                <div className="grid grid-cols-1 gap-2 pt-1 border-t border-slate-100 mt-2">
+                    <div className="flex justify-between items-center mb-2">
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="text-[9px] font-black text-slate-400 uppercase hover:text-slate-600 ml-1"
+                            disabled={value.length === 0}
+                        >
+                            {value.length > 0 ? 'Close List' : ''}
+                        </button>
+                    </div>
+                    {options.map((opt) => {
+                        const isSelected = value.includes(opt);
+                        return (
+                            <motion.button
+                                key={opt}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => {
+                                    const newValue = isSelected
+                                        ? value.filter(v => v !== opt)
+                                        : [...value, opt];
+                                    onChange(newValue);
+                                    setIsOpen(false);
+                                }}
+                                className={`w-full px-5 py-3 rounded-2xl text-sm font-bold transition-all border-2 flex items-center gap-4 ${isSelected
+                                    ? 'bg-[#0F1E3A] text-white border-[#0F1E3A] shadow-md'
+                                    : 'bg-slate-50 border-transparent text-slate-500 hover:bg-white hover:border-slate-100 hover:text-slate-900 shadow-sm'
+                                    }`}
+                            >
+                                {isSelected ? <CheckSquare className="w-5 h-5 text-cyan-400" /> : <Square className="w-5 h-5 opacity-20" />}
+                                <span className="flex-1 text-left">{opt}</span>
+                            </motion.button>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 };
@@ -114,8 +194,12 @@ const ProfileTab = () => {
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
-    const [activeSubTab, setActiveSubTab] = useState('info');
+    const [activeSubTab, setActiveSubTab] = useState(() => localStorage.getItem('profileActiveSubTab') || 'info');
     const fileInputRef = useRef(null);
+
+    useEffect(() => {
+        localStorage.setItem('profileActiveSubTab', activeSubTab);
+    }, [activeSubTab]);
 
     const [stats, setStats] = useState({
         completions: 0,
@@ -414,7 +498,12 @@ const ProfileTab = () => {
                                         ) : q.type === 'multi-select' ? (
                                             <CustomMultiSelect label={q.title} value={personaData[q.key] || []} options={q.options || []} onChange={val => handlePersonaChange(q.key, val)} />
                                         ) : (
-                                            <InputField label={q.title} value={personaData[q.key] || ''} onChange={val => handlePersonaChange(q.key, val)} />
+                                            <InputField
+                                                label={q.title}
+                                                value={personaData[q.key] || ''}
+                                                onChange={e => handlePersonaChange(q.key, e.target.value)}
+                                                type={q.type === 'number' ? 'number' : 'text'}
+                                            />
                                         )}
                                     </div>
                                 ))}
@@ -457,12 +546,12 @@ const PremiumTabLink = ({ icon, label, active, onClick, badge }) => (
     </button>
 );
 
-const InputField = ({ label, value, onChange, disabled, icon, name }) => (
+const InputField = ({ label, value, onChange, disabled, icon, name, type = "text" }) => (
     <div className="space-y-2">
         {label && <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">{label}</label>}
         <div className="relative group">
             {icon && <div className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-600 transition-colors">{React.cloneElement(icon, { size: 18 })}</div>}
-            <input name={name} type="text" value={value} onChange={onChange} disabled={disabled} className={`w-full ${icon ? 'pl-14' : 'px-6'} h-14 rounded-3xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/20 transition-all text-slate-900 text-sm font-bold placeholder:text-slate-300 ${disabled ? 'opacity-60 cursor-not-allowed' : ''}`} placeholder="Type your answer..." />
+            <input name={name} type={type} value={value} onChange={onChange} disabled={disabled} className={`w-full ${icon ? 'pl-14' : 'px-6'} h-14 rounded-3xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/20 transition-all text-slate-900 text-sm font-bold placeholder:text-slate-300 ${disabled ? 'opacity-60 cursor-not-allowed' : ''}`} placeholder="Type your answer..." />
         </div>
     </div>
 );
