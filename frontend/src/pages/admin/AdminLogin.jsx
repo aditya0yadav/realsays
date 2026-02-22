@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Lock, Loader2, AlertCircle } from 'lucide-react';
+import { getBaseURL } from '../../services/api';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -16,9 +17,8 @@ const AdminLogin = () => {
         setLoading(true);
 
         try {
-            const { hostname } = window.location;
-            const baseUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || `http://${hostname}:5000`;
-            const response = await axios.post(`${baseUrl}/api/auth/admin/login`, {
+            const baseUrl = getBaseURL();
+            const response = await axios.post(`${baseUrl}/auth/admin/login`, {
                 username,
                 password
             });

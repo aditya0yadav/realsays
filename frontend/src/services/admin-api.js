@@ -1,11 +1,21 @@
 import axios from 'axios';
 
-const getBaseURL = () => {
+export const getBaseURL = () => {
     if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-    const { hostname } = window.location;
-    return `http://${hostname}:5000/api`;
-};
 
+    const { hostname, protocol } = window.location;
+
+    // In local development (localhost or IP), we use port 5000
+    const isLocal = hostname === 'localhost' || /^(\d+\.){3}\d+$/.test(hostname);
+
+    if (isLocal) {
+        return `${protocol}//${hostname}:5000/api`;
+    }
+
+    // In production, try to use api. subdomain if not present
+    const prodHost = hostname.startsWith('api.') ? hostname : `api.${hostname}`;
+    return `${protocol}//${prodHost}/api`;
+};
 const adminApi = axios.create({
     baseURL: getBaseURL(),
     headers: {

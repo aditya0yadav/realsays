@@ -3,6 +3,7 @@ const {
     PersonaAttribute, AttributeDefinition
 } = require('../../../models');
 const { Op } = require('sequelize');
+const { sequelize } = require('../../../config/database');
 const { syncRegistry } = require('../../survey/services/survey.service');
 
 const getDashboardStats = async (req, res) => {

@@ -71,7 +71,7 @@ const AdminDashboard = () => {
             yaxis: { lines: { show: true } },
         },
         xaxis: {
-            categories: topEarnersData.map(u => (u.first_name || u.email.split('@')[0]).substring(0, 10)),
+            categories: topEarnersData.map(u => (u.first_name || u.user?.email?.split('@')[0] || 'Unknown').substring(0, 10)),
             axisBorder: { show: false },
             axisTicks: { show: false },
             labels: {
