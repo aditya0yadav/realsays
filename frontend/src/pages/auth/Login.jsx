@@ -171,7 +171,7 @@ const Login = () => {
                 <div className="w-full max-w-md space-y-8">
                     <div className="text-center lg:text-left">
                         <Link to="/" className="inline-block mb-8">
-                            <img src={logo} alt="startsayst by RealSays" className="h-10 w-auto" />
+                            <img src={logo} alt="StartSaySt by RealSays" className="h-10 w-auto" />
                         </Link>
                         <h1 className="text-3xl font-bold text-[#0F1E3A] tracking-tight">Welcome Back</h1>
                         <p className="text-gray-500 mt-2">Enter your credentials to access your account.</p>

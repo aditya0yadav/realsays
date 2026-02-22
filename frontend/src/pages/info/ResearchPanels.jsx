@@ -33,7 +33,7 @@ const ResearchPanels = () => {
                         <h2 className="text-[#5B6CFF] font-bold uppercase tracking-widest text-sm mb-4">Research Excellence</h2>
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#0F1E3A] mb-8 tracking-tight">Our Specialist Research Panels</h1>
                         <p className="text-[#0F1E3A]/70 text-xl leading-relaxed mb-8">
-                            At startsayst, we bridge the gap between global brands and authentic consumer voices. Our proprietary research panels are built on trust, transparency, and high-quality data.
+                            At StartSaySt, we bridge the gap between global brands and authentic consumer voices. Our proprietary research panels are built on trust, transparency, and high-quality data.
                         </p>
                         <div className="flex gap-4">
                             <button className="px-8 py-4 bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold rounded-2xl hover:shadow-lg hover:shadow-blue-500/20 transition-all active:scale-95 shadow-md">Partner With Us</button>

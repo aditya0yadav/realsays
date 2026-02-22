@@ -12,7 +12,7 @@ const EarnMoneySection = () => {
                 <div className="order-2 lg:order-1 w-full">
                     <img
                         src={earnImage}
-                        alt="Earn Money with startsayst"
+                        alt="Earn Money with StartSaySt"
                         className="w-full h-auto object-cover"
                     />
                 </div>
@@ -32,7 +32,7 @@ const EarnMoneySection = () => {
                     </div>
 
                     <p className="text-base md:text-lg text-slate-600 leading-relaxed">
-                        Turn your spare time into real cash. Whether you're on your daily commute or relaxing at home, startsayst gives you the power to earn from anywhere. Join the community that pays you for your opinion.
+                        Turn your spare time into real cash. Whether you're on your daily commute or relaxing at home, StartSaySt gives you the power to earn from anywhere. Join the community that pays you for your opinion.
                     </p>
 
                     <ul className="space-y-3 md:space-y-4">
