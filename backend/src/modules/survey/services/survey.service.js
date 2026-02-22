@@ -28,7 +28,8 @@ const providerMapper = {
 
 // Internal Cache for all fetched surveys (Registry)
 let surveyRegistry = {
-    data: [],
+    data: [],        // Filtered (Active) data for users
+    full: [],        // Unfiltered (All) data from last fetch
     lastFetched: null
 };
 const CACHE_DURATION = 35 * 60 * 1000; // 35 minutes
@@ -103,23 +104,34 @@ async function getAllSurveys(panelistId, forceFetch = false) {
         const dailyLimitReached = recentClicks.length >= 5;
 
         if (dailyLimitReached) {
+            console.log(`[SurveyService] Panelist ${panelistId} has reached daily survey limit.`);
             return []; // User has hit their daily limit of 5 survey attempts/clicks
         }
 
         // 5. Match, Score, and Filter all surveys
-        return surveyRegistryData
-            .filter(survey => {
-                // Filter 1: LOI/CPI Rule (LOI > 10 and CPI < 0.4)
-                const loi = parseInt(survey.raw_data.LOI || survey.raw_data.SurveyLOI || survey.duration) || 0;
-                const cpi = survey.payout;
+        const stats = { inactive: 0, visited: 0, loiCpi: 0, total_input: surveyRegistryData.length };
 
-                if (loi > 10 && cpi < 0.4) {
+        const filtered = surveyRegistryData
+            .filter(survey => {
+                const provider = providers.find(p => p.slug === survey.provider);
+
+                // Filter: Check if provider is still active in DB (Immediate toggle effect)
+                if (!provider || !provider.is_active) {
+                    stats.inactive++;
                     return false;
                 }
 
-                // Filter 2: Already visited today
-                const provider = providers.find(p => p.slug === survey.provider);
-                if (provider && visitedSurveyIds.has(`${provider.id}_${survey.providerSurveyId}`)) {
+                // Filter: Already visited today
+                if (visitedSurveyIds.has(`${provider.id}_${survey.providerSurveyId}`)) {
+                    stats.visited++;
+                    return false;
+                }
+
+                // Filter 1: LOI/CPI Rule (LOI > 10 and CPI < 0.4)
+                const loi = parseInt(survey.raw_data.LOI || survey.raw_data.SurveyLOI || survey.duration) || 0;
+                const cpi = survey.payout;
+                if (loi > 10 && cpi < 0.4) {
+                    stats.loiCpi++;
                     return false;
                 }
 
@@ -135,6 +147,8 @@ async function getAllSurveys(panelistId, forceFetch = false) {
                 };
             })
             .sort((a, b) => b.matchScore - a.matchScore);
+
+        return filtered;
 
     } catch (error) {
         console.error('Error in getAllSurveys:', error.message);
@@ -205,11 +219,11 @@ async function initiateSurvey(panelistId, providerSlug, providerSurveyId, ipAddr
 function standardizeSurvey(s, providerSlug) {
     // Basic extraction with fallbacks
     return {
-        provider: providerSlug,
+        provider: providerSlug || s.provider,
         providerId: s.providerId, // Ensure the DB UUID is preserved
-        providerSurveyId: String(s.providerSurveyId || s.surveyID || s.SurveyId),
-        title: s.title || s.projectBrief || s.Name || 'Survey Mission',
-        payout: parseFloat(s.payout || s.surveyCPI || s.CPI) || 0,
+        providerSurveyId: String(s.providerSurveyId || s.surveyID || s.SurveyId || s.SurveyID),
+        title: s.title || s.projectBrief || s.Name || s.ProjectName || 'Survey Mission',
+        payout: parseFloat(s.payout || s.surveyCPI || s.CPI || s.Cpi) || 0,
         duration: s.duration || (s.LOI ? `${s.LOI} mins` : 'Flexible'),
         qualifications: Array.isArray(s.qualifications) ? s.qualifications : [],
         quota: {
@@ -225,7 +239,7 @@ function standardizeSurvey(s, providerSlug) {
 /**
  * Background/Manual task to pull surveys from all providers into memory
  */
-async function refreshSurveyRegistry(forceFetch = false) {
+async function refreshSurveyRegistry(forceFetch = false, targetSlugs = null) {
     try {
         const lastFetched = surveyRegistry.lastFetched;
         const now = Date.now();
@@ -241,7 +255,14 @@ async function refreshSurveyRegistry(forceFetch = false) {
             if (!lock) return;
         }
 
-        const activeProviders = await SurveyProvider.findAll({ where: { is_active: true } });
+        const query = { where: { is_active: true } };
+        if (targetSlugs && Array.isArray(targetSlugs)) {
+            const { Op } = require('sequelize');
+            query.where.slug = { [Op.in]: targetSlugs };
+        }
+
+        const activeProviders = await SurveyProvider.findAll(query);
+        console.log(`[SurveyService] Refreshing registry for active providers: ${activeProviders.map(p => p.name).join(', ')}`);
 
         const fetchPromises = activeProviders.map(async (provider) => {
             const mapper = providerMapper[provider.slug];
@@ -255,7 +276,7 @@ async function refreshSurveyRegistry(forceFetch = false) {
             };
 
             try {
-                const surveys = await mapper.fetchSurveys(config, 10);
+                const surveys = await mapper.fetchSurveys(config, 20);
                 if (surveys.length === 0 && provider.slug === 'goweb') {
                     console.warn(`[SurveyService] GoWeb returned zero surveys. Check config:`, JSON.stringify(config.auth));
                 }
@@ -313,86 +334,38 @@ async function refreshSurveyRegistry(forceFetch = false) {
         const results = await Promise.all(fetchPromises);
         // Standardize all results before saving to registry
         const flattened = results.flat();
+
+        if (flattened.length === 0) {
+            console.warn(`[SurveyService] All provider fetches returned zero results. Keeping existing registry (${surveyRegistry.full.length} items).`);
+            return;
+        }
+
         const standardizedData = flattened.map(s => standardizeSurvey(s, s.provider));
 
-        // Update In-Memory Registry
-        surveyRegistry.data = standardizedData;
+        // Update In-Memory Registry (Merge or Replace)
+        if (targetSlugs && Array.isArray(targetSlugs)) {
+            // MERGE: Keep existing "full" data but replace items from the targeted providers
+            const targetSet = new Set(targetSlugs);
+            const preservedData = surveyRegistry.full.filter(s => !targetSet.has(s.provider));
+            surveyRegistry.full = [...preservedData, ...standardizedData];
+        } else {
+            // REPLACE ALL: Standard full refresh
+            surveyRegistry.full = standardizedData;
+        }
+
         surveyRegistry.lastFetched = Date.now();
+
+        // Apply filtering and save to file
+        await applyStateToRegistry();
 
         // Optional: Mirror to Redis for other instances if available, but don't depend on it
         try {
-            await redis.set('survey_registry', JSON.stringify(standardizedData), 'EX', 3600);
+            await redis.set('survey_registry', JSON.stringify(surveyRegistry.data), 'EX', 3600);
             await redis.del('survey_fetch_lock');
         } catch (e) { }
 
         // Persist to file for debugging/audit
-        try {
-            // Include matching results for a test panelist if available
-            let matchAudit = [];
-            try {
-                const testPanelist = await Panelist.findOne({
-                    where: { first_name: 'Prod', last_name: 'Test' }, // Our test user from readiness script
-                    include: [{
-                        model: PersonaAttribute,
-                        as: 'attributes',
-                        include: [{ model: AttributeDefinition, as: 'definition' }]
-                    }]
-                });
-
-                if (testPanelist) {
-                    const { SurveyAttributeMapping, SurveyOptionMapping } = require('../../../models');
-                    const allMappings = await SurveyAttributeMapping.findAll({
-                        include: [{ model: SurveyOptionMapping, as: 'optionMappings' }]
-                    });
-
-                    const providersMap = (await SurveyProvider.findAll()).reduce((acc, p) => ({ ...acc, [p.id]: p }), {});
-                    const formattedMappings = {};
-
-                    for (const m of allMappings) {
-                        const provider = providersMap[m.provider_id];
-                        if (!provider) continue;
-                        if (!formattedMappings[provider.slug]) formattedMappings[provider.slug] = {};
-
-                        const options = {};
-                        m.optionMappings.forEach(o => { options[o.internal_value] = o.provider_value; });
-
-                        const mappingData = { internal_key: m.internal_key, options };
-                        formattedMappings[provider.slug][m.provider_question_key] = mappingData;
-                        if (m.provider_question_id) {
-                            formattedMappings[provider.slug][m.provider_question_id] = mappingData;
-                        }
-                    }
-
-                    // Map scores directly onto a copy of the data for logging
-                    const enrichedData = surveyRegistry.data.map(s => {
-                        const result = SurveyMatchingService.match(testPanelist, s, formattedMappings);
-                        return {
-                            ...s,
-                            auditMatch: {
-                                isMatch: result.isMatch,
-                                score: result.score,
-                                failedReasons: result.failedReasons
-                            }
-                        };
-                    });
-
-                    matchAudit = enrichedData;
-                }
-                // Use enriched data for the JSON persistence
-            } catch (e) {
-                console.warn('Survey Service: Match audit failed:', e.message);
-            }
-
-            const cachePath = path.join(__dirname, '../../../../survey-cache.json');
-            await fs.writeFile(cachePath, JSON.stringify({
-                lastFetched: Date.now(),
-                count: standardizedData.length,
-                data: matchAudit.length > 0 ? matchAudit : standardizedData,
-                auditTimestamp: new Date().toISOString()
-            }, null, 2));
-        } catch (fsError) {
-            console.warn('Survey Service: Failed to persist registry to file:', fsError.message);
-        }
+        await saveRegistryToFile();
 
     } catch (error) {
         console.error('Survey Service: Error refreshing registry:', error.message);
@@ -477,6 +450,9 @@ function normalizeGoWebQualifications(targeting) {
 // Initial job addition logic moved to initializeSurveyService
 
 async function initializeSurveyService() {
+    // 0. Load existing cache from file to avoid starting with an empty registry
+    await loadRegistryFromFile();
+
     // 1. Warm the cache locally/synchronously on startup if needed (or just queue it)
     await refreshSurveyRegistry(false);
 
@@ -491,4 +467,125 @@ async function initializeSurveyService() {
     }
 }
 
-module.exports = { getAllSurveys, refreshSurveyRegistry, persistSurveyOnVisit, initializeSurveyService, initiateSurvey };
+/**
+ * Applies current provider status (is_active) to the registry without re-fetching
+ */
+async function applyStateToRegistry() {
+    const activeProviders = await SurveyProvider.findAll({ where: { is_active: true } });
+    const activeSlugs = new Set(activeProviders.map(p => p.slug));
+
+    surveyRegistry.data = surveyRegistry.full.filter(s => activeSlugs.has(s.provider));
+}
+
+async function saveRegistryToFile() {
+    try {
+        const standardizedData = surveyRegistry.data;
+        let matchAudit = [];
+
+        try {
+            const testPanelist = await Panelist.findOne({
+                where: { first_name: 'Prod', last_name: 'Test' },
+                include: [{
+                    model: PersonaAttribute,
+                    as: 'attributes',
+                    include: [{ model: AttributeDefinition, as: 'definition' }]
+                }]
+            });
+
+            if (testPanelist) {
+                const { SurveyAttributeMapping, SurveyOptionMapping } = require('../../../models');
+                const allMappings = await SurveyAttributeMapping.findAll({
+                    include: [{ model: SurveyOptionMapping, as: 'optionMappings' }]
+                });
+
+                const providersMap = (await SurveyProvider.findAll()).reduce((acc, p) => ({ ...acc, [p.id]: p }), {});
+                const formattedMappings = {};
+
+                for (const m of allMappings) {
+                    const provider = providersMap[m.provider_id];
+                    if (!provider) continue;
+                    if (!formattedMappings[provider.slug]) formattedMappings[provider.slug] = {};
+
+                    const options = {};
+                    m.optionMappings.forEach(o => { options[o.internal_value] = o.provider_value; });
+
+                    const mappingData = { internal_key: m.internal_key, options };
+                    formattedMappings[provider.slug][m.provider_question_key] = mappingData;
+                    if (m.provider_question_id) {
+                        formattedMappings[provider.slug][m.provider_question_id] = mappingData;
+                    }
+                }
+
+                matchAudit = standardizedData.map(s => {
+                    const result = SurveyMatchingService.match(testPanelist, s, formattedMappings);
+                    return {
+                        ...s,
+                        auditMatch: { isMatch: result.isMatch, score: result.score, failedReasons: result.failedReasons }
+                    };
+                });
+            }
+        } catch (e) {
+            console.warn('Survey Service: Match audit failed:', e.message);
+        }
+
+        const cachePath = path.join(__dirname, '../../../../survey-cache.json');
+        await fs.writeFile(cachePath, JSON.stringify({
+            lastFetched: surveyRegistry.lastFetched || Date.now(),
+            count: surveyRegistry.data.length,
+            fullCount: surveyRegistry.full.length,
+            data: matchAudit.length > 0 ? matchAudit : surveyRegistry.data,
+            full: surveyRegistry.full, // Persist the full unfiltered registry
+            auditTimestamp: new Date().toISOString()
+        }, null, 2));
+    } catch (fsError) {
+        console.warn('Survey Service: Failed to persist registry to file:', fsError.message);
+    }
+}
+
+async function syncRegistry() {
+    await applyStateToRegistry();
+    await saveRegistryToFile();
+}
+
+async function loadRegistryFromFile() {
+    try {
+        const cachePath = path.join(__dirname, '../../../../survey-cache.json');
+        const content = await fs.readFile(cachePath, 'utf8');
+        const parsed = JSON.parse(content);
+
+        if (parsed) {
+            if (Array.isArray(parsed.full)) {
+                surveyRegistry.full = parsed.full;
+            } else if (Array.isArray(parsed.data)) {
+                // Fallback for older cache format
+                surveyRegistry.full = parsed.data;
+            }
+
+            if (Array.isArray(parsed.data)) {
+                surveyRegistry.data = parsed.data;
+            }
+
+            surveyRegistry.lastFetched = parsed.lastFetched || Date.now();
+
+            // Re-apply current DB state immediately to ensure 'data' is correct vs current providers
+            await applyStateToRegistry();
+        }
+    } catch (error) {
+        if (error.code !== 'ENOENT') {
+            console.warn('[SurveyService] Failed to load registry from file:', error.message);
+        } else {
+            console.log('[SurveyService] No existing survey cache file found. Starting with empty registry.');
+        }
+    }
+}
+
+module.exports = {
+    getAllSurveys,
+    refreshSurveyRegistry,
+    persistSurveyOnVisit,
+    initializeSurveyService,
+    initiateSurvey,
+    syncRegistry,
+    loadRegistryFromFile,
+    surveyRegistry
+};
