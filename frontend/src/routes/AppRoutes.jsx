@@ -12,6 +12,7 @@ import CookiePolicy from '../pages/legal/CookiePolicy';
 // Auth Pages
 import Login from '../pages/auth/Login';
 import Signup from '../pages/auth/Signup';
+import FinishSignUp from '../pages/auth/FinishSignUp';
 import Onboarding from '../pages/onboarding/Onboarding';
 import Dashboard from '../pages/dashboard/Dashboard';
 import SurveyStatus from '../pages/survey/SurveyStatus';
@@ -41,6 +42,7 @@ const AppRoutes = () => {
                 {/* Auth Routes (Standalone) */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/finish-signup" element={<FinishSignUp />} />
                 <Route path="/onboarding" element={<Onboarding />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/survey-status" element={<SurveyStatus />} />
