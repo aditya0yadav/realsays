@@ -13,7 +13,8 @@ router.get('/:provider/:surveyId/initiate', protect, surveyController.initiateSu
 // Callbacks (Unprotected as they come from provider servers/redirects)
 const trackingController = require('./controllers/tracking.controller');
 router.get('/callback/goweb', trackingController.handleGoWebCallback);
-router.get('/callback/zamplia', trackingController.handleZampliaCallback);
+// NOTE: Zamplia callback is now handled at /api/index/callback (zamplia.callback.controller.js)
+// The old /api/survey/callback/zamplia route has been removed to prevent routing bypass.
 
 // Qualification Mapping Routes
 const mappingController = require('./controllers/mapping.controller');

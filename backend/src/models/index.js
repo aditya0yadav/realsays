@@ -1,5 +1,6 @@
 const User = require('./auth/User.model');
 const RefreshToken = require('./auth/RefreshToken.model');
+const DeviceFingerprint = require('./auth/DeviceFingerprint.model');
 const Panelist = require('./panel/Panelist.model');
 const PanelistStatusHistory = require('./panel/PanelistStatus.model');
 const AttributeDefinition = require('./persona/AttributeDefinition.model');
@@ -19,6 +20,10 @@ Panelist.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 // User <-> RefreshToken
 User.hasMany(RefreshToken, { foreignKey: 'user_id', as: 'refreshTokens' });
 RefreshToken.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+// User <-> DeviceFingerprint
+User.hasMany(DeviceFingerprint, { foreignKey: 'user_id', as: 'devices' });
+DeviceFingerprint.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
 // Panelist <-> PanelistStatusHistory
 Panelist.hasMany(PanelistStatusHistory, { foreignKey: 'panelist_id', as: 'statusHistory' });
@@ -75,6 +80,7 @@ module.exports = {
     User,
     Panelist,
     RefreshToken,
+    DeviceFingerprint,
     PanelistStatusHistory,
     AttributeDefinition,
     AttributeCategory,

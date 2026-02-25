@@ -92,9 +92,10 @@ async function fetchZampliaQualifications(config, surveyId) {
 async function registerSurvey(config, surveyId, panelistId, ipAddress, clickId) {
     try {
         const { baseUrl, auth } = config;
-        // Zamplia uses GenerateLink endpoint
-        // TransactionId is our clickId
-        const generateUrl = `${baseUrl}/GenerateLink?SurveyId=${surveyId}&IpAddress=${ipAddress}&TransactionId=${clickId}`;
+        // Prefix our clickId with 'rs_' so the shared Zamplia callback can identify
+        // this as a RealSays user (vs users from other services on the same Zamplia account)
+        const transactionId = `rs_${clickId}`;
+        const generateUrl = `${baseUrl}/GenerateLink?SurveyId=${surveyId}&IpAddress=${ipAddress}&TransactionId=${transactionId}`;
 
         const { data } = await axios.get(
             generateUrl,

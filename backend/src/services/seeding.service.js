@@ -300,7 +300,7 @@ const seedingService = {
             const { User, Panelist, PersonaAttribute, AttributeDefinition } = require('../models');
 
             const [user] = await User.findOrCreate({
-                where: { email: 'prod-test@realsays.com' },
+                where: { email: 'prod-test@startsayst.com' },
                 defaults: {
                     password_hash: '$2b$10$n.86vY9x4qJ9P.mS9mI0u.G.mI0u.G.mI0u.G.mI0u.G.mI0u.G', // valid dummy hash
                     role: 'panelist',

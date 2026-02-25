@@ -4,7 +4,7 @@ import {
     User, Mail, MapPin, Globe, Camera, Save, Loader2,
     Settings, Grid, Lock, Activity, ChevronRight, Edit3,
     FileText, CheckCircle2, AlertCircle, Sparkles, ChevronDown, Check, Square, CheckSquare, Search, LogOut,
-    X, Plus
+    X, Plus, KeyRound, SendHorizonal
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Country, State, City } from 'country-state-city';
@@ -13,6 +13,8 @@ import api, { getAssetUrl } from '../../../services/api';
 import userService from '../../../services/user.service';
 import personaService from '../../../services/persona.service';
 import { toast } from 'react-hot-toast';
+import { auth } from '../../../config/firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 // --- Reusable Premium Components ---
 
@@ -197,6 +199,26 @@ const ProfileTab = () => {
     const [activeSubTab, setActiveSubTab] = useState(() => localStorage.getItem('profileActiveSubTab') || 'info');
     const fileInputRef = useRef(null);
 
+    // Password reset state
+    const [resetLoading, setResetLoading] = useState(false);
+    const [resetSent, setResetSent] = useState(false);
+
+    const handlePasswordReset = async () => {
+        const email = user?.email;
+        if (!email) return;
+        setResetLoading(true);
+        try {
+            await sendPasswordResetEmail(auth, email);
+            setResetSent(true);
+            toast.success(`Password reset link sent to ${email}`);
+        } catch (err) {
+            console.error('Password reset error:', err);
+            toast.error('Failed to send reset email. Please try again.');
+        } finally {
+            setResetLoading(false);
+        }
+    };
+
     useEffect(() => {
         localStorage.setItem('profileActiveSubTab', activeSubTab);
     }, [activeSubTab]);
@@ -255,7 +277,15 @@ const ProfileTab = () => {
                     });
                     setPersonaData(profileData);
 
-                    // Pre-fill Codes
+                    // ── Merge persona location into formData ───────────────────
+                    // Persona data is more authoritative for location (set during onboarding)
+                    setFormData(prev => ({
+                        ...prev,
+                        country: profileData.country || prev.country,
+                        city: profileData.city || prev.city,
+                    }));
+
+                    // Pre-fill ISO codes for dropdowns
                     const currentCountryName = profileData.country || user?.panelist?.country;
                     if (currentCountryName) {
                         const country = Country.getAllCountries().find(c => c.name === currentCountryName);
@@ -338,12 +368,24 @@ const ProfileTab = () => {
     const handleSave = async () => {
         setSaving(true);
         try {
+            // 1. Save panelist profile
             await userService.updateProfile(formData);
+
+            // 2. Sync shared location fields back to persona data so both tabs stay in sync
+            const locationSync = {};
+            if (formData.country) locationSync.country = formData.country;
+            if (formData.city) locationSync.city = formData.city;
+            if (Object.keys(locationSync).length > 0) {
+                const mergedPersona = { ...personaData, ...locationSync };
+                setPersonaData(mergedPersona);
+                await personaService.updateProfile(mergedPersona);
+            }
+
             await refreshUser();
-            toast.success("Identity updated successfully");
+            toast.success('Identity updated successfully');
         } catch (error) {
             console.error(error);
-            toast.error("Failed to update identity");
+            toast.error('Failed to update identity');
         } finally {
             setSaving(false);
         }
@@ -352,11 +394,25 @@ const ProfileTab = () => {
     const handleSavePersona = async () => {
         setSaving(true);
         try {
+            // 1. Save persona data
             await personaService.updateProfile(personaData);
-            toast.success("Profiling questions saved");
+
+            // 2. Sync shared location fields back to panelist profile so Identity tab stays in sync
+            const locationUpdate = {
+                ...formData,
+                country: personaData.country || formData.country,
+                city: personaData.city || formData.city,
+            };
+            if (personaData.country || personaData.city) {
+                await userService.updateProfile(locationUpdate);
+                setFormData(locationUpdate);
+                await refreshUser();
+            }
+
+            toast.success('Profiling saved successfully');
         } catch (error) {
             console.error(error);
-            toast.error("Failed to save profiling");
+            toast.error('Failed to save profiling');
         } finally {
             setSaving(false);
         }
@@ -513,21 +569,49 @@ const ProfileTab = () => {
                     )}
 
                     {activeSubTab === 'security' && (
-                        <motion.div key="security" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="bg-slate-50 rounded-[2.5rem] p-12 text-center border border-slate-100">
-                            <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto mb-6 border border-slate-100 shadow-sm relative"><Lock className="w-10 h-10 text-indigo-500" /></div>
-                            <h3 className="text-xl font-display font-black text-slate-900 mb-3">Security Infrastructure</h3>
-                            <button className="px-8 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-black text-slate-700 hover:bg-slate-100 transition-all">Reset Password Protocol</button>
+                        <motion.div key="security" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="space-y-4">
+                            <div className="bg-white border border-slate-100 rounded-[2rem] p-8">
+                                <div className="flex items-start gap-6">
+                                    <div className="w-14 h-14 bg-indigo-50 rounded-2xl flex items-center justify-center border border-indigo-100 shrink-0">
+                                        <KeyRound className="w-7 h-7 text-indigo-500" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h4 className="font-display font-bold text-slate-900 mb-1">Password Reset</h4>
+                                        <p className="text-sm text-slate-400 font-medium mb-5">
+                                            We'll send a secure reset link to <span className="text-slate-700 font-bold">{user?.email}</span>.
+                                            The link expires in 1 hour.
+                                        </p>
+                                        {resetSent ? (
+                                            <div className="flex items-center gap-3 px-5 py-3 bg-emerald-50 border border-emerald-100 rounded-2xl text-emerald-700 text-sm font-bold w-fit">
+                                                <CheckCircle2 className="w-5 h-5" />
+                                                Reset link sent — check your inbox
+                                            </div>
+                                        ) : (
+                                            <button
+                                                onClick={handlePasswordReset}
+                                                disabled={resetLoading}
+                                                className="flex items-center gap-3 px-6 py-3 bg-indigo-600 text-white rounded-2xl text-sm font-black hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-500/20 active:scale-[0.98] disabled:opacity-60"
+                                            >
+                                                {resetLoading
+                                                    ? <Loader2 className="w-4 h-4 animate-spin" />
+                                                    : <SendHorizonal className="w-4 h-4" />}
+                                                Send Reset Link
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </motion.div>
                     )}
 
                     {activeSubTab === 'activity' && (
                         <motion.div key="activity" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="space-y-4">
-                            <div className="bg-white border border-slate-100 rounded-[2rem] p-6 flex items-center justify-between group hover:bg-slate-50 transition-all cursor-pointer">
-                                <div className="flex items-center gap-5">
-                                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100"><Activity className="w-6 h-6" /></div>
-                                    <div><h4 className="font-display font-bold text-slate-900 text-sm">Session Authentication</h4><p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-0.5">California, USA • Active Now</p></div>
+                            <div className="bg-slate-50 border border-slate-100 rounded-[2rem] p-12 text-center">
+                                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mx-auto mb-4 border border-slate-100 shadow-sm">
+                                    <Activity className="w-7 h-7 text-slate-300" />
                                 </div>
-                                <ChevronRight className="w-5 h-5 text-slate-200 group-hover:text-indigo-600 transition-all" />
+                                <h4 className="font-display font-bold text-slate-500 text-sm mb-1">No activity yet</h4>
+                                <p className="text-xs text-slate-400 font-medium">Your session and survey activity will appear here.</p>
                             </div>
                         </motion.div>
                     )}
