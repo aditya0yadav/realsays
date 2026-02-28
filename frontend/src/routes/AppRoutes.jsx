@@ -20,6 +20,7 @@ import SurveyStatus from '../pages/survey/SurveyStatus';
 // Info Pages
 import ResearchPanels from '../pages/info/ResearchPanels';
 import FAQ from '../pages/info/FAQ';
+import AboutUs from '../pages/info/AboutUs';
 
 // Admin Pages
 import QualificationMapping from '../pages/admin/QualificationMapping';
@@ -31,6 +32,12 @@ import AdminUsers from '../pages/admin/AdminUsers';
 import AdminPanelAnalytics from '../pages/admin/AdminPanelAnalytics';
 import AdminUserDetails from '../pages/admin/AdminUserDetails';
 import AdminProviderFilter from '../pages/admin/AdminProviderFilter';
+import AdminBlogList from '../pages/admin/AdminBlogList';
+import AdminBlogEditor from '../pages/admin/AdminBlogEditor';
+
+// Blog Pages
+import BlogList from '../pages/blog/BlogList';
+import BlogDetail from '../pages/blog/BlogDetail';
 
 import { Navigate } from 'react-router-dom';
 
@@ -54,11 +61,16 @@ const AppRoutes = () => {
                     {/* Information Routes */}
                     <Route path="research-panels" element={<ResearchPanels />} />
                     <Route path="faqs" element={<FAQ />} />
+                    <Route path="about-us" element={<AboutUs />} />
 
                     {/* Legal Routes */}
                     <Route path="terms-of-service" element={<TermsOfService />} />
                     <Route path="privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="cookie-policy" element={<CookiePolicy />} />
+
+                    {/* Blog Routes */}
+                    <Route path="blog" element={<BlogList />} />
+                    <Route path="blog/:slug" element={<BlogDetail />} />
                 </Route>
 
                 {/* Admin Routes with Layout */}
@@ -71,6 +83,9 @@ const AppRoutes = () => {
                     <Route path="users/:id" element={<AdminUserDetails />} />
                     <Route path="mappings" element={<QualificationMapping />} />
                     <Route path="filter" element={<AdminProviderFilter />} />
+                    <Route path="blogs" element={<AdminBlogList />} />
+                    <Route path="blogs/new" element={<AdminBlogEditor />} />
+                    <Route path="blogs/:id/edit" element={<AdminBlogEditor />} />
                 </Route>
             </Routes>
         </>

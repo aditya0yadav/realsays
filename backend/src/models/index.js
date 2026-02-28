@@ -1,4 +1,5 @@
 const User = require('./auth/User.model');
+const Blog = require('./blog/Blog.model');
 const RefreshToken = require('./auth/RefreshToken.model');
 const DeviceFingerprint = require('./auth/DeviceFingerprint.model');
 const Panelist = require('./panel/Panelist.model');
@@ -90,5 +91,6 @@ module.exports = {
     SurveyAttributeMapping,
     SurveyOptionMapping,
     SurveyClick,
-    SurveyCompletion
+    SurveyCompletion,
+    Blog
 };

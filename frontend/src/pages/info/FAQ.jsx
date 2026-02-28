@@ -1,92 +1,159 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Search } from 'lucide-react';
+import { ChevronDown, Search, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState(0);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const faqs = [
         {
-            question: "How do I start earning rewards on StartSaySt?",
-            answer: "Simply create a free account, complete your profile to 100%, and match with surveys. Once you complete a survey successfully, the rewards will be credited to your account balance."
+            question: "How do I start earning rewards on Opinionest?",
+            answer: "Simply create a free account, complete your profile to 100%, and match with surveys. Once you complete a survey successfully, the rewards will be credited to your account balance. Your first paid survey could be waiting for you right now."
         },
         {
-            question: "Is StartSaySt really free to join?",
-            answer: "Yes, 100%! We will never ask for payment or subscription fees. Our platform is supported by the researchers who want to hear your voice."
+            question: "Is Opinionest really free to join?",
+            answer: "Yes, 100%. We will never ask for payment, subscription fees, or hidden charges. Our platform is entirely supported by the market research companies who need to hear your voice to shape their future products."
         },
         {
             question: "What is the minimum payout threshold?",
-            answer: "The minimum payout threshold depends on the withdrawal method you choose. Typically, it ranges from $5.00 to $10.00. You can check the current thresholds in your Rewards dashboard."
+            answer: "The minimum payout threshold depends on the withdrawal method you choose. Typically, it ranges from $5.00 to $10.00. You can check the current thresholds at any time in your Rewards dashboard."
         },
         {
             question: "Why was my survey disqualified?",
-            answer: "Researchers often look for a very specific demographic. If your responses indicate you don't fit that criteria, the survey may end early. We try to match you as accurately as possible, but disqualifications can still happen."
+            answer: "Researchers often look for a very specific demographic to ensure data accuracy. If your responses indicate you don't neatly fit that required criteria, the survey may end early. We try our best to pre-match you, but early disqualifications happen."
         },
         {
             question: "How long does it take to receive my payment?",
-            answer: "Most payouts are processed within 24-48 business hours. Some methods, like bank transfers, may take up to 3-5 business days depending on your financial institution."
+            answer: "We value your time and aim for speed. Most payouts are processed internally within 24-48 business hours. However, depending on the method (like direct bank transfers), it may take an additional 3-5 business days for funds to reflect."
         },
         {
-            question: "Can I use StartSaySt on my mobile device?",
-            answer: "Absolutely! StartSaySt is fully optimized for mobile browsers. You can take surveys on the go, whether you're commuting or relaxing at home."
+            question: "Can I use Opinionest on my mobile device?",
+            answer: "Absolutely. The Opinionest platform is fully optimized for mobile browsers so you can take surveys on the go—whether you're commuting, waiting in line, or relaxing at home."
         }
     ];
 
+    const filteredFaqs = faqs.filter(faq =>
+        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
-        <div className="py-20 lg:py-32 bg-gray-50/50">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-[#5B6CFF] font-bold uppercase tracking-widest text-sm mb-4 border-b-2 border-[#5B6CFF] inline-block">Support Center</h2>
-                    <h1 className="text-4xl md:text-5xl font-bold text-[#0F1E3A] mt-6 tracking-tight">Frequently Asked Questions</h1>
-                    <p className="text-[#0F1E3A]/70 text-lg mt-4 font-medium">Everything you need to know about getting the most out of StartSaySt.</p>
+        <div className="min-h-screen bg-white flex flex-col font-sans">
+
+            {/* ── Editorial Header & Layout ─────────────────────────────────── */}
+            <section className="px-4 sm:px-[5%] pt-28 pb-32 lg:pt-36 max-w-[1200px] mx-auto w-full flex flex-col lg:flex-row gap-16 lg:gap-24">
+
+                {/* Left: Sticky Context Column */}
+                <div className="flex-1 lg:max-w-[40%] lg:sticky lg:top-36 self-start">
+                    {/* Eyebrow */}
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="h-px w-10 sm:w-16 bg-emerald-400" />
+                        <span className="text-emerald-500 font-bold text-xs uppercase tracking-[0.2em] font-mono">
+                            Support Center
+                        </span>
+                    </div>
+
+                    <h1 className="text-4xl sm:text-6xl font-black text-[#0F1E3A] leading-[1.05] tracking-tight mb-8">
+                        Frequently <br />
+                        <span className="text-slate-400">Asked Questions.</span>
+                    </h1>
+
+                    <p className="text-lg text-slate-500 font-medium leading-relaxed mb-10 pl-4 border-l-2 border-slate-100">
+                        Everything you need to know about getting the most out of Opinionest, matching with surveys, and redeeming your hard-earned rewards.
+                    </p>
+
+                    {/* Search Input */}
+                    <div className="relative group">
+                        <input
+                            type="text"
+                            placeholder="Search for answers..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full h-14 pl-12 pr-6 rounded-full border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 text-slate-700 font-medium transition-all"
+                        />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-emerald-500 transition-colors" />
+                    </div>
                 </div>
 
-                {/* Search Bar Placeholder */}
-                <div className="relative mb-12">
-                    <input
-                        type="text"
-                        placeholder="Search for answers..."
-                        className="w-full h-16 pl-14 pr-6 rounded-2xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 shadow-sm text-lg transition-all"
-                    />
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 w-6 h-6" />
-                </div>
-
-                <div className="space-y-4">
-                    {faqs.map((faq, index) => (
-                        <div
-                            key={index}
-                            className={`rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === index
-                                ? 'bg-white border-[#5B6CFF]/30 shadow-lg'
-                                : 'bg-white border-gray-100 hover:border-gray-200'
-                                }`}
-                        >
-                            <button
-                                onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-                                className="w-full px-8 py-6 flex justify-between items-center text-left"
-                            >
-                                <span className={`text-lg font-bold ${openIndex === index ? 'text-[#5B6CFF]' : 'text-[#0F1E3A]'}`}>
-                                    {faq.question}
-                                </span>
-                                {openIndex === index ? <ChevronUp className="text-[#5B6CFF] shrink-0" /> : <ChevronDown className="text-gray-400 shrink-0" />}
-                            </button>
-
-                            {openIndex === index && (
-                                <div className="px-8 pb-8">
-                                    <div className="h-[1px] bg-gray-100 mb-6" />
-                                    <p className="text-[#0F1E3A]/70 text-lg leading-relaxed">{faq.answer}</p>
-                                </div>
-                            )}
+                {/* Right: Accordion Column */}
+                <div className="flex-1 mt-0 lg:mt-8">
+                    {filteredFaqs.length === 0 ? (
+                        <div className="py-12 text-center text-slate-500">
+                            No answers found for "{searchQuery}". Try a different term.
                         </div>
-                    ))}
+                    ) : (
+                        <div className="divide-y divide-slate-100 border-t border-slate-100">
+                            {filteredFaqs.map((faq, index) => {
+                                const isOpen = openIndex === index;
+                                return (
+                                    <div key={index} className="group py-6">
+                                        <button
+                                            onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                                            className="w-full flex justify-between items-start gap-6 text-left"
+                                        >
+                                            <h3 className={`text-xl font-bold leading-tight transition-colors ${isOpen ? 'text-emerald-500' : 'text-[#0F1E3A] group-hover:text-emerald-500'
+                                                }`}>
+                                                {faq.question}
+                                            </h3>
+                                            <div className="flex-shrink-0 w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center group-hover:border-emerald-200 transition-colors mt-0.5">
+                                                <ChevronDown className={`w-4 h-4 text-slate-400 group-hover:text-emerald-500 transition-transform duration-300 ${isOpen ? 'rotate-180 text-emerald-500' : ''}`} />
+                                            </div>
+                                        </button>
+
+                                        <div
+                                            className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 mt-0'
+                                                }`}
+                                        >
+                                            <div className="overflow-hidden">
+                                                <p className="text-lg text-slate-600 leading-relaxed pr-8 border-l-2 border-emerald-100 pl-6">
+                                                    {faq.answer}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+
+                    {/* Support Fallback */}
+                    <div className="mt-16 bg-slate-50 p-8 sm:p-10 rounded-[1.5rem] border border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+                        <div>
+                            <h4 className="text-xl font-bold text-[#0F1E3A] mb-2">Still have questions?</h4>
+                            <p className="text-slate-500 font-medium">Reach out directly to our support team.</p>
+                        </div>
+                        <a
+                            href="mailto:support@opinionest.com"
+                            className="whitespace-nowrap inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-slate-200 text-[#0F1E3A] font-bold hover:border-[#0F1E3A] transition-colors shadow-sm"
+                        >
+                            Email Support
+                        </a>
+                    </div>
                 </div>
 
-                <div className="mt-20 text-center p-12 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                    <h3 className="text-2xl font-bold text-[#0F1E3A] mb-4">Still have questions?</h3>
-                    <p className="text-gray-500 mb-8">Can't find the answer you're looking for? Reach out to our friendly support team.</p>
-                    <a href="mailto:support@StartSaySt.com" className="px-8 py-4 bg-gradient-to-r from-[#5B6CFF] to-[#4FD1E8] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-blue-500/20 transition-all inline-block active:scale-95 shadow-md">
-                        Contact Support
-                    </a>
+            </section>
+
+            {/* ── Architectural CTA (Consistent with AboutUs) ──────────────── */}
+            <section className="mt-auto bg-slate-900 border-t border-slate-800">
+                <div className="max-w-[1200px] mx-auto px-4 sm:px-[5%] py-24 lg:py-32 flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div className="max-w-xl">
+                        <h2 className="text-4xl sm:text-5xl font-black text-white leading-tight mb-4">
+                            Ready to participate?
+                        </h2>
+                        <p className="text-lg sm:text-xl text-slate-400 font-medium">
+                            Join thousand of panelists and start earning today.
+                        </p>
+                    </div>
+                    <Link
+                        to="/signup"
+                        className="group relative inline-flex items-center justify-center gap-4 bg-emerald-500 text-white px-8 py-5 sm:px-10 sm:py-6 rounded-full text-lg sm:text-xl font-black shadow-2xl shadow-emerald-500/20 hover:bg-emerald-400 transition-all duration-300 flex-shrink-0"
+                    >
+                        <span>Create your account</span>
+                        <ArrowRight strokeWidth={3} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
                 </div>
-            </div>
+            </section>
         </div>
     );
 };

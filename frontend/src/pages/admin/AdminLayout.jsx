@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
-    LayoutDashboard, BarChart2, Users, LogOut, Menu, X, Search, ChevronRight, Activity
+    LayoutDashboard, BarChart2, Users, LogOut, Menu, X, Search, ChevronRight, Activity, BookOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../../assets/logo.png';
@@ -21,6 +21,7 @@ const AdminLayout = () => {
         { path: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
         { path: '/admin/users', icon: Users, label: 'Users' },
         { path: '/admin/panels', icon: Activity, label: 'Panel Analytics' },
+        { path: '/admin/blogs', icon: BookOpen, label: 'Blog Posts' },
         // { path: '/admin/analytics', icon: BarChart2, label: 'Growth Stats' },
     ];
 
