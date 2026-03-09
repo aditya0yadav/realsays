@@ -1,0 +1,1911 @@
+{
+  "lastFetched": 1771667615375,
+  "count": 20,
+  "data": [
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "124540",
+      "title": "C level Employees in below States in Finance Operations Information Technology/IT Departments States California Connecticut Illinois Massachusetts New Jersey Ohio Pennsylvania Texas",
+      "payout": 7.2,
+      "duration": "17 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 24
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 25,
+          "max": 34
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 35,
+          "max": 44
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 45,
+          "max": 54
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 55,
+          "max": 64
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 65,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        },
+        {
+          "key": "job_title",
+          "type": "list",
+          "allowed_values": [
+            "job_title_001946",
+            "job_title_004587",
+            "job_title_004601",
+            "job_title_004602",
+            "job_title_004610",
+            "job_title_004634",
+            "job_title_004638"
+          ]
+        },
+        {
+          "key": "b2b_department",
+          "type": "list",
+          "allowed_values": [
+            "b2b_department_00433",
+            "b2b_department_00437",
+            "b2b_department_00440",
+            "b2b_department_00441",
+            "b2b_department_00442",
+            "b2b_department_004660"
+          ]
+        },
+        {
+          "key": "number_of_employees",
+          "type": "list",
+          "allowed_values": [
+            "number_of_employees_002065",
+            "number_of_employees_002066",
+            "number_of_employees_002067",
+            "number_of_employees_002068",
+            "number_of_employees_002069",
+            "number_of_employees_002070"
+          ]
+        },
+        {
+          "key": "state",
+          "type": "list",
+          "allowed_values": [
+            "New York"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 14,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "124540",
+        "parentID": "124140",
+        "clientID": "664",
+        "surveyCPI": "7.20",
+        "surveyTargetCount": 14,
+        "LOI": "17",
+        "IR": "60",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2B",
+        "projectBrief": "C level Employees in below States in Finance Operations Information Technology/IT Departments States California Connecticut Illinois Massachusetts New Jersey Ohio Pennsylvania Texas",
+        "vAPICPC": "0.00"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 18.181818181818183,
+        "failedReasons": [
+          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
+          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":44}",
+          "Mismatch for age: user has \"25\", expected {\"min\":45,\"max\":54}",
+          "Mismatch for age: user has \"25\", expected {\"min\":55,\"max\":64}",
+          "Mismatch for age: user has \"25\", expected {\"min\":65,\"max\":99}",
+          "Missing attribute: job_title",
+          "Missing attribute: b2b_department",
+          "Missing attribute: number_of_employees",
+          "Missing attribute: state"
+        ]
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "125524",
+      "title": "Smartphone owners, GenPop aged 18+",
+      "payout": 1.2,
+      "duration": "10 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 24
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 25,
+          "max": 34
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 35,
+          "max": 44
+        },
+        {
+          "key": "age",
+          "type": "range",
+          "min": 45,
+          "max": 54
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_002"
+          ]
+        },
+        {
+          "key": "mobilephone_user",
+          "type": "list",
+          "allowed_values": [
+            "mobilephone_user_00831",
+            "mobilephone_user_00832",
+            "mobilephone_user_00833"
+          ]
+        },
+        {
+          "key": "cell_type",
+          "type": "list",
+          "allowed_values": [
+            "cell_type_003287"
+          ]
+        },
+        {
+          "key": "annual_hhi",
+          "type": "list",
+          "allowed_values": [
+            "annual_hhi_002330",
+            "annual_hhi_002331",
+            "annual_hhi_002332",
+            "annual_hhi_002333",
+            "annual_hhi_002334",
+            "annual_hhi_002335",
+            "annual_hhi_002336",
+            "annual_hhi_002337",
+            "annual_hhi_002338",
+            "annual_hhi_002339",
+            "annual_hhi_002340",
+            "annual_hhi_002341",
+            "annual_hhi_002342",
+            "annual_hhi_002343",
+            "annual_hhi_002344",
+            "annual_hhi_002345",
+            "annual_hhi_002346",
+            "annual_hhi_002347",
+            "annual_hhi_002348",
+            "annual_hhi_002349",
+            "annual_hhi_002350",
+            "annual_hhi_002351",
+            "annual_hhi_002352",
+            "annual_hhi_002353"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 103,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "125524",
+        "parentID": "0",
+        "clientID": "153",
+        "surveyCPI": "1.20",
+        "surveyTargetCount": 103,
+        "LOI": "10",
+        "IR": "60",
+        "countrieISOcode": "KR",
+        "languageCode": "ko",
+        "languageCountryCode": "ko-KR",
+        "projectSupportedDevice": "2",
+        "studyType": "B2C",
+        "projectBrief": "Smartphone owners, GenPop aged 18+",
+        "vAPICPC": "1.20"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 25,
+        "failedReasons": [
+          "Mismatch for age: user has \"25\", expected {\"min\":18,\"max\":24}",
+          "Mismatch for age: user has \"25\", expected {\"min\":35,\"max\":44}",
+          "Mismatch for age: user has \"25\", expected {\"min\":45,\"max\":54}",
+          "Mismatch for gender: user has \"gender_001\", expected [\"gender_002\"]",
+          "Missing attribute: mobilephone_user",
+          "Missing attribute: cell_type"
+        ]
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126056",
+      "title": "No Description available",
+      "payout": 0.37,
+      "duration": "20 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 29,
+          "max": 60
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        },
+        {
+          "key": "ethnicity",
+          "type": "list",
+          "allowed_values": [
+            "ethnicity_0010",
+            "ethnicity_0011",
+            "ethnicity_0012",
+            "ethnicity_0013",
+            "ethnicity_0014",
+            "ethnicity_0015",
+            "ethnicity_0016",
+            "ethnicity_003",
+            "ethnicity_004",
+            "ethnicity_005",
+            "ethnicity_006",
+            "ethnicity_007",
+            "ethnicity_008",
+            "ethnicity_009"
+          ]
+        },
+        {
+          "key": "race",
+          "type": "list",
+          "allowed_values": [
+            "race_00295",
+            "race_00296",
+            "race_00297",
+            "race_00298",
+            "race_00299",
+            "race_00300",
+            "race_00301",
+            "race_00302",
+            "race_00303",
+            "race_00304",
+            "race_00305",
+            "race_00306",
+            "race_00307",
+            "race_00308",
+            "race_00309",
+            "race_00310"
+          ]
+        },
+        {
+          "key": "b2b_industry",
+          "type": "list",
+          "allowed_values": [
+            "b2b_industry_001857",
+            "b2b_industry_001858",
+            "b2b_industry_001859",
+            "b2b_industry_001860",
+            "b2b_industry_001861",
+            "b2b_industry_001862",
+            "b2b_industry_001863",
+            "b2b_industry_001864",
+            "b2b_industry_001865",
+            "b2b_industry_001866",
+            "b2b_industry_001867",
+            "b2b_industry_001868",
+            "b2b_industry_001869",
+            "b2b_industry_001870",
+            "b2b_industry_001871",
+            "b2b_industry_001872",
+            "b2b_industry_001873",
+            "b2b_industry_001874",
+            "b2b_industry_001875",
+            "b2b_industry_001876",
+            "b2b_industry_001877",
+            "b2b_industry_001878",
+            "b2b_industry_001879",
+            "b2b_industry_001880",
+            "b2b_industry_001881",
+            "b2b_industry_001882",
+            "b2b_industry_001883",
+            "b2b_industry_001884",
+            "b2b_industry_001885",
+            "b2b_industry_001886",
+            "b2b_industry_001887",
+            "b2b_industry_001888",
+            "b2b_industry_001889",
+            "b2b_industry_001890",
+            "b2b_industry_001891",
+            "b2b_industry_001892",
+            "b2b_industry_001893",
+            "b2b_industry_001894",
+            "b2b_industry_001895",
+            "b2b_industry_001896",
+            "b2b_industry_001897",
+            "b2b_industry_001898",
+            "b2b_industry_001899",
+            "b2b_industry_001900",
+            "b2b_industry_001901",
+            "b2b_industry_001902",
+            "b2b_industry_001903",
+            "b2b_industry_001904",
+            "b2b_industry_001905",
+            "b2b_industry_001906",
+            "b2b_industry_001907",
+            "b2b_industry_001908"
+          ]
+        },
+        {
+          "key": "annual_hhi",
+          "type": "list",
+          "allowed_values": [
+            "annual_hhi_002349",
+            "annual_hhi_002350",
+            "annual_hhi_002351",
+            "annual_hhi_002352",
+            "annual_hhi_002353",
+            "annual_hhi_002354"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 59,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126056",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.37",
+        "surveyTargetCount": 59,
+        "LOI": "20",
+        "IR": "55",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.37"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 16.666666666666664,
+        "failedReasons": [
+          "Mismatch for age: user has \"25\", expected {\"min\":29,\"max\":60}",
+          "Mismatch for ethnicity: user has \"No\", expected [\"ethnicity_0010\",\"ethnicity_0011\",\"ethnicity_0012\",\"ethnicity_0013\",\"ethnicity_0014\",\"ethnicity_0015\",\"ethnicity_0016\",\"ethnicity_003\",\"ethnicity_004\",\"ethnicity_005\",\"ethnicity_006\",\"ethnicity_007\",\"ethnicity_008\",\"ethnicity_009\"]",
+          "Mismatch for race: user has \"White\", expected [\"race_00295\",\"race_00296\",\"race_00297\",\"race_00298\",\"race_00299\",\"race_00300\",\"race_00301\",\"race_00302\",\"race_00303\",\"race_00304\",\"race_00305\",\"race_00306\",\"race_00307\",\"race_00308\",\"race_00309\",\"race_00310\"]",
+          "Missing attribute: b2b_industry",
+          "Mismatch for annual_hhi: user has \"annual_hhi_002343\", expected [\"annual_hhi_002349\",\"annual_hhi_002350\",\"annual_hhi_002351\",\"annual_hhi_002352\",\"annual_hhi_002353\",\"annual_hhi_002354\"]"
+        ]
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126241",
+      "title": "Gen Pop",
+      "payout": 1.2,
+      "duration": "20 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 34
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        },
+        {
+          "key": "state",
+          "type": "list",
+          "allowed_values": [
+            "Alabama",
+            "Alaska",
+            "American Samoa",
+            "Arizona",
+            "Arkansas",
+            "Armed Forces Africa",
+            "Armed Forces Americas",
+            "Armed Forces Canada",
+            "Armed Forces Europe",
+            "Armed Forces Middle East",
+            "Armed Forces Pacific",
+            "California",
+            "Colorado",
+            "Connecticut",
+            "Delaware",
+            "District of Columbia",
+            "Federated States Of Micronesia",
+            "Florida",
+            "Georgia",
+            "Guam",
+            "Hawaii",
+            "Idaho",
+            "Illinois",
+            "Indiana",
+            "Iowa",
+            "Kansas",
+            "Kentucky",
+            "Louisiana",
+            "Maine",
+            "Marshall Islands",
+            "Maryland",
+            "Massachusetts",
+            "Michigan",
+            "Minnesota",
+            "Mississippi",
+            "Missouri",
+            "Montana",
+            "Nebraska",
+            "Nevada",
+            "New Hampshire",
+            "New Jersey",
+            "New Mexico",
+            "New York",
+            "North Carolina",
+            "North Dakota",
+            "Northern Mariana Islands",
+            "Ohio",
+            "Oklahoma",
+            "Oregon",
+            "Palau",
+            "Pennsylvania",
+            "Puerto Rico",
+            "Rhode Island",
+            "South Carolina",
+            "South Dakota",
+            "Tennessee",
+            "Texas",
+            "Utah",
+            "Vermont",
+            "Virgin Islands",
+            "Virginia",
+            "Washington",
+            "West Virginia",
+            "Wisconsin",
+            "Wyoming"
+          ]
+        },
+        {
+          "key": "annual_hhi",
+          "type": "list",
+          "allowed_values": [
+            "annual_hhi_002333",
+            "annual_hhi_002334",
+            "annual_hhi_002335",
+            "annual_hhi_002336",
+            "annual_hhi_002337",
+            "annual_hhi_002338",
+            "annual_hhi_002339",
+            "annual_hhi_002340",
+            "annual_hhi_002341",
+            "annual_hhi_002342",
+            "annual_hhi_002343",
+            "annual_hhi_002344",
+            "annual_hhi_002345",
+            "annual_hhi_002346",
+            "annual_hhi_002347",
+            "annual_hhi_002348",
+            "annual_hhi_002349",
+            "annual_hhi_002350",
+            "annual_hhi_002351"
+          ]
+        },
+        {
+          "key": "region",
+          "type": "list",
+          "allowed_values": [
+            "region_005052",
+            "region_005054",
+            "region_005060"
+          ]
+        },
+        {
+          "key": "ethnic_identity_2",
+          "type": "list",
+          "allowed_values": [
+            "ethnic_identity_2_003719",
+            "ethnic_identity_2_003720",
+            "ethnic_identity_2_003727",
+            "ethnic_identity_2_003731"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 202,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126241",
+        "parentID": "0",
+        "clientID": "153",
+        "surveyCPI": "1.20",
+        "surveyTargetCount": 202,
+        "LOI": "20",
+        "IR": "60",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "2",
+        "studyType": "B2C",
+        "projectBrief": "Gen Pop",
+        "vAPICPC": "1.20"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 66.66666666666666,
+        "failedReasons": [
+          "Missing attribute: state",
+          "Missing attribute: region"
+        ]
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126307",
+      "title": "No Description available",
+      "payout": 0.21,
+      "duration": "15 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        },
+        {
+          "key": "ethnicity",
+          "type": "list",
+          "allowed_values": [
+            "ethnicity_0010",
+            "ethnicity_0011",
+            "ethnicity_0012",
+            "ethnicity_0013",
+            "ethnicity_0014",
+            "ethnicity_0015",
+            "ethnicity_0016",
+            "ethnicity_003",
+            "ethnicity_004",
+            "ethnicity_005",
+            "ethnicity_006",
+            "ethnicity_007",
+            "ethnicity_008",
+            "ethnicity_009"
+          ]
+        },
+        {
+          "key": "race",
+          "type": "list",
+          "allowed_values": [
+            "race_00295",
+            "race_00296",
+            "race_00297",
+            "race_00298",
+            "race_00299",
+            "race_00300",
+            "race_00301",
+            "race_00302",
+            "race_00303",
+            "race_00304",
+            "race_00305",
+            "race_00306",
+            "race_00307",
+            "race_00308",
+            "race_00309",
+            "race_00310"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1416,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126307",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.21",
+        "surveyTargetCount": 1416,
+        "LOI": "15",
+        "IR": "70",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.21"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 50,
+        "failedReasons": [
+          "Mismatch for ethnicity: user has \"No\", expected [\"ethnicity_0010\",\"ethnicity_0011\",\"ethnicity_0012\",\"ethnicity_0013\",\"ethnicity_0014\",\"ethnicity_0015\",\"ethnicity_0016\",\"ethnicity_003\",\"ethnicity_004\",\"ethnicity_005\",\"ethnicity_006\",\"ethnicity_007\",\"ethnicity_008\",\"ethnicity_009\"]",
+          "Mismatch for race: user has \"White\", expected [\"race_00295\",\"race_00296\",\"race_00297\",\"race_00298\",\"race_00299\",\"race_00300\",\"race_00301\",\"race_00302\",\"race_00303\",\"race_00304\",\"race_00305\",\"race_00306\",\"race_00307\",\"race_00308\",\"race_00309\",\"race_00310\"]"
+        ]
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126338",
+      "title": "No Description available",
+      "payout": 0.11,
+      "duration": "16 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 114,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126338",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.11",
+        "surveyTargetCount": 114,
+        "LOI": "16",
+        "IR": "65",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.11"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126384",
+      "title": "No Description available",
+      "payout": 0.18,
+      "duration": "20 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 590,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126384",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.18",
+        "surveyTargetCount": 590,
+        "LOI": "20",
+        "IR": "50",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.18"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126396",
+      "title": "No Description available",
+      "payout": 0.18,
+      "duration": "18 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 175,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126396",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.18",
+        "surveyTargetCount": 175,
+        "LOI": "18",
+        "IR": "65",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.18"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126401",
+      "title": "No Description available",
+      "payout": 0.51,
+      "duration": "18 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 235,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126401",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.51",
+        "surveyTargetCount": 235,
+        "LOI": "18",
+        "IR": "70",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.51"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "goweb",
+      "providerId": "49df2fb4-76f8-4032-8fe9-d0d9aed13a38",
+      "providerSurveyId": "126606",
+      "title": "No Description available",
+      "payout": 0.37,
+      "duration": "17 mins",
+      "qualifications": [
+        {
+          "key": "age",
+          "type": "range",
+          "min": 18,
+          "max": 99
+        },
+        {
+          "key": "gender",
+          "type": "list",
+          "allowed_values": [
+            "gender_001",
+            "gender_002"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 335,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "surveyID": "126606",
+        "parentID": "0",
+        "clientID": "1863",
+        "surveyCPI": "0.37",
+        "surveyTargetCount": 335,
+        "LOI": "17",
+        "IR": "70",
+        "countrieISOcode": "US",
+        "languageCode": "en",
+        "languageCountryCode": "en-US",
+        "projectSupportedDevice": "3",
+        "studyType": "B2C",
+        "projectBrief": "",
+        "vAPICPC": "0.37"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758023524",
+      "title": "1758023523",
+      "payout": 1,
+      "duration": "11 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1247,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758023524,
+        "Name": "1758023523",
+        "TotalCompleteRequired": 1247,
+        "CPI": 1,
+        "LOI": 11,
+        "IR": 83,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-11T22:31:51.000Z",
+        "Device": "Both",
+        "IndustryId": "21",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 66.66666666666666,
+        "failedReasons": [
+          "Missing attribute: children"
+        ]
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758050906",
+      "title": "1758050905",
+      "payout": 1,
+      "duration": "11 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1211,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758050906,
+        "Name": "1758050905",
+        "TotalCompleteRequired": 1211,
+        "CPI": 1,
+        "LOI": 11,
+        "IR": 86,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-11T22:54:05.000Z",
+        "Device": "Both",
+        "IndustryId": "24",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 66.66666666666666,
+        "failedReasons": [
+          "Missing attribute: children"
+        ]
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758144892",
+      "title": "1758144891",
+      "payout": 1.3,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "37",
+          "type": "list",
+          "allowed_values": [
+            "768",
+            "769",
+            "770",
+            "563490"
+          ]
+        },
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 682,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758144892,
+        "Name": "1758144891",
+        "TotalCompleteRequired": 682,
+        "CPI": 1.3,
+        "LOI": 9,
+        "IR": 72,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T00:27:13.000Z",
+        "Device": "Both",
+        "IndustryId": "22",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 50,
+        "failedReasons": [
+          "Missing attribute: 37",
+          "Missing attribute: children"
+        ]
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758153949",
+      "title": "1758150367",
+      "payout": 0.9,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1080,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758153949,
+        "Name": "1758150367",
+        "TotalCompleteRequired": 1080,
+        "CPI": 0.9,
+        "LOI": 9,
+        "IR": 88,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T00:34:08.000Z",
+        "Device": "Both",
+        "IndustryId": "26",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758176898",
+      "title": "1758176897",
+      "payout": 1.1,
+      "duration": "12 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1168,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758176898,
+        "Name": "1758176897",
+        "TotalCompleteRequired": 1168,
+        "CPI": 1.1,
+        "LOI": 12,
+        "IR": 82,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T00:54:08.000Z",
+        "Device": "Both",
+        "IndustryId": "29",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 66.66666666666666,
+        "failedReasons": [
+          "Missing attribute: children"
+        ]
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758341246",
+      "title": "1758337949",
+      "payout": 0.95,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1169,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758341246,
+        "Name": "1758337949",
+        "TotalCompleteRequired": 1169,
+        "CPI": 0.95,
+        "LOI": 9,
+        "IR": 85,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T03:34:18.000Z",
+        "Device": "Both",
+        "IndustryId": "21",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758608888",
+      "title": "1758608887",
+      "payout": 1,
+      "duration": "10 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1228,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758608888,
+        "Name": "1758608887",
+        "TotalCompleteRequired": 1228,
+        "CPI": 1,
+        "LOI": 10,
+        "IR": 84,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T08:14:27.000Z",
+        "Device": "Both",
+        "IndustryId": "21",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 66.66666666666666,
+        "failedReasons": [
+          "Missing attribute: children"
+        ]
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758669755",
+      "title": "1758669754",
+      "payout": 1,
+      "duration": "12 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "9",
+          "type": "text",
+          "allowed_values": [
+            "96",
+            "97",
+            "98",
+            "99",
+            "100",
+            "101",
+            "102",
+            "103",
+            "104",
+            "105",
+            "106",
+            "107",
+            "108",
+            "109",
+            "110",
+            "111",
+            "112",
+            "113",
+            "114",
+            "115",
+            "116",
+            "117",
+            "118",
+            "119",
+            "120",
+            "121",
+            "122",
+            "123",
+            "124",
+            "125",
+            "126",
+            "127",
+            "128",
+            "129",
+            "130",
+            "131"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1265,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758669755,
+        "Name": "1758669754",
+        "TotalCompleteRequired": 1265,
+        "CPI": 1,
+        "LOI": 12,
+        "IR": 85,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T09:14:29.000Z",
+        "Device": "Both",
+        "IndustryId": "10",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": false,
+        "score": 66.66666666666666,
+        "failedReasons": [
+          "Missing attribute: children"
+        ]
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758791122",
+      "title": "1758791121",
+      "payout": 1,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1244,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758791122,
+        "Name": "1758791121",
+        "TotalCompleteRequired": 1244,
+        "CPI": 1,
+        "LOI": 9,
+        "IR": 83,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T11:14:32.000Z",
+        "Device": "Both",
+        "IndustryId": "24",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    },
+    {
+      "provider": "zamplia",
+      "providerId": "bcce5a0c-5284-45bb-8363-bbcfe5e9e4cd",
+      "providerSurveyId": "1758835820",
+      "title": "1758835512",
+      "payout": 0.95,
+      "duration": "9 mins",
+      "qualifications": [
+        {
+          "id": "1",
+          "type": "list",
+          "allowed_values": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "id": "5",
+          "type": "list",
+          "allowed_values": [
+            "482397",
+            "34",
+            "35",
+            "36",
+            "37",
+            "38",
+            "39",
+            "40",
+            "41",
+            "42",
+            "43",
+            "44",
+            "45",
+            "46",
+            "47",
+            "48",
+            "49",
+            "50",
+            "51",
+            "52",
+            "53",
+            "54",
+            "55",
+            "56",
+            "57",
+            "58",
+            "59",
+            "60"
+          ]
+        },
+        {
+          "id": "29",
+          "type": "text",
+          "allowed_values": [
+            "18-99"
+          ]
+        }
+      ],
+      "quota": {
+        "required": 1266,
+        "remaining": 0
+      },
+      "status": "active",
+      "raw_data": {
+        "SurveyId": 1758835820,
+        "Name": "1758835512",
+        "TotalCompleteRequired": 1266,
+        "CPI": 0.95,
+        "LOI": 9,
+        "IR": 86,
+        "LastUpdateTimeStamp": "2026-02-18T07:20:15.000Z",
+        "IsSurveyGroupExist": 0,
+        "LanguageCode": "En-US",
+        "SurveyEndDate": "2026-02-12T11:54:32.000Z",
+        "Device": "Both",
+        "IndustryId": "7",
+        "StudyTypes": "ADHOC",
+        "IsRecontactSurvey": 0,
+        "CollectPII": 0,
+        "LanguageId": 4,
+        "FieldDays": null,
+        "SurveyCreatedAt": "2026-02-18T07:20:15.000Z",
+        "status": "Live"
+      },
+      "auditMatch": {
+        "isMatch": true,
+        "score": 100,
+        "failedReasons": []
+      }
+    }
+  ],
+  "auditTimestamp": "2026-02-21T09:53:35.375Z"
+}
