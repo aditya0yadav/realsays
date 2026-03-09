@@ -81,7 +81,7 @@ export default function BlogDetail() {
     return (
         <>
             <Helmet>
-                <title>{blog.meta_title || blog.title} | Opinionest Journal</title>
+                <title>{blog.meta_title || blog.title} | StartSaySt Journal</title>
                 <meta name="description" content={blog.meta_description || blog.excerpt || ''} />
                 <meta property="og:title" content={blog.meta_title || blog.title} />
                 <meta property="og:description" content={blog.meta_description || blog.excerpt || ''} />
@@ -98,7 +98,7 @@ export default function BlogDetail() {
 
                         {/* Back Nav */}
                         <Link to="/blog" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-emerald-500 transition-colors mb-16">
-                            <ArrowLeft className="w-4 h-4" /> Opinionest Journal
+                            <ArrowLeft className="w-4 h-4" /> StartSaySt Journal
                         </Link>
 
                         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
@@ -107,7 +107,7 @@ export default function BlogDetail() {
                                 <div className="flex items-center gap-4 mb-8">
                                     <div className="h-px w-10 sm:w-16 bg-emerald-400" />
                                     <span className="text-emerald-500 font-bold text-xs uppercase tracking-[0.2em] font-mono">
-                                        {blog.category || 'Opinionest Journal'}
+                                        {blog.category || 'StartSaySt Journal'}
                                     </span>
                                 </div>
 

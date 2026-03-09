@@ -75,7 +75,7 @@ export default function BlogList() {
                         <div className="flex items-center gap-4 mb-8">
                             <div className="h-px w-10 sm:w-16 bg-emerald-400" />
                             <span className="text-emerald-500 font-bold text-xs uppercase tracking-[0.2em] font-mono">
-                                Opinionest Journal
+                                StartSaySt Journal
                             </span>
                         </div>
 
