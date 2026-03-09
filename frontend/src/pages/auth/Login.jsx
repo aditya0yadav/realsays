@@ -175,7 +175,7 @@ const Login = () => {
                 <div className="w-full max-w-md space-y-8">
                     <div className="text-center lg:text-left">
                         <Link to="/" className="inline-block mb-8">
-                            <img src={logo} alt="RealSays" className="h-10 w-auto" />
+                            <img src={logo} alt="StartSaySt" className="h-10 w-auto" />
                         </Link>
                         <h1 className="text-3xl font-bold text-[#0F1E3A] tracking-tight">Welcome back</h1>
                         <p className="text-gray-500 mt-2">Sign in with your verified email to continue.</p>
@@ -204,7 +204,7 @@ const Login = () => {
                             <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-[#5B6CFF] transition-colors" />
                             <input
                                 type="email"
-                                placeholder="Email Address"
+                                placeholder="email address"
                                 className="w-full h-14 pl-12 pr-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#5B6CFF]/20 focus:bg-white transition-all"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}

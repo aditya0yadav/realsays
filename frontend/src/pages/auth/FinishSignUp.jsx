@@ -49,7 +49,7 @@ const FinishSignUp = () => {
             if (err.code === 'auth/invalid-action-code' || err.code === 'auth/expired-action-code') {
                 setErrorMsg('This link has expired or already been used. Please sign up again.');
             } else if (err.code === 'auth/invalid-email') {
-                setErrorMsg('Email mismatch. Please enter the email you used to sign up.');
+                setErrorMsg('email mismatch. Please enter the email you used to sign up.');
                 setStatus('needEmail');
                 return;
             } else {
@@ -104,7 +104,7 @@ const FinishSignUp = () => {
                     <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto shadow-lg">
                         <ShieldCheck className="w-8 h-8 text-white" />
                     </div>
-                    <h2 className="text-xl font-bold text-[#0F1E3A]">Email verified!</h2>
+                    <h2 className="text-xl font-bold text-[#0F1E3A]">email verified!</h2>
                     <p className="text-gray-500 text-sm">Redirecting you to complete your profile…</p>
                 </div>
             </div>

@@ -22,7 +22,7 @@ function generateSlug(title) {
 
 const INITIAL_FORM = {
     title: '', slug: '', excerpt: '', content: '',
-    featured_image: '', author: 'RealSays Team',
+    featured_image: '', author: 'StartSaySt Team',
     status: 'draft', category: '', tags: '',
     meta_title: '', meta_description: ''
 };
@@ -70,7 +70,7 @@ export default function AdminBlogEditor() {
                     excerpt: data.excerpt || '',
                     content: data.content || '',
                     featured_image: data.featured_image || '',
-                    author: data.author || 'RealSays Team',
+                    author: data.author || 'StartSaySt Team',
                     status: data.status || 'draft',
                     category: data.category || '',
                     tags: Array.isArray(data.tags) ? data.tags.join(', ') : '',

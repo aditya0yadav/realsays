@@ -524,7 +524,7 @@ const ProfileTab = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
                                 <InputField label="First Name" name="first_name" value={formData.first_name} onChange={handleChange} />
                                 <InputField label="Last Name" name="last_name" value={formData.last_name} onChange={handleChange} />
-                                <InputField label="Email Address" name="email" value={formData.email} disabled icon={<Mail />} />
+                                <InputField label="email address" name="email" value={formData.email} disabled icon={<Mail />} />
                                 <InputField label="Postal Code" name="zip_code" value={formData.zip_code} onChange={handleChange} />
                                 <CustomSelect label="Country" value={formData.country} options={Country.getAllCountries().map(c => c.name)} onChange={val => handleLocationChange('country', val)} />
                                 <CustomSelect label="City / Region" value={formData.city} options={selectedCountryCode ? City.getCitiesOfCountry(selectedCountryCode).map(c => c.name) : []} onChange={val => handleLocationChange('city', val)} />

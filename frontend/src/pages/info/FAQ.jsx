@@ -8,11 +8,11 @@ const FAQ = () => {
 
     const faqs = [
         {
-            question: "How do I start earning rewards on Opinionest?",
+            question: "How do I start earning rewards on StartSaySt?",
             answer: "Simply create a free account, complete your profile to 100%, and match with surveys. Once you complete a survey successfully, the rewards will be credited to your account balance. Your first paid survey could be waiting for you right now."
         },
         {
-            question: "Is Opinionest really free to join?",
+            question: "Is StartSaySt really free to join?",
             answer: "Yes, 100%. We will never ask for payment, subscription fees, or hidden charges. Our platform is entirely supported by the market research companies who need to hear your voice to shape their future products."
         },
         {
@@ -28,8 +28,8 @@ const FAQ = () => {
             answer: "We value your time and aim for speed. Most payouts are processed internally within 24-48 business hours. However, depending on the method (like direct bank transfers), it may take an additional 3-5 business days for funds to reflect."
         },
         {
-            question: "Can I use Opinionest on my mobile device?",
-            answer: "Absolutely. The Opinionest platform is fully optimized for mobile browsers so you can take surveys on the go—whether you're commuting, waiting in line, or relaxing at home."
+            question: "Can I use StartSaySt on my mobile device?",
+            answer: "Absolutely. The StartSaySt platform is fully optimized for mobile browsers so you can take surveys on the go—whether you're commuting, waiting in line, or relaxing at home."
         }
     ];
 
@@ -60,7 +60,7 @@ const FAQ = () => {
                     </h1>
 
                     <p className="text-lg text-slate-500 font-medium leading-relaxed mb-10 pl-4 border-l-2 border-slate-100">
-                        Everything you need to know about getting the most out of Opinionest, matching with surveys, and redeeming your hard-earned rewards.
+                        Everything you need to know about getting the most out of StartSaySt, matching with surveys, and redeeming your hard-earned rewards.
                     </p>
 
                     {/* Search Input */}
@@ -124,10 +124,10 @@ const FAQ = () => {
                             <p className="text-slate-500 font-medium">Reach out directly to our support team.</p>
                         </div>
                         <a
-                            href="mailto:support@opinionest.com"
+                            href="mailto:support@startsays.com"
                             className="whitespace-nowrap inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-slate-200 text-[#0F1E3A] font-bold hover:border-[#0F1E3A] transition-colors shadow-sm"
                         >
-                            Email Support
+                            email Support
                         </a>
                     </div>
                 </div>

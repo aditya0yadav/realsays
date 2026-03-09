@@ -90,7 +90,7 @@ const AboutUs = () => {
                         </h2>
                         <div className="w-12 h-1 bg-emerald-400 mb-8 rounded-full" />
                         <p className="text-lg text-slate-600 leading-relaxed mb-6 font-medium">
-                            Opinionest collects inputs via online mail surveys and questionnaires from qualified individuals addressed to specific demographics.
+                            StartSaySt collects inputs via online mail surveys and questionnaires from qualified individuals addressed to specific demographics.
                         </p>
                         <p className="text-base text-slate-500 leading-relaxed">
                             We collate your thoughts on behalf of the market research companies and brands. Market research companies partner with us, and we reward you for your precious time and input.
@@ -131,7 +131,7 @@ const AboutUs = () => {
                             Share your Opinions
                         </h2>
                         <p className="text-lg sm:text-xl text-slate-400 font-medium">
-                            Register with Opinionest today, and let your opinion do the talking.
+                            Register with StartSaySt today, and let your opinion do the talking.
                         </p>
                     </div>
 

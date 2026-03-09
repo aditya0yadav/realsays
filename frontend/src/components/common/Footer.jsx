@@ -19,7 +19,7 @@ const Footer = () => {
                             <img src={logo} alt="StartSaySt Logo" className="h-12 w-auto" />
                         </Link>
                         <p className="text-gray-400 leading-relaxed text-[15px] max-w-xs">
-                            <span className="text-white font-semibold">StartSaySt by RealSays</span> is a premier market research platform connecting voices globally. We empower individuals to monetize their time through meaningful surveys while helping organizations gain verified, actionable insights.
+                            <span className="text-white font-semibold">StartSaySt</span> is a premier market research platform connecting voices globally. We empower individuals to monetize their time through meaningful surveys while helping organizations gain verified, actionable insights.
                         </p>
                     </div>
 
@@ -66,7 +66,7 @@ const Footer = () => {
 
                 {/* Bottom Bar */}
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm">
-                    <p>© {currentYear} StartSaySt by RealSays. All rights reserved.</p>
+                    <p>© {currentYear} StartSaySt. All rights reserved.</p>
                     <div className="flex gap-8">
                         <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
                         <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
